@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Data
 @AllArgsConstructor
@@ -21,4 +23,7 @@ public class Nominee {
 
     @Enumerated(EnumType.STRING)
     private NomineeType nomineeType;
+
+    @OneToMany(mappedBy = "nominee")
+    private List<Vote> votes;
 }
