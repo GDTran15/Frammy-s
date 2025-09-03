@@ -7,26 +7,23 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-@Data
 @Entity
-@Table(name = "users")
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
-
+@Table(name = "nominees")
+public class Nominee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId;
+    private Long nomineeId;
 
-    private String username;
+    @ManyToOne
+    @JoinColumn(name = "category_id", nullable = false)
+    private Category category;
 
-    private String gmail;
-
-    private String password;
     @Enumerated(EnumType.STRING)
-    private Role role;
+    private NomineeType nomineeType;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "nominee")
     private List<Vote> votes;
-
 }
