@@ -17,6 +17,8 @@ target/
 backend/.idea
 backend/frammy/.idea
 .idea
+backend/.idea/
+backend/frammy/.idea/
 *.iws
 *.iml
 *.ipr
@@ -33,3 +35,4 @@ build/
 
 ### VS Code ###
 .vscode/
+/backend/.idea/
