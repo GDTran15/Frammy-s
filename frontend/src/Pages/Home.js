@@ -16,6 +16,10 @@ import "../CSS/Home.css"
             <Link to = "/UserManagement"> 
                 <button>Go to User Management Page</button>
             </Link>
+
+            <Link to = "/PopularityMetrics">
+                <button>Popularity Metrics Page</button>
+            </Link> 
         </div>
     
     )
