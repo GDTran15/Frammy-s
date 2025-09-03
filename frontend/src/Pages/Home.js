@@ -12,6 +12,10 @@ import "../CSS/Home.css"
             <Link to = "/weekly-result-summary"> 
                 <button>Go to weekly result summary</button>
             </Link>
+
+            <Link to = "/UserManagement"> 
+                <button>Go to User Management Page</button>
+            </Link>
         </div>
     
     )
