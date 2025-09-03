@@ -18,6 +18,7 @@ public class Artist {
     private Long artistId;
     private String artistName;
     private String artistInfo;
+
     @OneToMany(mappedBy = "artist")
     private List<Song> songs;
     @OneToMany(mappedBy = "artist")
