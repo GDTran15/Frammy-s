@@ -3,6 +3,8 @@ import Home from './Pages/Home';
 import WeeklyResultSummary from  "./Pages/WeeklyResultSummary"
 
 
+//CONFIGURE UR PAGES HERE by importing them and adding to router-Trison
+
  export default function App(){
     return (
         <div>
