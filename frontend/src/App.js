@@ -11,8 +11,8 @@ import UserManagement from "./Pages/UserManagement"
         <div>
             <BrowserRouter>
                 <Routes>
-                  <Route index element = {<Home />} /> //makes default
-                  <Route path = "/home" element = {<Home />} /> //allows navigation to home by adding the /home to the url
+                  <Route index element = {<Home />} /> {/* makes default */}
+                  <Route path = "/home" element = {<Home />} /> {/* allows navigation to home by adding the /home to the url */}
                   <Route path = "/weekly-result-summary" element = {<WeeklyResultSummary />} />
                   <Route path = "/UserManagement" element = {<UserManagement />} />
                 </Routes>
