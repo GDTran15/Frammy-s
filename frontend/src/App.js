@@ -1,11 +1,10 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from './Pages/Home';
+import HomePage from "./Pages/HomePage";
 import WeeklyResultSummary from  "./Pages/WeeklyResultSummary"
 import UserManagement from "./Pages/UserManagement"
 
 import ArtistManagement from "./Pages/ArtistManagement"
-
-
+import LoginPage from "./Pages/LoginPage";
 import PopularityMetrics from "./Pages/PopularityMetrics"; 
 
 
@@ -17,11 +16,11 @@ import PopularityMetrics from "./Pages/PopularityMetrics";
         <div >
             <BrowserRouter>
                 <Routes>
-                  <Route index element = {<Home />} /> 
-                  <Route path = "/home" element = {<Home />} /> 
+                  <Route index element = {<HomePage />} /> 
+                  <Route path = "/" element = {<HomePage />} /> 
                   <Route path = "/weekly-result-summary" element = {<WeeklyResultSummary />} />
                   <Route path = "/UserManagement" element = {<UserManagement />} />
-
+                    <Route path="/login" element = {<LoginPage/>}/>
                   <Route path = "/ArtistManagement" element = {<ArtistManagement />} />
                   
 
@@ -32,4 +31,4 @@ import PopularityMetrics from "./Pages/PopularityMetrics";
 
         </div>
     )
- }
+ }  

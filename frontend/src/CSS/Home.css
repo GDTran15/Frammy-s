@@ -24,3 +24,8 @@ body {
 .feature{
     padding-top: 70px;
 }
+
+.btn.btn-outline-warning:hover svg path{
+    fill: white ;
+
+}
