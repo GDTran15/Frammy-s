@@ -16,9 +16,16 @@ import "../CSS/Home.css"
             <Link to = "/UserManagement"> 
                 <button>Go to User Management Page</button>
             </Link>
+<<<<<<< HEAD
             <Link to = "/ArtistManagement"> 
                 <button>Go to Artist Management Page</button>
             </Link>
+=======
+
+            <Link to = "/PopularityMetrics">
+                <button>Popularity Metrics Page</button>
+            </Link> 
+>>>>>>> 38818844793df75088932708262dbd1b09dcbd93
         </div>
     
     )

@@ -2,7 +2,11 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from './Pages/Home';
 import WeeklyResultSummary from  "./Pages/WeeklyResultSummary"
 import UserManagement from "./Pages/UserManagement"
+
 import ArtistManagement from "./Pages/ArtistManagement"
+
+
+import PopularityMetrics from "./Pages/PopularityMetrics"; 
 
 
 
@@ -17,8 +21,12 @@ import ArtistManagement from "./Pages/ArtistManagement"
                   <Route path = "/home" element = {<Home />} /> 
                   <Route path = "/weekly-result-summary" element = {<WeeklyResultSummary />} />
                   <Route path = "/UserManagement" element = {<UserManagement />} />
+
                   <Route path = "/ArtistManagement" element = {<ArtistManagement />} />
                   
+
+                  <Route path = "/PopularityMetrics" element = {<PopularityMetrics />} />
+
                 </Routes>
             </BrowserRouter>
 
