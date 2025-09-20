@@ -5,9 +5,9 @@ import "../CSS/Home.css"
 
  export default function Home(){
     return (
-        <div className = "homepage">
+        <div className = "homepage t">
             <Header />
-            <h2>homepage content</h2>
+            <h2 >homepage content</h2>
 
             <Link to = "/weekly-result-summary"> 
                 <button>Go to weekly result summary</button>
@@ -15,6 +15,9 @@ import "../CSS/Home.css"
 
             <Link to = "/UserManagement"> 
                 <button>Go to User Management Page</button>
+            </Link>
+            <Link to = "/ArtistManagement"> 
+                <button>Go to Artist Management Page</button>
             </Link>
         </div>
     
