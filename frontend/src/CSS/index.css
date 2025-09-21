@@ -1,4 +1,11 @@
 /* src/index.css */
+
+
 body {
   font-family: 'Roboto', 'Arial', sans-serif;
+  background-color: rgb(245, 245, 245);
+}
+
+.link-dark.text-decoration-none:hover{
+  text-decoration: underline;
 }
