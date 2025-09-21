@@ -26,6 +26,4 @@ public class UserManagementController {
         return ResponseEntity.ok(ApiResponse.success("User successfully created"));
     }
 
-
-
 }
