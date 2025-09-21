@@ -39,3 +39,5 @@ build/
 
 ### Local application properties ###
 backend/frammy/src/main/resources/application.properties
+.idea/vcs.xml
+*.iml

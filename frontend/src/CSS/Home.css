@@ -1,9 +1,31 @@
+.main-header {
+  background-image: url('../Images/purple.jpg'); /* note the leading slash */
+  background-size: cover;
+  background-position: center;
+  padding-top: 100px;
+  padding-bottom: 70px;
+}
+body {
+    padding-top: 56px;
+}
+.title{
+    font-size: 60px;
+}
 
-.homepage{
-    background-image: url('../Images/twicelul.png');
-    background-size: cover;
-    background-position: top center;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
+.btn-outline-warning{
+    background-color: white;
+}
+
+.main-header{
+    padding-top: 100px;
+    padding-bottom: 70px;
+}
+
+.feature{
+    padding-top: 70px;
+}
+
+.btn.btn-outline-warning:hover svg path{
+    fill: white ;
+
 }

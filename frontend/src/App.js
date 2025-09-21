@@ -1,22 +1,33 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from './Pages/Home';
+import HomePage from "./Pages/HomePage";
 import WeeklyResultSummary from  "./Pages/WeeklyResultSummary"
 import UserManagement from "./Pages/UserManagement"
+
+import ArtistManagement from "./Pages/ArtistManagement"
+import LoginPage from "./Pages/LoginPage";
+import PopularityMetrics from "./Pages/PopularityMetrics"; 
+
 
 
 //CONFIGURE UR PAGES HERE by importing them and adding to router-Trison
 
  export default function App(){
     return (
-        <div>
+        <div >
             <BrowserRouter>
                 <Routes>
-                  <Route index element = {<Home />} /> {/* makes default */}
-                  <Route path = "/home" element = {<Home />} /> {/* allows navigation to home by adding the /home to the url */}
+                  <Route index element = {<HomePage />} /> 
+                  <Route path = "/" element = {<HomePage />} /> 
                   <Route path = "/weekly-result-summary" element = {<WeeklyResultSummary />} />
                   <Route path = "/UserManagement" element = {<UserManagement />} />
+                    <Route path="/login" element = {<LoginPage/>}/>
+                  <Route path = "/ArtistManagement" element = {<ArtistManagement />} />
+                  
+
+                  <Route path = "/PopularityMetrics" element = {<PopularityMetrics />} />
+
                 </Routes>
             </BrowserRouter>
         </div>
     )
- }
+ }  
