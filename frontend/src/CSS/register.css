@@ -1,8 +1,3 @@
-.register{
-   
-    margin: 0 auto;
-    margin-top: 100px;
-}
 
 
 .link-signin{
@@ -13,5 +8,5 @@
     padding-bottom: 2px;
 }
 .link-signin:hover{
-   border-bottom: 2px solid black;;
+   border-bottom: 2px solid black;
 }
