@@ -17,6 +17,22 @@ import  "../Images/purple.jpg"
           </div>
         </div>
       </nav>
+
+      {/* registration form */}
+        <div className="container" style={{ paddingTop: "80px", maxWidth: "400px" }}>
+            <h2 className="mb-4 text-center text-warning">Register</h2>
+            <form>
+                <div className="mb-3">
+                    <label htmlFor="username" className="form-label text-white">Username</label>
+                    <label htmlFor="email" className="form-label text-white">Email address</label>
+                    <input type="email" className="form-control" id="email" placeholder="Enter email" />
+                    <input type="text" className="form-control" id="username" placeholder="Enter username" />
+                    <input type="password" className="form-control" id="password" placeholder="Enter password" />
+                    <input type="password" className="form-control" id="password" placeholder="Re-enter password" />
+                    <button type="submit" className="btn btn-warning w-100 mt-3">Register</button>
+                </div>
+            </form>
+        </div>
     </div>
     
     )
