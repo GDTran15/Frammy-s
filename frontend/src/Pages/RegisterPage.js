@@ -2,6 +2,7 @@ import { width } from "@fortawesome/free-brands-svg-icons/fa11ty";
 import  "../CSS/register.css"
 import { useState } from "react";
 import axios from "axios";
+import InputComponent from "../Components/InputComponent";
 
 export default function RegisterPage(){
   const [gmail,setGmail] = useState("");
@@ -55,23 +56,34 @@ export default function RegisterPage(){
             <div className="card-body">
                 <h5 className="card-title text-center">Create Your Account</h5>
                 <h6 className="card-subtitle mb-2 text-center text-body-tertiary mb-4" >Join Frammy voting community</h6>
+           
             <form onSubmit={handleSubmit}>
-            <div className="mb-3">
+              {/* <div className="mb-3">
                 <label  className="form-label">Gmail address</label>
                 <input onChange={(e) => setGmail(e.target.value)}
                  type="email" className="form-control bg-body-tertiary" value={gmail} placeholder="Enter your gmail"/>
-                </div>
-            <div className="mb-3">
-                <label  className="form-label">Username</label>
-                <input onChange={(e) => setUsername(e.target.value)} 
-                type="text" className="form-control bg-body-tertiary" value={username} placeholder="Enter your username" />
-                </div>
-            <div className="mb-3">
-                <label  className="form-label" >Password</label>
-                <input onChange={(e) => setPassword(e.target.value)}
-                 type="password" className="form-control bg-body-tertiary" value={password} placeholder="Enter your password" />
-            </div>
-
+                </div> */}
+            <InputComponent 
+            labelText="Gmail address"
+            changeHandle={(e) => setGmail(e.target.value)}
+            inputType="email"
+            value={gmail}
+            placeholderValue="Enter your gmail"
+            />
+            <InputComponent 
+            labelText="Username"
+            changeHandle={(e) => setUsername(e.target.value)}
+            inputType="text"
+            value={username}
+            placeholderValue="Enter your username"
+            />
+            <InputComponent 
+            labelText="Password"
+            changeHandle={(e) => setPassword(e.target.value)}
+            inputType="password"
+            value={password}
+            placeholderValue="Enter your password"
+            />
             <button type="submit" className="btn btn-warning w-100 mt-2">Register</button>
                     </form>
             <div className="text-center my-4">
