@@ -6,6 +6,8 @@ import RegisterPage from "./Pages/RegisterPage"
 import ArtistManagement from "./Pages/ArtistManagement"
 import LoginPage from "./Pages/LoginPage";
 import PopularityMetrics from "./Pages/PopularityMetrics"; 
+import RegisterPage from "./Pages/RegisterPage";
+
 
 //CONFIGURE UR PAGES HERE by importing them and adding to router-Trison
 
@@ -18,8 +20,8 @@ import PopularityMetrics from "./Pages/PopularityMetrics";
                   <Route path = "/" element = {<HomePage />} /> 
                   <Route path = "/weekly-result-summary" element = {<WeeklyResultSummary />} />
                   <Route path = "/UserManagement" element = {<UserManagement />} />
-                  <Route path="/login" element = {<LoginPage/>}/>
-                  <Route path="/register" element = {<RegisterPage/>}/>
+                    <Route path="/login" element = {<LoginPage/>}/>
+                    <Route path="/register" element = {<RegisterPage/>}/>
                   <Route path = "/ArtistManagement" element = {<ArtistManagement />} />
                   <Route path = "/PopularityMetrics" element = {<PopularityMetrics />} />
                 </Routes>

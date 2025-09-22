@@ -5,29 +5,8 @@ import "../CSS/home.css"
 import  "../Images/purple.jpg"
 
  export default function HomePage(){
+    
     return (
-       /*  <div >
-            <Header />
-            <h2 >homepage content</h2>
-
-            <Link to = "/weekly-result-summary"> 
-                <button>Go to weekly result summary</button>
-            </Link>
-
-            <Link to = "/UserManagement"> 
-                <button>Go to User Management Page</button>
-            </Link>
-
-            <Link to = "/ArtistManagement"> 
-                <button>Go to Artist Management Page</button>
-            </Link>
-
-
-            <Link to = "/PopularityMetrics">
-                <button>Popularity Metrics Page</button>
-            </Link> 
-
-        </div> */
         <div>
       {/* Navbar */}
       <nav className="navbar bg-black fixed-top">
@@ -45,7 +24,7 @@ import  "../Images/purple.jpg"
       </nav>
 
       {/* Header */}
-      <header className="main-header" style={{ paddingTop: "56px" }}>
+      <header className="main-header">
         <div className="container text-center">
           <div className="row justify-content-center">
             <div className="col">
