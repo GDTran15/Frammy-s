@@ -9,3 +9,8 @@ body {
 .link-dark.text-decoration-none:hover{
   text-decoration: underline;
 }
+
+ul{
+  list-style-type: none;
+}
+

@@ -43,7 +43,7 @@ export default function LoginPage(){
 
     return(
         <>
-         <NavBar/>
+         <NavBar children={""} isNotLogin={true}/>
 
         <FormComponent
         title="Welcome Back"

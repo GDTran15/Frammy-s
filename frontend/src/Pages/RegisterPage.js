@@ -35,18 +35,14 @@ export default function RegisterPage(){
 
     return (
      <>
-      <NavBar/>
+      <NavBar children={""} isNotLogin={true}/>
     <FormComponent 
        title="Create Your Account" 
        subTitle="Join Frammy voting community"
        optional="Already have an account? Sign in"
        >
          <form onSubmit={handleSubmit}>
-              {/* <div className="mb-3">
-                <label  className="form-label">Gmail address</label>
-                <input onChange={(e) => setGmail(e.target.value)}
-                 type="email" className="form-control bg-body-tertiary" value={gmail} placeholder="Enter your gmail"/>
-                </div> */}
+              
             <InputComponent 
             labelText="Gmail address"
             changeHandle={(e) => setGmail(e.target.value)}
