@@ -1,0 +1,16 @@
+.nav-button{
+    color: white;
+    background-color: black;
+    border: none;
+    transition: background-color 0.25s;
+    transition: color 0.25s;
+}
+
+.nav-button:hover{
+    background-color: white;
+    color:  #FFC107;
+}
+.nav-button.active{
+    background-color: white;
+    color:  #FFC107;
+}

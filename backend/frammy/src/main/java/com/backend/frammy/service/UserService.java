@@ -1,5 +1,7 @@
 package com.backend.frammy.service;
 
+import com.backend.frammy.dto.LoginRequestDTO;
+import com.backend.frammy.dto.LoginResponseDTO;
 import com.backend.frammy.model.Role;
 import  com.backend.frammy.model.User;
 import com.backend.frammy.dto.RegisterRequestDTO;
@@ -7,6 +9,9 @@ import com.backend.frammy.exception.UserAlreadyExistException;
 import com.backend.frammy.repo.UserRepo;
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +22,8 @@ public class UserService {
 
     private final UserRepo userRepo;
     private final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder(12);
+    private final AuthenticationManager authenticationManager;
+    private final JwtService jwtService;
 
     @Transactional
     public void createAccountForUser(RegisterRequestDTO registerRequestDTO) {
@@ -32,5 +39,15 @@ public class UserService {
                     .role(Role.ROLE_USER)
                     .build();
             userRepo.save(user);
+    }
+
+    public LoginResponseDTO loginUser(LoginRequestDTO loginRequestDTO) {
+        Authentication authentication = authenticationManager.authenticate( new UsernamePasswordAuthenticationToken(loginRequestDTO.username(),loginRequestDTO.password()));
+        if (authentication.isAuthenticated()){
+            User user = userRepo.findByUsername(loginRequestDTO.username());
+            String token = jwtService.generateToken(user,user.getUserId());
+            return new LoginResponseDTO(token,user.getRole());
+        }
+        return null;
     }
 }
