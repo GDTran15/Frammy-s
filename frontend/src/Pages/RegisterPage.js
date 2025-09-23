@@ -10,7 +10,7 @@ export default function RegisterPage(){
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post("http://localhost:8080/register",{
+    axios.post("http://localhost:8081/register",{
     username: username,
     gmail : gmail,
     password : password
