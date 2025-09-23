@@ -66,7 +66,7 @@ export default function RegisterPage(){
             />
             <button type="submit" className="btn btn-warning w-100 mt-2">Register</button>
                     </form>
-        </FormComponent>         
+        </FormComponent>    
      </>   
     )
 }
