@@ -1,8 +1,7 @@
 package com.backend.frammy.controller;
 
 import com.backend.frammy.dto.ApiResponse;
-import com.backend.frammy.dto.LoginRequestDTO;
-import com.backend.frammy.dto.LoginResponseDTO;
+import com.backend.frammy.dto.EditUserRequestDTO;
 import com.backend.frammy.dto.DeleteUserRequestDTO;
 import com.backend.frammy.service.UserService;
 import jakarta.validation.Valid;
@@ -27,5 +26,11 @@ public class UserController {
     public ResponseEntity<ApiResponse<String>> deleteUserAccount( @Valid @RequestBody DeleteUserRequestDTO deleteRequestDTO) {
         userService.deleteUser(deleteRequestDTO);
         return ResponseEntity.ok(ApiResponse.success("Delete success"));
+    }
+
+    @PostMapping("/editUser")
+    public ResponseEntity<ApiResponse<String>> editUserAccount( @Valid @RequestBody EditUserRequestDTO editUserRequestDTO) {
+        userService.editUser(editUserRequestDTO);
+        return ResponseEntity.ok(ApiResponse.success("User updated successfully"));
     }
 }
