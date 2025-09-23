@@ -6,7 +6,6 @@ import RegisterPage from "./Pages/RegisterPage"
 import ArtistManagement from "./Pages/ArtistManagement"
 import LoginPage from "./Pages/LoginPage";
 import PopularityMetrics from "./Pages/PopularityMetrics"; 
-import RegisterPage from "./Pages/RegisterPage";
 
 
 //CONFIGURE UR PAGES HERE by importing them and adding to router-Trison

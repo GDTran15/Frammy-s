@@ -40,8 +40,7 @@ export default function RegisterPage(){
             <h5 className="mb-0">GrammyVote</h5>
           </a>
           <div>
-            <a href="/login" className="btn btn-outline-warning me-2 btn-sm">Login</a>
-            <a href="/register" className="btn btn-warning btn-sm">Register</a>
+            <a href="/" className="btn btn-warning btn-sm"> Back to Home </a>
           </div>
         </div>
       </nav>
@@ -57,9 +56,9 @@ export default function RegisterPage(){
                 <h6 className="card-subtitle mb-2 text-center text-body-tertiary mb-4" >Join Frammy voting community</h6>
             <form onSubmit={handleSubmit}>
             <div className="mb-3">
-                <label  className="form-label">Gmail address</label>
+                <label  className="form-label">Email address</label>
                 <input onChange={(e) => setGmail(e.target.value)}
-                 type="email" className="form-control bg-body-tertiary" value={gmail} placeholder="Enter your gmail"/>
+                 type="email" className="form-control bg-body-tertiary" value={gmail} placeholder="Enter your email"/>
                 </div>
             <div className="mb-3">
                 <label  className="form-label">Username</label>
