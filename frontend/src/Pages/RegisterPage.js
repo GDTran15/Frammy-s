@@ -8,8 +8,8 @@ export default function RegisterPage(){
   const [username,setUsername] = useState("");
   const [password,setPassword] = useState("");
 
- const handleSubmit = (e) => {
-  e.preventDefault();
+  const handleSubmit = (e) => {
+    e.preventDefault();
     axios.post("http://localhost:8080/register",{
     username: username,
     gmail : gmail,
@@ -28,7 +28,7 @@ export default function RegisterPage(){
     setUsername("");
     setPassword("");
     })
- }
+  }
 
     return (
      <>
