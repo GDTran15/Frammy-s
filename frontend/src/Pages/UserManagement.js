@@ -1,16 +1,17 @@
+import "../CSS/usermanagement.css"
+import NavBar from "../Components/NavBar";
+import FormComponent from "../Components/FormComponent";
+import InputComponent from "../Components/InputComponent";
+import axios from "axios";
+import { use, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-import Header from "../Components/Header"
-import { Link } from "react-router-dom"
+export default function LoginPage(){
 
-export default function UserManagement(){
-    return (
-        <div>
-            <Header />
-            <h2>Welcome to User Management</h2>
-
-             <Link to = "/home">
-                <button>Go to back to home</button>
-            </Link>
-        </div>
-    )
- }
+    return(
+        <>
+         <NavBar children={""} isNotLogin={false}/>
+        
+        </>
+    );
+}
