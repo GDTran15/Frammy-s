@@ -46,26 +46,35 @@ export default function UserManagement(){
                 {loading && <p>Loading users...</p>}
                 {error && <p className="error">{error}</p>}
 
-                <table className="user-table">
-                    <thead>
-                        <tr>
-                            <th>User ID</th>
-                            <th>Username</th>
-                            <th>Email</th>
-                            <th>Role</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {users.map(user => (
-                            <tr key={user.userId}>
-                                <td>{user.userId}</td>
-                                <td>{user.username}</td>
-                                <td>{user.gmail}</td>
-                                <td>{user.role}</td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
+                <div className="user-cards-wrapper">
+                    {users.map((user) => (
+                        <div key={user.id} className="user-card">
+                            <div className="user-info">
+                                <div className="user-detail">
+                                    <p><strong>User ID: </strong></p>
+                                    <p>{user.userId}</p>
+                                </div>
+                                <div className="user-detail">
+                                    <p><strong>Username: </strong></p>
+                                    <p>{user.username}</p>
+                                </div>
+                                <div className="user-detail">
+                                    <p><strong>Gmail: </strong></p>
+                                    <p>{user.gmail}</p>
+                                </div>
+                                <div className="user-detail">
+                                    <p><strong>Role: </strong></p>
+                                    <p>{user.role}</p>
+                                </div>
+                            </div>
+
+                            <div className="card-buttons">
+                                <button className="edit-button">Edit</button>
+                                <button className="delete-button">Delete</button>
+                            </div>
+                        </div>
+                    ))}
+                </div>
             </div>
         </>
     );
