@@ -39,7 +39,7 @@ public class ArtistController {
         return  ResponseEntity.ok(ApiResponse.success("success"));
     }
 
-    @DeleteMapping("/{artistId")
+    @DeleteMapping("/{artistId}")
     public ResponseEntity<ApiResponse<String>> deleteArtist(@PathVariable Long artistId){
         artistService.deleteArtist(artistId);
     }
