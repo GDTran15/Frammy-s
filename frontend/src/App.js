@@ -8,6 +8,7 @@ import LoginPage from "./Pages/LoginPage";
 import PopularityMetrics from "./Pages/PopularityMetrics"; 
 import AdminDashBoard from "./Pages/AdminDashBoard";
 import UserHomePage from "./Pages/UserHomePage";
+import Voting from "./Pages/Voting";
 
 //CONFIGURE UR PAGES HERE by importing them and adding to router-Trison
 
@@ -25,6 +26,7 @@ import UserHomePage from "./Pages/UserHomePage";
                   <Route path = "/ArtistManagement" element = {<ArtistManagement />} />
                   <Route path = "/admin/dashboard" element = {<AdminDashBoard />} />
                   <Route path = "/user/home" element = {<UserHomePage />} />
+                  <Route path = "/Voting" element = {<Voting />} />
                   
 
                   <Route path = "/PopularityMetrics" element = {<PopularityMetrics />} />
