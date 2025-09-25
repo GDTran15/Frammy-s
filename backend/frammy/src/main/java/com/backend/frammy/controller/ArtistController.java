@@ -42,6 +42,7 @@ public class ArtistController {
     @DeleteMapping("/{artistId}")
     public ResponseEntity<ApiResponse<String>> deleteArtist(@PathVariable Long artistId){
         artistService.deleteArtist(artistId);
+        return ResponseEntity.ok(ApiResponse.success("delete success"));
     }
 
 
