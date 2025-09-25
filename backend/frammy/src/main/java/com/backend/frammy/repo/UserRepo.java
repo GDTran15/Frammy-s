@@ -12,8 +12,6 @@ import java.util.Optional;
 public interface UserRepo extends JpaRepository<User,Long> {
     Optional<User> findOptionByUsername(String username);
 
-    
-
     boolean existsByUsername(String username);
 
     boolean existsByGmail(String gmail);
@@ -22,4 +20,6 @@ public interface UserRepo extends JpaRepository<User,Long> {
     Long findIdByUsername(String username);
 
     User findByUsername(String username);
+
+    User findByUserId(Long userId);
 }

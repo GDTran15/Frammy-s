@@ -55,10 +55,10 @@ public class UserService {
 
     @Transactional
     public void deleteUser(DeleteUserRequestDTO deleteUserRequestDTO ) {
-        String username = deleteUserRequestDTO.username();
-        User user = userRepo.findByUsername(username);
+        Long userId = deleteUserRequestDTO.userId();
+        User user = userRepo.findByUserId(userId);
         if  (user == null){
-            throw new UsernameNotFoundException("Username not found");
+            throw new UsernameNotFoundException("User ID not found");
         }
         userRepo.delete(user);
     }

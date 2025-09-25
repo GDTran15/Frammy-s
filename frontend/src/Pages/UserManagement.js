@@ -23,10 +23,12 @@ export default function UserManagement(){
                 if (error.response) {
                     console.error("Error response:", error.response);
                     setError("Server error: " + error.response.status);
-                } else if (error.request) {
+                } 
+                else if (error.request) {
                     console.error("No response received:", error.request);
                     setError("No response from server.");
-                } else {
+                } 
+                else {
                     console.error("Error setting up request:", error.message);
                     setError("Request error: " + error.message);
                 }
@@ -35,6 +37,39 @@ export default function UserManagement(){
                 setLoading(false)
             });
     }, []);
+
+    const handleDelete = (userId) => {
+        const confirmed = window.confirm("Are you sure you want to delete this user?");
+        if (!confirmed) {
+            return;
+        }
+
+        axios.post(`http://localhost:8081/user/deleteUser`, {userId: userId})
+            .then((response) => {
+                if (response.data.status === "success") {
+                    setUsers(prevUsers => prevUsers.filter(user => user.userId !== userId));
+                } 
+                else {
+                    alert("Failed to delete user: " + response.data.message);
+                }
+            })
+            .catch((error) => {
+                console.error("Error deleting user:", error);
+            if (error.response) {
+                console.error("Server responded with status", error.response.status);
+                console.error(error.response.data);
+                alert("Server error: " + error.response.data.message || error.response.status);
+            } 
+            else if (error.request) {
+                console.error("No response received:", error.request);
+                alert("No response from server.");
+            } 
+            else {
+                alert("Error setting up request: " + error.message);
+            }
+            });
+        };
+            
 
     return(
         <>
@@ -48,10 +83,10 @@ export default function UserManagement(){
 
                 <div className="user-cards-wrapper">
                     {users.map((user) => (
-                        <div key={user.id} className="user-card">
+                        <div key={user.userId} className="user-card">
                             <div className="user-info">
                                 <div className="user-detail">
-                                    <p><strong>User ID: </strong></p>
+                                    <p><strong>User ID: </strong></p>   
                                     <p>{user.userId}</p>
                                 </div>
                                 <div className="user-detail">
@@ -70,7 +105,7 @@ export default function UserManagement(){
 
                             <div className="card-buttons">
                                 <button className="edit-button">Edit</button>
-                                <button className="delete-button">Delete</button>
+                                <button className="delete-button" onClick={() => handleDelete(user.userId)}>Delete</button>
                             </div>
                         </div>
                     ))}
