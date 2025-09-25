@@ -69,7 +69,36 @@ export default function UserManagement(){
             }
             });
         };
-            
+
+        const [editingUser, setEditingUser] = useState(null);
+        const [editData, setEditData] = useState({ username: "", gmail: "", password: "" });
+        
+        const handleEditUser = () => {
+            if (!editingUser) {
+                return;
+            }
+
+            axios.post("http://localhost:8081/user/editUser", {
+                userId: editingUser.userId,
+                username: editData.username,
+                gmail: editData.gmail,
+                password: editData.password
+            })
+            .then((response) => {
+                if (response.data.status === "success") {
+                    alert("User updated successfully");
+                    setUsers(prevUsers => prevUsers.map(user => user.userId === editingUser ? { ...user, ...editData } : user));
+                    setEditingUser(null);
+                }
+                else {
+                    alert("Failed to update user: " + response.data.message);
+                }
+            })
+            .catch((error) => {
+                console.error("Error updating user:", error);
+                alert("Error updating user: " + error.message);
+            });
+        };
 
     return(
         <>
@@ -104,12 +133,37 @@ export default function UserManagement(){
                             </div>
 
                             <div className="card-buttons">
-                                <button className="edit-button">Edit</button>
+                                <button className="edit-button" onClick={() => {
+                                    setEditingUser(user);
+                                    setEditData({ username: user.username, gmail: user.gmail, password: "" });
+                                }}>Edit</button>
                                 <button className="delete-button" onClick={() => handleDelete(user.userId)}>Delete</button>
                             </div>
                         </div>
                     ))}
                 </div>
+
+                {editingUser && (
+                    <div className="edit-modal">
+                        <h2>Edit User</h2>
+                        <label>
+                            Username:
+                            <input type="text" value={editData.username} onChange={(e) => setEditData({ ...editData, username: e.target.value })} />
+                        </label>
+                        <label>
+                            Gmail:
+                            <input type="email" value={editData.gmail} onChange={(e) => setEditData({ ...editData, gmail: e.target.value })} />
+                        </label>
+                        <label>
+                            Password:
+                            <input type="password" value={editData.password} onChange={(e) => setEditData({ ...editData, password: e.target.value })} />
+                        </label>
+                        <div className="modal-buttons">
+                            <button onClick={handleEditUser}>Save</button>
+                            <button onClick={() => setEditingUser(null)}>Cancel</button>
+                        </div>
+                    </div>
+                )}
             </div>
         </>
     );
