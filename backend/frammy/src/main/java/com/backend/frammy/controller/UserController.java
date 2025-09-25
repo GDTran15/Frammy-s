@@ -31,6 +31,7 @@ public class UserController {
 
     @PostMapping("/editUser")
     public ResponseEntity<ApiResponse<String>> editUserAccount( @Valid @RequestBody EditUserRequestDTO editUserRequestDTO) {
+        System.out.println("Received Edit Request: " + editUserRequestDTO);
         userService.editUser(editUserRequestDTO);
         return ResponseEntity.ok(ApiResponse.success("User updated successfully"));
     }

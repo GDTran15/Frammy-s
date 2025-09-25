@@ -1,10 +1,11 @@
 package com.backend.frammy.dto;
 
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 public record EditUserRequestDTO (
-        @NotEmpty
-        Long userID,
+        @NotNull
+        Long userId,
         @NotEmpty
         String username,
         @NotEmpty

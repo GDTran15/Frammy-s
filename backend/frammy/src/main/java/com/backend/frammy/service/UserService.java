@@ -65,7 +65,7 @@ public class UserService {
 
     @Transactional
     public void editUser(EditUserRequestDTO editUserRequestDTO) {
-        User user =  userRepo.findById(editUserRequestDTO.userID())
+        User user =  userRepo.findById(editUserRequestDTO.userId())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
         if (userRepo.existsByUsername(editUserRequestDTO.username()) && !user.getUsername().equals(editUserRequestDTO.username())){
