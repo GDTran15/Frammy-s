@@ -38,4 +38,8 @@ build/
 /backend/.idea/
 
 ### Local application properties ###
-backend/frammy/src/main/resources/application.properties
+
+.idea/vcs.xml
+*.iml
+!src/main/resources/
+!src/main/resources/**

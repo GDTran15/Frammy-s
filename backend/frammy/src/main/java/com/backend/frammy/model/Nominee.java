@@ -21,8 +21,17 @@ public class Nominee {
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
-    @Enumerated(EnumType.STRING)
-    private NomineeType nomineeType;
+    @ManyToOne
+    @JoinColumn(name = "artist_id", nullable = true)
+    private Artist artist;
+
+    @ManyToOne
+    @JoinColumn(name = "album_id", nullable = true)
+    private Album album;
+
+    @ManyToOne
+    @JoinColumn(name = "song_id", nullable = true)
+    private Song song;
 
     @OneToMany(mappedBy = "nominee")
     private List<Vote> votes;

@@ -1,9 +1,0 @@
-
-.homepage{
-    background-image: url('../Images/twicelul.png');
-    background-size: cover;
-    background-position: top center;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
