@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomePage from "./Pages/HomePage";
 import WeeklyResultSummary from  "./Pages/WeeklyResultSummary"
 import UserManagement from "./Pages/UserManagement"
-
+import NomineManagementPage from "./Pages/NomineeManagementPage";
 import ArtistManagement from "./Pages/ArtistManagement"
 import LoginPage from "./Pages/LoginPage";
 import PopularityMetrics from "./Pages/PopularityMetrics"; 
@@ -17,6 +17,7 @@ import UserHomePage from "./Pages/UserHomePage";
         <div >
             <BrowserRouter>
                 <Routes>
+                  <Route path="/admin/nominee-management" element={<NomineManagementPage/>}/>
                   <Route index element = {<HomePage />} /> 
                   <Route path = "/" element = {<HomePage />} /> 
                   <Route path = "/weekly-result-summary" element = {<WeeklyResultSummary />} />
