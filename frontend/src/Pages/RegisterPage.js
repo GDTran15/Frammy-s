@@ -1,5 +1,5 @@
-
-import  "../CSS/register.css"
+import { width } from "@fortawesome/free-brands-svg-icons/fa11ty";
+import  "../CSS/loginregister.css"
 import { useState } from "react";
 import axios from "axios";
 import InputComponent from "../Components/InputComponent";
@@ -11,14 +11,14 @@ export default function RegisterPage(){
   const [username,setUsername] = useState("");
   const [password,setPassword] = useState("");
 
- const handleSubmit = (e) => {
-  e.preventDefault();
-   axios.post("http://localhost:8080/register",{
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    axios.post("http://localhost:8081/register",{
     username: username,
     gmail : gmail,
     password : password
-  })
-  .then((res) =>{
+    })
+    .then((res) =>{
     const response = res.data;
     console.log(response)
     if(response.status === "success"){
@@ -30,8 +30,8 @@ export default function RegisterPage(){
     setGmail("");
     setUsername("");
     setPassword("");
-  })
- }
+    })
+  }
 
     return (
      <>
@@ -66,7 +66,7 @@ export default function RegisterPage(){
             />
             <button type="submit" className="btn btn-warning w-100 mt-2">Register</button>
                     </form>
-        </FormComponent>         
+        </FormComponent>    
      </>   
     )
 }

@@ -1,4 +1,4 @@
-import "../CSS/register.css"
+import "../CSS/loginregister.css"
 import NavBar from "../Components/NavBar";
 import FormComponent from "../Components/FormComponent";
 import InputComponent from "../Components/InputComponent";
@@ -16,7 +16,7 @@ export default function LoginPage(){
         
         e.preventDefault();
         
-             axios.post("http://localhost:8080/login",{
+             axios.post("http://localhost:8081/login",{
             username: username,
             password : password
         }).then((res) =>{

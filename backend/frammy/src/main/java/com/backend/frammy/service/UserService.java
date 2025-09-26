@@ -1,10 +1,8 @@
 package com.backend.frammy.service;
 
-import com.backend.frammy.dto.LoginRequestDTO;
-import com.backend.frammy.dto.LoginResponseDTO;
+import com.backend.frammy.dto.*;
 import com.backend.frammy.model.Role;
 import  com.backend.frammy.model.User;
-import com.backend.frammy.dto.RegisterRequestDTO;
 import com.backend.frammy.exception.UserAlreadyExistException;
 import com.backend.frammy.repo.UserRepo;
 import lombok.RequiredArgsConstructor;
@@ -12,9 +10,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -50,4 +52,46 @@ public class UserService {
         }
         return null;
     }
+
+    @Transactional
+    public void deleteUser(DeleteUserRequestDTO deleteUserRequestDTO ) {
+        Long userId = deleteUserRequestDTO.userId();
+        User user = userRepo.findByUserId(userId);
+        if  (user == null){
+            throw new UsernameNotFoundException("User ID not found");
+        }
+        userRepo.delete(user);
+    }
+
+    @Transactional
+    public void editUser(EditUserRequestDTO editUserRequestDTO) {
+        User user =  userRepo.findById(editUserRequestDTO.userId())
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+
+        if (userRepo.existsByUsername(editUserRequestDTO.username()) && !user.getUsername().equals(editUserRequestDTO.username())){
+            throw new UserAlreadyExistException("Username already exist");
+        }
+
+        if (userRepo.existsByGmail(editUserRequestDTO.gmail()) && !user.getGmail().equals(editUserRequestDTO.gmail())){
+            throw new UserAlreadyExistException("Gmail already exist");
+        }
+
+        user.setUsername(editUserRequestDTO.username());
+        user.setGmail(editUserRequestDTO.gmail());
+        user.setPassword(bCryptPasswordEncoder.encode(editUserRequestDTO.password()));
+
+        userRepo.save(user);
+    }
+
+    public List<UserResponseDTO> getAllUsers() {
+        List<User> users = userRepo.findAll();
+
+        return users.stream().map(user -> new UserResponseDTO(
+                user.getUserId(),
+                user.getGmail(),
+                user.getRole(),
+                user.getUsername()
+        )).toList();
+    }
+
 }
