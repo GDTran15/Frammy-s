@@ -1,18 +1,15 @@
 package com.backend.frammy.controller;
 
 
-import com.backend.frammy.dto.AddSongDTORequest;
-import com.backend.frammy.dto.ApiResponse;
-import com.backend.frammy.dto.CreateArtistRequestDTO;
+import com.backend.frammy.dto.*;
 import com.backend.frammy.repo.SongRepo;
 import com.backend.frammy.service.SongService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequestMapping("songs")
 @RestController
@@ -25,5 +22,12 @@ public class SongController {
     public ResponseEntity<ApiResponse<String>> addSong(@Valid @RequestBody AddSongDTORequest addSongDTORequest){
         songService.createSong(addSongDTORequest);
         return ResponseEntity.ok(ApiResponse.success("Artist successfully create"));
+    }
+
+
+    @GetMapping()
+    public ResponseEntity<ApiResponse<List<ResponseGetSongDTO>>> getSongs(){
+        List<ResponseGetSongDTO> songList = songService.getAllSongs();
+        return ResponseEntity.ok(ApiResponse.success(songList));
     }
 }
