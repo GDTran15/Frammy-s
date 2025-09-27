@@ -11,7 +11,13 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(UserAlreadyExistException.class)
-    public ResponseEntity<ApiResponse<String>> userNameAlreadyExist(UsernameNotFoundException ex){
+    public ResponseEntity<ApiResponse<String>> userNameAlreadyExist(UserAlreadyExistException ex){
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(ApiResponse.error(ex.getMessage()));
+    }
+
+    @ExceptionHandler(ObjectAlreadyExist.class)
+    public ResponseEntity<ApiResponse<String>> objectAlreadyExist(ObjectAlreadyExist ex){
         return ResponseEntity.status(HttpStatus.CONFLICT)
                 .body(ApiResponse.error(ex.getMessage()));
     }
