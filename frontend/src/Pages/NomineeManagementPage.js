@@ -74,9 +74,9 @@ export default function NomineManagementPage(){
                 </div>
             </div>
            </section>
+     </>
 
-
-        </>
+     
         
     );
 }
