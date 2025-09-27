@@ -6,5 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 public interface ArtistRepo extends JpaRepository<Artist,Long> {
-    Optional<Artist> findByArtistId(Long artistId);
+    boolean existsByArtistName(String artistName);
+
+    Artist findByArtistId(Long artistId);
 }

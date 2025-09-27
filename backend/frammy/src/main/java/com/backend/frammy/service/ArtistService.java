@@ -3,6 +3,7 @@ package com.backend.frammy.service;
 import com.backend.frammy.dto.CreateArtistRequestDTO;
 import com.backend.frammy.dto.ResponseGetArtistDTO;
 import com.backend.frammy.dto.UpdateArtistRequestDTO;
+import com.backend.frammy.exception.ObjectAlreadyExist;
 import com.backend.frammy.mapper.ArtistToDTO;
 import com.backend.frammy.mapper.DtoToArtist;
 import com.backend.frammy.model.Artist;
@@ -12,6 +13,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.ObjectNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,7 +26,12 @@ public class ArtistService {
     private final ArtistRepo artistRepo;
     private final ArtistToDTO artistToDTO;
 
+
+    @Transactional
     public Artist createArtist(@Valid CreateArtistRequestDTO createArtistRequestDTO) {
+        if (artistRepo.existsByArtistName(createArtistRequestDTO.artistName())){
+            throw new ObjectAlreadyExist("Artist already exist");
+        }
         Artist newArtist = dtoToArtist.apply(createArtistRequestDTO);
         return artistRepo.save(newArtist);
     }
@@ -36,14 +43,14 @@ public class ArtistService {
                 .collect(Collectors.toList());
     }
 
-    public void updateArtist(Long artistId, @Valid UpdateArtistRequestDTO updateArtistRequestDTO) {
-        Artist artist = artistRepo.findByArtistId(artistId)
-                .orElseThrow(() -> new ObjectNotFoundException("Artist not found", artistId));
-        artist.setArtistName(updateArtistRequestDTO.artistName());
-        artist.setArtistInfo(updateArtistRequestDTO.artistInfo());
-        artist.setAwards(updateArtistRequestDTO.awards());
-        artistRepo.save(artist);
-    }
+//    public void updateArtist(Long artistId, @Valid UpdateArtistRequestDTO updateArtistRequestDTO) {
+//        Artist artist = artistRepo.findByArtistId(artistId)
+//                .orElseThrow(() -> new ObjectNotFoundException("Artist not found", artistId));
+//        artist.setArtistName(updateArtistRequestDTO.artistName());
+//        artist.setArtistInfo(updateArtistRequestDTO.artistInfo());
+//        artist.setAwards(updateArtistRequestDTO.awards());
+//        artistRepo.save(artist);
+//    }
 
     public void deleteArtist(Long artistId) {
         artistRepo.deleteById(artistId);
