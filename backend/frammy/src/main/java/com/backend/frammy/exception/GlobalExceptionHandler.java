@@ -21,4 +21,16 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.CONFLICT)
                 .body(ApiResponse.error(ex.getMessage()));
     }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ApiResponse<String>>  handleValidationException(){
+        return     ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(ApiResponse.error("Please fill in all field"));
+    }
+
+    @ExceptionHandler(InvalidInputException.class)
+    public ResponseEntity<ApiResponse<String>>  handleInvalidInputException(){
+        return     ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(ApiResponse.error("Please fill in all field"));
+    }
 }
