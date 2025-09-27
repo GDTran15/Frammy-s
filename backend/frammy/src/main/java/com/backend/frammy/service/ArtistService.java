@@ -2,7 +2,6 @@ package com.backend.frammy.service;
 
 import com.backend.frammy.dto.CreateArtistRequestDTO;
 import com.backend.frammy.dto.ResponseGetArtistDTO;
-import com.backend.frammy.dto.UpdateArtistRequestDTO;
 import com.backend.frammy.exception.ObjectAlreadyExist;
 import com.backend.frammy.mapper.ArtistToDTO;
 import com.backend.frammy.mapper.DtoToArtist;
@@ -11,7 +10,6 @@ import com.backend.frammy.model.Artist;
 import com.backend.frammy.repo.ArtistRepo;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.ObjectNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,12 +26,12 @@ public class ArtistService {
 
 
     @Transactional
-    public Artist createArtist(@Valid CreateArtistRequestDTO createArtistRequestDTO) {
+    public void createArtist(@Valid CreateArtistRequestDTO createArtistRequestDTO) {
         if (artistRepo.existsByArtistName(createArtistRequestDTO.artistName())){
             throw new ObjectAlreadyExist("Artist already exist");
         }
         Artist newArtist = dtoToArtist.apply(createArtistRequestDTO);
-        return artistRepo.save(newArtist);
+        artistRepo.save(newArtist);
     }
 
     public List<ResponseGetArtistDTO> getAllArtist() {
