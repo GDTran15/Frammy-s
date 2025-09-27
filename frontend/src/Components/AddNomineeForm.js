@@ -82,8 +82,8 @@ export default function AddNomineeForm(){
     const handleSubmit = (e) =>{
         e.preventDefault();
         setError("");
-        if(item === undefined || choseCategory === undefined){
-            setError("Please select every option")
+        if(item === undefined){
+            setError("Please fill in all field")
         } else {
             let data = {
                 categoryId : choseCategory.value,
@@ -101,7 +101,10 @@ export default function AddNomineeForm(){
         }
     }).then((res) => {
         alert(res.data.data);
+    }).catch((error) => {
+        setError(error.respone.data.message)
     })
+
         }
     }
     return(

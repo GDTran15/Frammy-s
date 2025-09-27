@@ -11,11 +11,15 @@ export default function AddSong(){
     const [releaseDate, setReleaseDate] = useState("");
     const [artistList,setArtistList] = useState([]);
     const [artist,setArtist] = useState("");
+    const [error,setError] = useState("");
     const token = localStorage.getItem("token");
 
 
         const handleSubmit = (e) => {
+           
             e.preventDefault();
+
+            
             let data = {
                 songName : songName,
                 releaseDate : releaseDate,
@@ -28,6 +32,8 @@ export default function AddSong(){
         }
             }).then((res) => {
                 alert(res.data.data)
+            }).catch ((err)  => {
+                setError(err.response.data.message);
             })
         }
 
@@ -79,8 +85,9 @@ export default function AddSong(){
                                    <Select options={artistList} value={artist} onChange={handleChange} onMenuOpen={fetchArtist}/>
                                    
                                   
-                                   <button type="submit" className="btn btn-warning w-100 mt-2">Add</button>
-                                    
+                                   <button type="submit" className="btn btn-warning w-100 mt-3">Add</button>
+                                    <p className="text-danger mt-2">{error !== "" ? `*${error}`: "" }</p>
+
                                </form>
         </>
     )
