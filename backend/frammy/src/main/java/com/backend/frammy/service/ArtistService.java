@@ -10,6 +10,9 @@ import com.backend.frammy.model.Artist;
 import com.backend.frammy.repo.ArtistRepo;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -52,5 +55,13 @@ public class ArtistService {
 
     public void deleteArtist(Long artistId) {
         artistRepo.deleteById(artistId);
+    }
+
+    public Page<ResponseGetArtistDTO> getArtistInPage(Pageable pageable) {
+        Page<Artist> artistPage = artistRepo.findAll(pageable);
+        List<ResponseGetArtistDTO> artistListDTO = artistPage.stream().map(artistToDTO)
+                .toList();
+
+        return new PageImpl<>(artistListDTO,pageable,artistPage.getTotalElements());
     }
 }

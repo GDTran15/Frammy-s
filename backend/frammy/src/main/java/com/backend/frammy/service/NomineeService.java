@@ -1,11 +1,15 @@
 package com.backend.frammy.service;
 
 import com.backend.frammy.dto.AddNomineeRequestDTO;
+import com.backend.frammy.dto.ResponseGetAllNomineeDTO;
 import com.backend.frammy.exception.InvalidInputException;
 import com.backend.frammy.exception.ObjectAlreadyExist;
 import com.backend.frammy.model.*;
 import com.backend.frammy.repo.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedModel;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,7 +39,7 @@ public class NomineeService {
             exist = nomineeRepo.existsByCategoryAndArtist(category,artist);
             nominee.setArtist(artist);
         } else if (addNomineeRequestDTO.nomineeType().equals(NomineeType.ALBUM)) {
-            if (addNomineeRequestDTO.songId() == null) {
+            if (addNomineeRequestDTO.albumId() == null) {
                 throw new InvalidInputException();
             }
            Album album = albumRepo.findByAlbumId(addNomineeRequestDTO.albumId());
@@ -57,5 +61,13 @@ public class NomineeService {
         nominee.setCategory(category);
         nominee.setNomineeType(addNomineeRequestDTO.nomineeType());
         nomineeRepo.save(nominee);
+    }
+
+    public Page<ResponseGetAllNomineeDTO> getNominees(Pageable pageable) {
+        return nomineeRepo.findAllNominateWithInformation(pageable);
+    }
+
+    public void deleteNominee(Long nomineeId) {
+        nomineeRepo.deleteById(nomineeId);
     }
 }

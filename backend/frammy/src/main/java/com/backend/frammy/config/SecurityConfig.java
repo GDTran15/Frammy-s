@@ -44,7 +44,7 @@ public class SecurityConfig {
                     c.configurationSource(source);
                 })
                 .authorizeHttpRequests(request ->
-                        request.requestMatchers("/login", "/register", "/category")
+                        request.requestMatchers("/login", "/register")
                                 .permitAll()
                                 .anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
