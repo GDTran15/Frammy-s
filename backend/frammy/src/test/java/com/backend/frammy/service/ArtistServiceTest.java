@@ -21,6 +21,49 @@ public class ArtistServiceTest {
     ArtistRepo artistRepo;
     @Mock
     DtoToArtist dtoToArtist;
+    @Mock
+    ArtistToDTO artistToDTO;
+
+
+
+    @Test
+    void createArtist() {
+        CreateArtistRequestDTO dto = new CreateArtistRequestDTO("MichaelTran", "Young boy", "No awards");
+        Artist artist = new Artist();
+
+        when(artistRepo.existsByArtistName(dto.artistName())).thenReturn(false);
+        when(dtoToArtist.apply(dto)).thenReturn(artist);
+
+        artistService.createArtist(dto);
+
+        verify(artistRepo, times(1)).save(artist);
+    }
+
+    @Test
+    void createArtist_alreadyExists() {
+        CreateArtistRequestDTO dto = new CreateArtistRequestDTO("MichaelTran", "Young Boy", "No awards");
+
+        when(artistRepo.existsByArtistName(dto.artistName())).thenReturn(true);
+
+        assertThrows(ObjectAlreadyExist.class, () -> artistService.createArtist(dto));
+        verify(artistRepo, never()).save(any());
+    }
+
+    @Test
+    void getAllArtist() {
+        Artist artist = Artist.builder()
+                .artistId(1L)
+                .artistName("MichaelTran")
+                .build();
+
+        when(artistRepo.findAll()).thenReturn(List.of(artist));
+        when(artistToDTO.apply(artist)).thenReturn(new ResponseGetArtistDTO(1L, "MichaelTran", "Young Boy", "No awards"));
+
+        List<ResponseGetArtistDTO> result = artistService.getAllArtist();
+
+        assertEquals(1, result.size());
+        assertEquals("MichaelTran", result.get(0).artistName());
+    }
 
     @Test
     void createArtistTest(){
