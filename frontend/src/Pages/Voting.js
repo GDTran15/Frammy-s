@@ -1,13 +1,15 @@
 import Header from "../Components/Header"
 import { Link } from "react-router-dom"
+import NavBar from "../Components/NavBar";
+
 
 export default function Voting(){
     return (
         <div>
-            <Header />
+            <NavBar children={""} isNotLogin={false}/>
             <h2>Voting</h2>
 
-             <Link to = "/home">
+             <Link to = "/">
                 <button>Go to back to home</button>
             </Link>
         </div>
