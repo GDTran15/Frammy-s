@@ -2,7 +2,7 @@ package com.backend.frammy.dto;
 
 import jakarta.validation.constraints.NotEmpty;
 
-public record CreateArtistRequestDTO(
+public record UpdateArtistRequestDTO(
         @NotEmpty
         String artistName,
         @NotEmpty

@@ -5,5 +5,7 @@ public enum Genre {
     ROCK,
     HIP_HOP,
     JAZZ,
-    ELECTRONIC
+    ELECTRONIC,
+    COUNTRY,
+    RHYTHM_AND_BLUE
 }

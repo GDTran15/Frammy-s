@@ -15,6 +15,7 @@ public class DtoToArtist implements Function<CreateArtistRequestDTO, Artist> {
         return Artist.builder()
                 .artistName(createArtistRequestDTO.artistName())
                 .artistInfo(createArtistRequestDTO.artistInfo())
+                .awards(createArtistRequestDTO.awards())
                 .build();
     }
 }
