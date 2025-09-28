@@ -6,6 +6,7 @@ import AddNomineeForm from "../Components/AddNomineeForm";
 import AddArtist from "../Components/AddArtistForm";
 import AddAlbum from "../Components/AddAlbum";
 import AddSong from "../Components/AddSong";
+import NomineeList from "../Components/NomineeList";
 
 
 export default function NomineManagementPage(){
@@ -28,7 +29,7 @@ export default function NomineManagementPage(){
     
     return (
         <>
-         <NavBar children={[
+         <NavBar  children={[
                              <TabButton >
                                 DashBoard
                              </TabButton>,
@@ -46,7 +47,7 @@ export default function NomineManagementPage(){
                              </TabButton>,
            ]}/>
 
-           <section className="nominee-main">
+           <header className="nominee-main">
             <div className="container">
                 <div className="row bg-white mt-3 rounded-3 py-3">
                     <div className="col ">
@@ -67,13 +68,15 @@ export default function NomineManagementPage(){
                         </div>
                     </div>
                 </div>
-                <div className="row mt-2 rounded-2">
-                    <div className="col bg-white py-3 px-4">
-                        {mainContent()}
-                    </div>
-                </div>
+                
             </div>
-           </section>
+           </header>
+
+           
+          {mainContent()}
+                    
+          
+         
      </>
 
      
