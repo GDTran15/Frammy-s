@@ -3,6 +3,7 @@ import InputComponent from "./InputComponent";
 import { useState } from "react";
 import Select from "react-select";
 import { data } from "react-router-dom";
+import AlbumList from "./AlbumList";
 
 
 export default function AddAlbum(){
@@ -57,6 +58,10 @@ export default function AddAlbum(){
     return(
         
         <>
+         <section>
+            <div className="container">
+            <div className="row mt-2 rounded-2">
+                    <div className="col bg-white py-3 px-4">
         <h2>Add Album</h2>
          <form onSubmit={handleSubmit}>
                                    <InputComponent 
@@ -88,6 +93,11 @@ export default function AddAlbum(){
                                     <p className="text-danger mt-2">{error !== "" ? `*${error}`: "" }</p>
 
                                </form>
+                               </div>
+                               </div>
+                               </div>
+            </section>
+            <AlbumList/>
         </>
     )
 
