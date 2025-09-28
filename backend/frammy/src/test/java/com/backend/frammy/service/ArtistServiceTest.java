@@ -66,8 +66,11 @@ public class ArtistServiceTest {
     }
 
     @Test
-    void createArtistTest(){
-        System.out.println("MyFirst Unit text");
+    void deleteArtist() {
+        Long id = 1L;
+        artistService.deleteArtist(id);
+        verify(artistRepo, times(1)).deleteById(id);
+    }
 
         CreateArtistRequestDTO createArtistRequestDTO =new CreateArtistRequestDTO(
                 "SonTungMTP",
