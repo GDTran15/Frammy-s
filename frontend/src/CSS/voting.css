@@ -1,0 +1,81 @@
+.main-header {
+  background-image: url('../Images/purple.jpg'); /* note the leading slash */
+  background-size: cover;
+  background-position: center;
+ padding-top: 100px;
+    padding-bottom: 70px;
+    margin-top: 50px;
+}
+
+.voting-page{
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.title{
+    font-size: 60px;
+}
+
+.subtitle{
+    font-size: 45px; 
+}
+
+.voting-list{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.controls{
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.voting-item{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 0.5rem;
+    background: #fff;
+}
+
+.voting-search{
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+}
+
+.voting-select{
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+}
+
+.voting-name{
+    font-weight: bold;
+    margin: 0;
+}
+
+.voting-info{
+    margin: 0;
+    color: #666;
+}
+
+.voting-award{
+    margin: 0;
+    font-size: 0.9rem;
+    color: #999;
+}
+
+.voting-meta {
+  max-width: 70%;
+}
+
+.voting-button:hover {
+    background: #f3f4f6;
+}
