@@ -31,9 +31,6 @@ public class UserAccessController {
     @PostMapping("/login")
     public ResponseEntity<ApiResponse<LoginResponseDTO>> login(@Valid @RequestBody LoginRequestDTO loginRequestDTO){
         LoginResponseDTO loginResponseDTO = userService.loginUser(loginRequestDTO);
-        if (loginRequestDTO == null){
-            return new ResponseEntity<>(ApiResponse.error("Login failed"), HttpStatus.BAD_REQUEST);
-        }
         return ResponseEntity.ok(ApiResponse.success(loginResponseDTO));
     }
 
