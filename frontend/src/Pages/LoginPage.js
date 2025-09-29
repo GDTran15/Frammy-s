@@ -36,7 +36,8 @@ export default function LoginPage(){
         }
         
     ).catch((error) =>{
-            setError("Something when wrong");
+        console.log(error)
+            setError(error.response.data.message);
         }
     )
     }
@@ -68,7 +69,7 @@ export default function LoginPage(){
                 <button type="submit" className="btn btn-warning w-100 mt-2">Login</button>
                     
             </form>
-            <p className="mt-3 text-danger">{error === "" ? undefined : error}</p>
+            <p className="mt-3 text-danger">{error === "" ? undefined : "*"+error}</p>
         </FormComponent>
         
         </>

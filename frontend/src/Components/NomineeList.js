@@ -13,6 +13,7 @@ export default function NomineeList({title,  permission}){
     const [chosenCategory,setChosenCategories] = useState(null) 
     const token = localStorage.getItem("token");
     const [search,setSearch] = useState("")
+    const [updateOpen, setUpdateOpen] = useState(false); 
     console.log(search);
     
    
@@ -108,6 +109,7 @@ export default function NomineeList({title,  permission}){
                                    
                                     {permission === "user" ? <Button variant="primary">Vote</Button> : 
                                       <div className="d-flex gap-2">
+                                        <Button variant="success" >Update</Button> 
                                         <Button variant="danger" onClick={() => handleDelete(nominee.nomineeId)}>Delete</Button> 
                                       </div> }
                                     
@@ -120,6 +122,7 @@ export default function NomineeList({title,  permission}){
                     </div>
                 </div>
             </div>
+            
             
         
         </>
