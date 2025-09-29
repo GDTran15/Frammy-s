@@ -57,7 +57,9 @@ export default function AddNomineeForm(){
     
     })
  }
+ 
 }   
+        
    
     const handleItemChange = (e) => {
         setItem(e);
@@ -67,7 +69,7 @@ export default function AddNomineeForm(){
         setChoseCategories(e);
          console.log(e.value);
     }
-    const fetchCategories = () =>{
+    const fetchCategory = () =>{
         axios.get("http://localhost:8080/categories",{
             headers:{
             "Authorization": `Bearer ${token}`
@@ -75,7 +77,7 @@ export default function AddNomineeForm(){
     }).then((res) =>{
         const data = res.data.data.map(item => ({
           value: item.categoryId,
-         label: item.category
+         label: item.categoryName
         }));
         setCategories(data);
     })
@@ -120,7 +122,7 @@ export default function AddNomineeForm(){
            
                         <div className="mb-2">
                             <label className="me-2">Choose nominee category:</label>
-                            <Select options={categories} value={choseCategory} onChange={handleCategoryChange} onMenuOpen={fetchCategories}/>
+                            <Select options={categories} value={choseCategory} onChange={handleCategoryChange} defaultValue={choseCategory} onMenuOpen={fetchCategory} />
                             </div>
                         
                             <div>
@@ -148,7 +150,7 @@ export default function AddNomineeForm(){
                 </div>
            </section>
 
-            <NomineeList/>
+            <NomineeList categoryList={categories}/>
         
                                
                               
