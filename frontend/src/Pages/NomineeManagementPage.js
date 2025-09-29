@@ -53,7 +53,7 @@ export default function NomineManagementPage(){
                     <div className="col ">
                         <h3 className=" ps-3">Nominee Management</h3>                        
                         <div className="btn-group w-100 px-1 bg-body-secondary py-1 rounded-5" >
-                        {["Nominee","Artist","Song","Album"].map((tab) => (
+                        {["Nominee","Artist","Song","Album","Controller"].map((tab) => (
                         <button
                             type="button"
                             className={`btn rounded-5 nominee-nav ${

@@ -28,7 +28,7 @@ export default function LoginPage(){
                 if(role === "ROLE_ADMIN"){
                     navigate("/admin/dashboard");
                 } else{
-                    navigate("/user/home");
+                    navigate("/user/voting");
                 }
             } else  {
                 setError(res.data.message);
