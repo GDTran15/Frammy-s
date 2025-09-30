@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("vote")
 public class VotingController {
 
-    private final  VoteService voteService;
+    //private final  VoteService voteService;
 
     @PostMapping()
     public ResponseEntity<ApiResponse<String>>addVote(@Valid @RequestBody VoteRequestDTO voteRequestDTO) {
