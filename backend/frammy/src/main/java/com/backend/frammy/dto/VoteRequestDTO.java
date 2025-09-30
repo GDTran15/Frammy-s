@@ -5,7 +5,8 @@ import jakarta.validation.constraints.NotNull;
 public record VoteRequestDTO(
 
         @NotNull
-        Long NomineeId
+        Long userId,
+        Long nomineeId
 
 ) {
 }
