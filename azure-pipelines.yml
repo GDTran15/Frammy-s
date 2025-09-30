@@ -29,7 +29,6 @@ steps:
     jdkVersionOption: '1.21'
     jdkArchitectureOption: 'x64'
     publishJUnitResults: true
-    testResultsFiles: '**/surefire-reports/TEST-*.xml'
     goals: 'clean package'
 
 - task: Maven@3
