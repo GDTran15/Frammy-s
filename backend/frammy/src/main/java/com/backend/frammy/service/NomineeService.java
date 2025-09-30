@@ -46,7 +46,7 @@ public class NomineeService {
            exist = nomineeRepo.existsByCategoryAndAlbum(category,album);
             nominee.setAlbum(album);
         } else if (addNomineeRequestDTO.nomineeType().equals(NomineeType.SONG)) {
-            if (addNomineeRequestDTO.albumId() == null) {
+            if (addNomineeRequestDTO.songId() == null) {
                 throw new InvalidInputException();
             }
            Song song = songRepo.findBySongId(addNomineeRequestDTO.songId());
