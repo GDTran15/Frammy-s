@@ -9,6 +9,16 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
+services:
+  postgres:
+    image: postgres:15
+    env:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 0000
+      POSTGRES_DB: frammy
+    ports:
+      - 5432:5432
+
 steps:
 - task: Maven@3
   inputs:
