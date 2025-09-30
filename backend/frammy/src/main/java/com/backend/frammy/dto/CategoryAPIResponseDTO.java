@@ -2,6 +2,6 @@ package com.backend.frammy.dto;
 
 public record CategoryAPIResponseDTO (
         Long categoryId,
-        String category
+        String categoryName
 ) {
 }

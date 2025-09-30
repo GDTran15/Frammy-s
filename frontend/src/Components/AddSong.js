@@ -3,6 +3,7 @@ import InputComponent from "./InputComponent";
 import { useState } from "react";
 import Select from "react-select";
 import { data } from "react-router-dom";
+import SongList from "./SongList";
 
 
 export default function AddSong(){
@@ -58,6 +59,10 @@ export default function AddSong(){
     return(
         
         <>
+             <section>
+            <div className="container">
+            <div className="row mt-2 rounded-2">
+                    <div className="col bg-white py-3 px-4">
         <h2>Add Song</h2>
          <form onSubmit={handleSubmit}>
                                    <InputComponent 
@@ -89,6 +94,11 @@ export default function AddSong(){
                                     <p className="text-danger mt-2">{error !== "" ? `*${error}`: "" }</p>
 
                                </form>
+                               </div>
+                               </div>
+                               </div>
+                               </section>
+                               <SongList/>
         </>
     )
 

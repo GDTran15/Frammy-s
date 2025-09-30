@@ -7,6 +7,7 @@ import com.backend.frammy.model.Category;
 import com.backend.frammy.repo.CategoryRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 import java.util.List;
@@ -18,7 +19,7 @@ public class CategoryService {
     private final CategoryRepo categoryRepo;
     private final CategoryToDTO categoryToDTO;
 
-
+    @Transactional
     public Category createCategory(AddCategoryRequest addCategoryRequest) {
         Category category = new Category();
         category.setCategoryName(addCategoryRequest.categoryName());

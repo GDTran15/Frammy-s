@@ -1,13 +1,14 @@
 package com.backend.frammy.controller;
 
-import com.backend.frammy.dto.ApiResponse;
-import com.backend.frammy.dto.CreateArtistRequestDTO;
-import com.backend.frammy.dto.ResponseGetArtistDTO;
-import com.backend.frammy.dto.UpdateArtistRequestDTO;
+import com.backend.frammy.dto.*;
 import com.backend.frammy.service.ArtistService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,11 +34,7 @@ public class ArtistController {
         return ResponseEntity.ok(ApiResponse.success(artistList));
     }
 
-//    @PutMapping("/{artistId}")
-//    public ResponseEntity<ApiResponse<String>> updateArtist(@PathVariable Long artistId, @RequestBody @Valid UpdateArtistRequestDTO updateArtistRequestDTO){
-//        artistService.updateArtist(artistId,updateArtistRequestDTO);
-//        return  ResponseEntity.ok(ApiResponse.success("success"));
-//    }
+
 
     @DeleteMapping("/{artistId}")
     public ResponseEntity<ApiResponse<String>> deleteArtist(@PathVariable Long artistId){
@@ -45,6 +42,15 @@ public class ArtistController {
         return ResponseEntity.ok(ApiResponse.success("delete success"));
     }
 
+    @GetMapping("/page")
+    public ResponseEntity<ApiResponse<PagedModel<ResponseGetArtistDTO>>> getAllArtistInPagination(
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "9") int size
+    )  {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<ResponseGetArtistDTO> pagedModel = artistService.getArtistInPage(pageable);
+        return ResponseEntity.ok(ApiResponse.success(new PagedModel<>(pagedModel)));
+    }
 
 
 

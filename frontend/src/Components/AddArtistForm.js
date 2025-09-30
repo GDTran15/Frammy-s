@@ -1,6 +1,7 @@
 import { use, useState } from "react"
 import InputComponent from "./InputComponent"
 import axios from "axios";
+import ArtistList from "./ArtistList";
 
 export default function AddArtist(){
     const [artistName,setArtistName] = useState("");
@@ -19,7 +20,7 @@ export default function AddArtist(){
                 awards : awards,
                 
             }
-            axios.post("http://localhost:8080/songs",data,{
+            axios.post("http://localhost:8080/artists",data,{
                 headers:{
             "Authorization": `Bearer ${token}`
         }
@@ -31,6 +32,10 @@ export default function AddArtist(){
         }
     return(
         <>
+        <section>
+            <div className="container">
+            <div className="row mt-2 rounded-2">
+                    <div className="col bg-white py-3 px-4">
             <h2>Add Artist</h2>
             <form onSubmit={handleSubmit}>
                            <InputComponent 
@@ -59,8 +64,11 @@ export default function AddArtist(){
                          <p className="text-danger mt-2">{error !== "" ? `*${error}`: "" }</p>
 
                        </form>
-                       
-                      
+                       </div>
+                       </div> 
+                       </div>
+                       </section>                      
+                    <ArtistList/>
         </>
     )
 }
