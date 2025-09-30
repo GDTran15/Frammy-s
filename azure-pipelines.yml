@@ -9,8 +9,30 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
+services:
+  postgres:
+    image: postgres:15
+    env:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 0000
+      POSTGRES_DB: frammy
+    ports:
+      - 5432:5432
+
 steps:
 - task: Maven@3
+  displayName: "Build Project"
+  inputs:
+    mavenPomFile: 'backend/frammy/pom.xml'
+    mavenOptions: '-Xmx3072m'
+    javaHomeOption: 'JDKVersion'
+    jdkVersionOption: '1.21'
+    jdkArchitectureOption: 'x64'
+    publishJUnitResults: true
+    goals: 'clean package'
+
+- task: Maven@3
+  displayName: "Run Unit Test"
   inputs:
     mavenPomFile: 'backend/frammy/pom.xml'
     mavenOptions: '-Xmx3072m'
@@ -19,4 +41,4 @@ steps:
     jdkArchitectureOption: 'x64'
     publishJUnitResults: true
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    goals: 'package'
+    goals: 'test'
