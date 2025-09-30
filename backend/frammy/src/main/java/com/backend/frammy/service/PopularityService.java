@@ -1,26 +1,39 @@
-@service
+@Service
 public class PopularityService {
 
-    @autowired
+    @Autowired
     private StreamStatRepository repo;
 
-    public class List<NomineePopularityDTO> getALlPopularity() {
-        //logic to aggregate and return dto's
+    // Get all stats and convert to DTO
+    public List<NomineePopularityDTO> getAllPopularity() {
         List<StreamStat> stats = repo.findAll();
+
         return stats.stream()
-                    .map(stat -> new NomineePopularityDTO(stat.getNomineeId(), stat.getPopularityScore()))
-                    .collect(Collectors.toList());
+                .map(stat -> new NomineePopularityDTO(
+                        stat.getNomineeId(),
+                        stat.getPopularityScore()
+                ))
+                .collect(Collectors.toList());
     }
 
-    public NomineePopularityDTO getByNomineeId (Long id) {
-        //logic to return single DTO
-        public NomineePopularityDTO getByNomineeId(Long id) {
-            Optional<StreamStat> statOpt = repo.findByNomineeId(id);
-            if (statOpt.isPresent()) {
-                StreamStat stat = statOpt.get();
-                return new NomineePopularityDTO(stat.getNomineeId(), stat.getPopularityScore());
-            }
-            return null;
-        }
+    // Get popularity by *database ID*
+    public NomineePopularityDTO getById(Long id) {
+        return repo.findById(id)
+                .map(stat -> new NomineePopularityDTO(
+                        stat.getNomineeId(),
+                        stat.getPopularityScore()
+                ))
+                .orElse(null);
+    }
+
+    // OR, if you want to look up by nomineeId (not PK)
+    public List<NomineePopularityDTO> getByNomineeId(Long nomineeId) {
+        List<StreamStat> stats = repo.findByNomineeId(nomineeId);
+        return stats.stream()
+                .map(stat -> new NomineePopularityDTO(
+                        stat.getNomineeId(),
+                        stat.getPopularityScore()
+                ))
+                .collect(Collectors.toList());
     }
 }

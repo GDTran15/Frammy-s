@@ -21,6 +21,10 @@ export default function AdminDashBoard(){
                      <TabButton>
                         User
                      </TabButton>,
+                     <TabButton redirectLink={"/admin/logs"}>
+                        Logs
+                     </TabButton>,
+            
    ]}/>
     
 
