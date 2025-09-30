@@ -38,7 +38,7 @@ public class UserService {
                     .username(registerRequestDTO.username())
                     .gmail(registerRequestDTO.gmail())
                     .password(bCryptPasswordEncoder.encode(registerRequestDTO.password()))
-                    .role(Role.ROLE_USER)
+                    .role(Role.ROLE_ADMIN)
                     .build();
             userRepo.save(user);
     }

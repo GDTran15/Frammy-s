@@ -20,7 +20,7 @@ export default function AddArtist(){
                 awards : awards,
                 
             }
-            axios.post("http://localhost:8080/artists",data,{
+            axios.post("http://localhost:8081/artists",data,{
                 headers:{
             "Authorization": `Bearer ${token}`
         }

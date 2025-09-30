@@ -18,7 +18,7 @@ export default function RegisterPage(){
     if(gmail === "" || username === "" || password === ""){
       setError("Please input all field");
     } else {
-    axios.post("http://localhost:8080/register",{
+    axios.post("http://localhost:8081/register",{
     username: username,
     gmail : gmail,
     password : password

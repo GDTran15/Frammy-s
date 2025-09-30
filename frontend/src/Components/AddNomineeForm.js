@@ -23,16 +23,16 @@ export default function AddNomineeForm(){
         let url = "";
         switch(selected){
            case "ARTIST":
-        url = "http://localhost:8080/artists";
+        url = "http://localhost:8081/artists";
         setChoseLabel("Choose artist:");
         break;
       case "ALBUM":
-        url = "http://localhost:8080/albums";
+        url = "http://localhost:8081/albums";
         setChoseLabel("Choose album:");
 
         break;
       case "SONG":
-        url = "http://localhost:8080/songs";
+        url = "http://localhost:8081/songs";
         setChoseLabel("Choose song:");
 
         break;
@@ -70,7 +70,7 @@ export default function AddNomineeForm(){
          console.log(e.value);
     }
     const fetchCategory = () =>{
-        axios.get("http://localhost:8080/categories",{
+        axios.get("http://localhost:8081/categories",{
             headers:{
             "Authorization": `Bearer ${token}`
         }
@@ -98,7 +98,7 @@ export default function AddNomineeForm(){
                 }else if (type === "ALBUM") {
            data.albumId = item.value;
                 }else if (type === "SONG") data.songId = item.value;
-            axios.post("http://localhost:8080/nominee",data,{
+            axios.post("http://localhost:8081/nominee",data,{
             headers:{
             "Authorization": `Bearer ${token}`
         }

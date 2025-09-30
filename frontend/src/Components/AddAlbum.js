@@ -26,7 +26,7 @@ export default function AddAlbum(){
                 albumGenre : albumGenre,
                 artistId : artist.value
             }
-            axios.post("http://localhost:8080/albums",data,{
+            axios.post("http://localhost:8081/albums",data,{
                 headers:{
             "Authorization": `Bearer ${token}`
         }
@@ -38,7 +38,7 @@ export default function AddAlbum(){
         }
 
         const fetchArtist = () => {
-             axios.get("http://localhost:8080/artists",{
+             axios.get("http://localhost:8081/artists",{
             headers:{
             "Authorization": `Bearer ${token}`
         }
