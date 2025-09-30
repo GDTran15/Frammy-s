@@ -10,7 +10,7 @@ export default function Voting(){
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        fetch("http://localhost:8081/artists")
+        fetch("http://localhost:8080/artists")
             .then((res) => res.json())
             .then((response) => {
                 if (response.status === "success") {

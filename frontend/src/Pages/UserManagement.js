@@ -13,7 +13,7 @@ export default function UserManagement(){
     }, []);
 
     const fetchUsers = () => {
-        axios.get("http://localhost:8081/user/getUsers")
+        axios.get("http://localhost:8080/user/getUsers")
             .then((response) => {
                 if (response.data.status === "success") {
                     setUsers(response.data.data);
@@ -50,7 +50,7 @@ export default function UserManagement(){
             return;
         }
 
-        axios.post(`http://localhost:8081/user/deleteUser`, {userId: userId}, {headers: { Authorization: `Bearer ${token}` }})
+        axios.post(`http://localhost:8080/user/deleteUser`, {userId: userId}, {headers: { Authorization: `Bearer ${token}` }})
             .then((response) => {
                 if (response.data.status === "success") {
                     setUsers(prevUsers => prevUsers.filter(user => user.userId !== userId));
@@ -84,7 +84,7 @@ export default function UserManagement(){
                 return;
             }
 
-            axios.post("http://localhost:8081/user/editUser", {
+            axios.post("http://localhost:8080/user/editUser", {
                 userId: editingUser.userId, 
                 username: editData.username,
                 gmail: editData.gmail,

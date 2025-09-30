@@ -18,7 +18,7 @@ export default function NomineeList({title,  permission}){
    
 
     useEffect(() =>{
-        axios.get(`http://localhost:8081/nominee?page=${page}&size=9`,{
+        axios.get(`http://localhost:8080/nominee?page=${page}&size=9`,{
             headers:{
                 "Authorization": `Bearer ${token}`
             }
@@ -36,7 +36,7 @@ export default function NomineeList({title,  permission}){
         if(!confirm) {
             return;
         }
-        axios.delete(`http://localhost:8081/nominee/${id}`
+        axios.delete(`http://localhost:8080/nominee/${id}`
         )
         .then((res) => {
             alert(res.data.data);
@@ -51,7 +51,7 @@ export default function NomineeList({title,  permission}){
     }
    
    useEffect(() =>{
-                axios.get("http://localhost:8081/categories",{
+                axios.get("http://localhost:8080/categories",{
                     headers:{
                     "Authorization": `Bearer ${token}`
                 }
