@@ -2,12 +2,16 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomePage from "./Pages/HomePage";
 import WeeklyResultSummary from  "./Pages/WeeklyResultSummary"
 import UserManagement from "./Pages/UserManagement"
+
+import NomineManagementPage from "./Pages/NomineeManagementPage";
+
 import RegisterPage from "./Pages/RegisterPage"
+
 import ArtistManagement from "./Pages/ArtistManagement"
 import LoginPage from "./Pages/LoginPage";
 import PopularityMetrics from "./Pages/PopularityMetrics"; 
 import AdminDashBoard from "./Pages/AdminDashBoard";
-import UserHomePage from "./Pages/UserHomePage";
+import UserVotingPage from "./Pages/UserVotingPage";
 
 //CONFIGURE UR PAGES HERE by importing them and adding to router-Trison
 
@@ -16,6 +20,7 @@ import UserHomePage from "./Pages/UserHomePage";
         <div >
             <BrowserRouter>
                 <Routes>
+                  <Route path="/admin/nominee-management" element={<NomineManagementPage/>}/>
                   <Route index element = {<HomePage />} /> 
                   <Route path = "/" element = {<HomePage />} /> 
                   <Route path = "/weekly-result-summary" element = {<WeeklyResultSummary />} />
@@ -24,7 +29,7 @@ import UserHomePage from "./Pages/UserHomePage";
                     <Route path="/register" element = {<RegisterPage/>}/>
                   <Route path = "/ArtistManagement" element = {<ArtistManagement />} />
                   <Route path = "/admin/dashboard" element = {<AdminDashBoard />} />
-                  <Route path = "/user/home" element = {<UserHomePage />} />
+                  <Route path = "/user/voting" element = {<UserVotingPage />} />
                   
 
                   <Route path = "/PopularityMetrics" element = {<PopularityMetrics />} />

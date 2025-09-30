@@ -6,6 +6,7 @@ public record CreateArtistRequestDTO(
         @NotEmpty
         String artistName,
         @NotEmpty
-        String artistInfo
+        String artistInfo,
+        String awards
 ) {
 }

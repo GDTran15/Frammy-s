@@ -10,10 +10,10 @@ export default function AdminDashBoard(){
                         DashBoard
                      </TabButton>,
                      <TabButton>
-                        Vote
+                        Voting
                      </TabButton>,
-                     <TabButton>
-                        Tournament
+                     <TabButton redirectLink={"/admin/nominee-management"}>
+                        Nominee
                      </TabButton>,
                      <TabButton>
                         Community

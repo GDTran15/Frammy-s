@@ -1,10 +1,10 @@
-.main-header {
+.homepage-header {
   background-image: url('../Images/purple.jpg'); /* note the leading slash */
   background-size: cover;
   background-position: center;
  padding-top: 100px;
     padding-bottom: 70px;
-    margin-top: 50px;
+    
 }
 
 .title{

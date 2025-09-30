@@ -10,27 +10,34 @@ export default function RegisterPage(){
   const [gmail,setGmail] = useState("");
   const [username,setUsername] = useState("");
   const [password,setPassword] = useState("");
+  const [error,setError] = useState("");
 
   const handleSubmit = (e) => {
+    setError("");
     e.preventDefault();
-    axios.post("http://localhost:8081/register",{
+    if(gmail === "" || username === "" || password === ""){
+      setError("Please input all field");
+    } else {
+    axios.post("http://localhost:8080/register",{
     username: username,
     gmail : gmail,
     password : password
     })
     .then((res) =>{
     const response = res.data;
+    console.log(res);
     console.log(response)
-    if(response.status === "success"){
-      alert(response.data);
-    }
-    else{
-      alert(response.message);
-    }
+     alert(response.data)
     setGmail("");
     setUsername("");
     setPassword("");
+   
+    }).catch((error) => {
+      console.log(error);
+     setError(error.response.data.message); 
     })
+    
+  }
   }
 
     return (
@@ -64,9 +71,11 @@ export default function RegisterPage(){
             value={password}
             placeholderValue="Enter your password"
             />
+            <p className="text-danger">{error !== "" ?  `*${error}` : ""}</p>
             <button type="submit" className="btn btn-warning w-100 mt-2">Register</button>
                     </form>
         </FormComponent>    
+
      </>   
     )
 }

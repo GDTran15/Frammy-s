@@ -16,7 +16,7 @@ export default function LoginPage(){
         
         e.preventDefault();
         
-             axios.post("http://localhost:8081/login",{
+             axios.post("http://localhost:8080/login",{
             username: username,
             password : password
         }).then((res) =>{
@@ -28,7 +28,7 @@ export default function LoginPage(){
                 if(role === "ROLE_ADMIN"){
                     navigate("/admin/dashboard");
                 } else{
-                    navigate("/user/home");
+                    navigate("/user/voting");
                 }
             } else  {
                 setError(res.data.message);
