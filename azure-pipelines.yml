@@ -36,12 +36,28 @@ stages:
         jdkArchitectureOption: 'x64'
         publishJUnitResults: true
         goals: 'clean package'
+
+        
 - stage: TestStage
   displayName: "Test stage"
   jobs:
   - job: TestBackend
     displayName: "Test Backend"
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: 0000
+          POSTGRES_DB: frammy
+        ports:
+          - 5432:5432
     steps:
+    - script: |
+        echo "Waiting for Postgres to be ready..."
+        sleep 10
+      displayName: "Wait for Postgres"
+    
     - task: Maven@3
       displayName: "Run Unit Test"
       inputs:
