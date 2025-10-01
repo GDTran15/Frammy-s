@@ -112,7 +112,7 @@ export default function UserManagement(){
             <NavBar children={""} isNotLogin={false}/>
 
             <div className="user-management-container">
-                <h1>User Management</h1>
+                <h1 className="title">User Management</h1>
 
                 {loading && <p>Loading users...</p>}
                 {error && <p className="error">{error}</p>}
