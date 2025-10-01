@@ -78,7 +78,7 @@ import  "../Images/purple.jpg"
             <div className="col">
               {/* Use  PublicLogFeed component here */}
               {/* Limit to 5 items for preview */}
-              <PublicLogFeed endpoint="http://localhost:9000/public/logs" limit={5} />
+              {/* <PublicLogFeed endpoint="http://localhost:9000/public/logs" limit={5} /> */}
 
               {/* Link to full page */}
               <a href="/activity" className="btn btn-outline-warning mt-3">
