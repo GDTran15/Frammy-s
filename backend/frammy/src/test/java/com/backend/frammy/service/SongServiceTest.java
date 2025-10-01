@@ -41,12 +41,12 @@ public class SongServiceTest {
     void setup() {
         artist = new Artist();
         artist.setArtistId(1L);
-        when(artistRepo.findByArtistId(1L)).thenReturn(artist);
+        lenient().when(artistRepo.findByArtistId(1L)).thenReturn(artist);
     }
 
     @Test
     void createSong_success() {
-        AddSongDTORequest dto = new AddSongDTORequest( "Song1", LocalDate.now(), "Pop", 1L);
+        AddSongDTORequest dto = new AddSongDTORequest( "Song1", LocalDate.now(), "Pop", artist.getArtistId());
         when(songRepo.existsBySongNameAndArtist("Song1", artist)).thenReturn(false);
 
         songService.createSong(dto);
@@ -56,7 +56,7 @@ public class SongServiceTest {
 
     @Test
     void createSong_missingArtist_shouldThrow() {
-        AddSongDTORequest dto = new AddSongDTORequest(null, LocalDate.now(), "Pop", 1L);
+        AddSongDTORequest dto = new AddSongDTORequest(null, LocalDate.now(), "Pop", artist.getArtistId());
 
         assertThrows(InvalidInputException.class, () -> songService.createSong(dto));
         verify(songRepo, never()).save(any());
@@ -64,7 +64,7 @@ public class SongServiceTest {
 
     @Test
     void createSong_alreadyExist_shouldThrow() {
-        AddSongDTORequest dto = new AddSongDTORequest("Song1", LocalDate.now(), "Pop", 1L);
+        AddSongDTORequest dto = new AddSongDTORequest("Song1", LocalDate.now(), "Pop", artist.getArtistId());
         when(songRepo.existsBySongNameAndArtist("Song1", artist)).thenReturn(true);
 
         assertThrows(ObjectAlreadyExist.class, () -> songService.createSong(dto));
