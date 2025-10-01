@@ -5,6 +5,7 @@
 
 trigger:
 - main
+- nominee-feature
 
 
 pool:
@@ -15,7 +16,7 @@ stages:
   displayName :  "Build stage"
   jobs:
   - job: BuildBackend
-    displayName: "Setup PostgresSQL"
+    displayName: "Build Backend"
     services:
       postgres:
         image: postgres:15
@@ -27,7 +28,7 @@ stages:
           - 5432:5432
     steps:
     - task: Maven@3
-      displayName: "Build Backend"
+      
       inputs:
         mavenPomFile: 'backend/frammy/pom.xml'
         mavenOptions: '-Xmx3072m'
