@@ -4,14 +4,19 @@ import { useEffect, useState } from "react";
 import { Card } from "react-bootstrap";
 import PagiComponent from "./PagiComponenet";
 import  { Button } from "react-bootstrap";
+import SongForm from "./SongForm";
 
 export default function SongList({title}){
     const [songList,setSongList] = useState([]);
     const [page,setPage] = useState("0");
-    const [totalPage,setTotalPage] = useState(0)
+    
+    const [totalPage,setTotalPage] = useState(0);
+     const [updateOpen, setUpdateOpen] = useState(false); 
+    const [updateData, setUpdateData] = useState(null);
     const token = localStorage.getItem("token");
 
-    useEffect(() =>{
+
+    const fetchSong = () => {
         axios.get(`http://localhost:8080/songs/page?page=${page}&size=9`,{
             headers:{
             "Authorization": `Bearer ${token}`
@@ -22,8 +27,8 @@ export default function SongList({title}){
               setTotalPage(res.data.data.page.totalPages);
               console.log(res);
         })
-    },[page,token
-    ]) 
+    }
+    useEffect(() => fetchSong(),[page,token]); 
 
     const handleDelete = (id) =>{
         const confirm = window.confirm("Do you want to delete this song?")
@@ -37,9 +42,15 @@ export default function SongList({title}){
         .then((res) => {
             alert(res.data.data);
             
-            setSongList(prev => prev.filter(song => song.songId !== id))
+           fetchSong();
         })
     }   
+
+    const handleUpdate = (song) => {
+        setUpdateData(song);
+        setUpdateOpen(true);
+        
+    }
     return(
         <>
              <div className="container">
@@ -60,6 +71,7 @@ export default function SongList({title}){
                                    
                                     
                                       <div className="d-flex gap-2">
+                                       <Button variant="success" onClick={() => handleUpdate(song)}>Update</Button> 
                                         <Button variant="danger" onClick={() => handleDelete(song.songId)}>Delete</Button> 
                                       </div>                                     
                                 </Card.Body>
@@ -71,6 +83,7 @@ export default function SongList({title}){
                     </div>
                 </div>
             </div>
+           {updateOpen && <SongForm usage="Update" title="Update Song" currentSong={updateData} fetchSong={fetchSong}/>}
             
         
         </>

@@ -3,7 +3,7 @@ import NavBar from "../Components/NavBar";
 import FormComponent from "../Components/FormComponent";
 import InputComponent from "../Components/InputComponent";
 import axios from "axios";
-import { use, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function LoginPage(){
@@ -36,7 +36,8 @@ export default function LoginPage(){
         }
         
     ).catch((error) =>{
-            setError("Something when wrong");
+        console.log(error)
+            setError(error.response.data.message);
         }
     )
     }
@@ -68,7 +69,7 @@ export default function LoginPage(){
                 <button type="submit" className="btn btn-warning w-100 mt-2">Login</button>
                     
             </form>
-            <p className="mt-3 text-danger">{error === "" ? undefined : error}</p>
+            <p className="mt-3 text-danger">{error === "" ? undefined : "*"+error}</p>
         </FormComponent>
         
         </>

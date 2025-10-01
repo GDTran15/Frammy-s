@@ -4,6 +4,7 @@ import Select from "react-select"
 import { Card } from "react-bootstrap";
 import PagiComponent from "./PagiComponenet";
 import  { Button } from "react-bootstrap";
+import NomineeForm from "./NomineeForm";
 
 export default function NomineeList({title,  permission}){
     const [nomineeList,setNomineeList] = useState([]);
@@ -13,11 +14,12 @@ export default function NomineeList({title,  permission}){
     const [chosenCategory,setChosenCategories] = useState(null) 
     const token = localStorage.getItem("token");
     const [search,setSearch] = useState("")
+    const [updateOpen, setUpdateOpen] = useState(false); 
+    const [updateData, setUpdateData] = useState(null);
     console.log(search);
     
-   
-
-    useEffect(() =>{
+    const getNominee = () => {
+        
         axios.get(`http://localhost:8080/nominee?page=${page}&size=9`,{
             headers:{
                 "Authorization": `Bearer ${token}`
@@ -29,25 +31,53 @@ export default function NomineeList({title,  permission}){
               setTotalPage(res.data.data.page.totalPages);
            
         })
-    },[page,token]) 
+    
+    }
+
+
+    console.log(updateData);
+    useEffect(() =>{ getNominee();},[page,token]) 
 
     const handleDelete = (id) =>{
         const confirm = window.confirm("Do you want to delete this nominee?")
         if(!confirm) {
             return;
         }
-        axios.delete(`http://localhost:8080/nominee/${id}`
+        axios.delete(`http://localhost:8080/nominee/${id}`,{
+            headers:{
+                "Authorization": `Bearer ${token}`
+            }
+        }
         )
         .then((res) => {
             alert(res.data.data);
-            
-            setNomineeList(prev => prev.filter(nominee =>  nominee.nomineeId !== id))
+            getNominee();
+           
         })
     }   
 
     const handleCategoryChange = (e) => {
             setChosenCategories(e)
             
+    }
+    const handleUpdate = (nominee) =>{
+        const data = {
+            nomineeId: nominee.nomineeId,
+            
+            type: nominee.nomineeType,
+            categories:{
+                value: nominee.categoryNominee,//this is id
+                label: nominee.nomineeCategory//this is name
+            },
+            item:{
+                value: nominee.artistId || nominee.songId || nominee.albumId, 
+                label: nominee.artistName || nominee.songName || nominee.albumName 
+                }
+        }
+        
+        setUpdateData(data);
+        setUpdateOpen(true);
+        getNominee();
     }
    
    useEffect(() =>{
@@ -140,6 +170,7 @@ export default function NomineeList({title,  permission}){
                                         <Button variant="primary" onClick={() => handleVote(nominee.nomineeId)}>Vote</Button> 
                                     : 
                                       <div className="d-flex gap-2">
+                                        <Button variant="success" onClick={() => handleUpdate(nominee)}>Update</Button> 
                                         <Button variant="danger" onClick={() => handleDelete(nominee.nomineeId)}>Delete</Button> 
                                       </div> }
                                     
@@ -152,6 +183,14 @@ export default function NomineeList({title,  permission}){
                     </div>
                 </div>
             </div>
+            
+            {
+                updateOpen && (
+                 
+                            <NomineeForm currentNominee={updateData} title="Update Nominee" usage="Update"/>
+                       
+                )
+            }
             
         
         </>

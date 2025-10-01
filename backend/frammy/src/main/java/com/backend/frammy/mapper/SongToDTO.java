@@ -13,7 +13,8 @@ public  class SongToDTO implements Function<Song, ResponseGetSongDTO> {
         return new ResponseGetSongDTO(
                 song.getSongId(),
                 song.getSongName(),
-                song.getReleaseDate()
+                song.getReleaseDate(),
+                song.getSongGenre()
         );
     }
 }

@@ -44,14 +44,7 @@ public class ArtistService {
                 .collect(Collectors.toList());
     }
 
-//    public void updateArtist(Long artistId, @Valid UpdateArtistRequestDTO updateArtistRequestDTO) {
-//        Artist artist = artistRepo.findByArtistId(artistId)
-//                .orElseThrow(() -> new ObjectNotFoundException("Artist not found", artistId));
-//        artist.setArtistName(updateArtistRequestDTO.artistName());
-//        artist.setArtistInfo(updateArtistRequestDTO.artistInfo());
-//        artist.setAwards(updateArtistRequestDTO.awards());
-//        artistRepo.save(artist);
-//    }
+
 
     public void deleteArtist(Long artistId) {
         artistRepo.deleteById(artistId);
@@ -64,4 +57,14 @@ public class ArtistService {
 
         return new PageImpl<>(artistListDTO,pageable,artistPage.getTotalElements());
     }
+
+    public void updateArtist(Long artistId, @Valid CreateArtistRequestDTO createArtistRequestDTO) {
+        Artist updateArtist = artistRepo.findByArtistId(artistId);
+        updateArtist.setArtistName(createArtistRequestDTO.artistName());
+        updateArtist.setArtistInfo(createArtistRequestDTO.artistInfo());
+        updateArtist.setAwards(createArtistRequestDTO.awards());
+
+    }
+
+
 }

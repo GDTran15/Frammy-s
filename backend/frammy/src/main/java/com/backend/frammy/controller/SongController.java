@@ -50,4 +50,11 @@ public class SongController {
         songService.deleteSong(songId);
         return ResponseEntity.ok(ApiResponse.success("delete success"));
     }
+    @PutMapping("{songId}")
+    public ResponseEntity<ApiResponse<String>> updateSong(@Valid @RequestBody AddSongDTORequest addSongDTORequest, @PathVariable Long songId){
+        songService.updateSong(addSongDTORequest,songId);
+        return ResponseEntity.ok(ApiResponse.success("Artist successfully update"));
+    }
+
+
 }
