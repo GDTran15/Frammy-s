@@ -75,7 +75,7 @@ public class SongServiceTest {
         Song song = new Song();
         song.setSongName("Song1");
         when(songRepo.findAll()).thenReturn(List.of(song));
-        when(songToDTO.apply(song)).thenReturn(new ResponseGetSongDTO(1L,"Song1",LocalDate.now()));
+        when(songToDTO.apply(song)).thenReturn(new ResponseGetSongDTO(1L,"Song1",LocalDate.now(),"Pop"));
 
         List<ResponseGetSongDTO> result = songService.getAllSongs();
 
