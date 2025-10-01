@@ -3,7 +3,7 @@ import HomePage from "./Pages/HomePage";
 import WeeklyResultSummary from  "./Pages/WeeklyResultSummary"
 import UserManagement from "./Pages/UserManagement"
 
-import NomineManagementPage from "./Pages/NomineeManagementPage";
+import NomineeManagementPage from "./Pages/NomineeManagementPage";
 
 import RegisterPage from "./Pages/RegisterPage"
 
@@ -20,18 +20,16 @@ import UserVotingPage from "./Pages/UserVotingPage";
         <div >
             <BrowserRouter>
                 <Routes>
-                  <Route path="/admin/nominee-management" element={<NomineManagementPage/>}/>
+                  <Route path="/admin/nominee-management" element={<NomineeManagementPage/>}/>
                   <Route index element = {<HomePage />} /> 
                   <Route path = "/" element = {<HomePage />} /> 
                   <Route path = "/weekly-result-summary" element = {<WeeklyResultSummary />} />
-                  <Route path = "/UserManagement" element = {<UserManagement />} />
+                  <Route path = "/admin/user-management" element = {<UserManagement />} />
                     <Route path="/login" element = {<LoginPage/>}/>
                     <Route path="/register" element = {<RegisterPage/>}/>
                   <Route path = "/ArtistManagement" element = {<ArtistManagement />} />
                   <Route path = "/admin/dashboard" element = {<AdminDashBoard />} />
                   <Route path = "/user/voting" element = {<UserVotingPage />} />
-                  
-
                   <Route path = "/PopularityMetrics" element = {<PopularityMetrics />} />
                 </Routes>
             </BrowserRouter>
