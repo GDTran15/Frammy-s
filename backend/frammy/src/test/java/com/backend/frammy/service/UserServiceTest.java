@@ -57,7 +57,7 @@ public class UserServiceTest {
         userService.createAccountForUser(dto);
 
         ArgumentCaptor<User> captor = ArgumentCaptor.forClass(User.class);
-        verify(userRepo, times(1)).save(user);
+        verify(userRepo, times(1)).save(captor.capture());
 
         User savedUser = captor.getValue();
         assertEquals("test",  savedUser.getUsername());
