@@ -40,7 +40,7 @@ stages:
   - job: BuildFrontend
     displayName: "Build Frontend"
     pool:
-      vmImage: ubuntu-lastest
+      vmImage: ubuntu-latest
     steps:
       - task: NodeTool@0
         inputs:
