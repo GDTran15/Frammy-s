@@ -44,27 +44,30 @@ public class UserServiceTest {
     @Test
     void createUser() {
         RegisterRequestDTO dto = new RegisterRequestDTO("test", "test@gmail.com", "test");
-        User user = User.builder()
-                .username(dto.username())
-                .gmail(dto.gmail())
-                .password(dto.password())
-                .build();
 
-//        when(userRepo.existsByUsername(dto.username())).thenReturn(false);
+        // Mock both checks as they're called in the service
+        when(userRepo.existsByUsername(dto.username())).thenReturn(false);
         when(userRepo.existsByGmail(dto.gmail())).thenReturn(false);
-        when(dtoToUser.apply(dto)).thenReturn(user);
+
+        // Capture the user object that gets saved
+        ArgumentCaptor<User> captor = ArgumentCaptor.forClass(User.class);
+        doNothing().when(userRepo).save(captor.capture());
 
         userService.createAccountForUser(dto);
 
-        ArgumentCaptor<User> captor = ArgumentCaptor.forClass(User.class);
-        verify(userRepo, times(1)).save(captor.capture());
+        // Verify save was called
+        verify(userRepo, times(1)).save(any(User.class));
 
         User savedUser = captor.getValue();
-        assertEquals("test",  savedUser.getUsername());
+
+        assertEquals("test", savedUser.getUsername());
         assertEquals("test@gmail.com", savedUser.getGmail());
+
+        // Password should be encoded, so it should NOT equal plain text
         assertNotEquals("test", savedUser.getPassword());
 
-
+        // Optionally verify password format (BCrypt starts with $2a, $2b, or $2y)
+        assertTrue(savedUser.getPassword().startsWith("$2"));
     }
 
 }
