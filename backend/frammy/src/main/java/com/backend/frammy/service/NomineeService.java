@@ -40,7 +40,8 @@ public class NomineeService {
             nominee.setArtist(artist);
         } else if (addNomineeRequestDTO.nomineeType().equals(NomineeType.ALBUM)) {
             if (addNomineeRequestDTO.albumId() == null) {
-                throw new InvalidInputException();
+                throw new
+ InvalidInputException();
             }
            Album album = albumRepo.findByAlbumId(addNomineeRequestDTO.albumId());
            exist = nomineeRepo.existsByCategoryAndAlbum(category,album);
