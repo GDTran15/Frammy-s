@@ -30,7 +30,7 @@ public class ArtistService {
 
     @Transactional
     public void createArtist(@Valid CreateArtistRequestDTO createArtistRequestDTO) {
-        if (artistRepo.existsByArtistName(createArtistRequestDTO.artistName())){
+        if (artistRepo.existsByArtistName(createArtistRequestDTO.artistName())){// check if artist already exist or not
             throw new ObjectAlreadyExist("Artist already exist");
         }
         Artist newArtist = dtoToArtist.apply(createArtistRequestDTO);
@@ -52,7 +52,7 @@ public class ArtistService {
 
     public Page<ResponseGetArtistDTO> getArtistInPage(Pageable pageable) {
         Page<Artist> artistPage = artistRepo.findAll(pageable);
-        List<ResponseGetArtistDTO> artistListDTO = artistPage.stream().map(artistToDTO)
+        List<ResponseGetArtistDTO> artistListDTO = artistPage.stream().map(artistToDTO)// map list of artist to List of DTO
                 .toList();
 
         return new PageImpl<>(artistListDTO,pageable,artistPage.getTotalElements());

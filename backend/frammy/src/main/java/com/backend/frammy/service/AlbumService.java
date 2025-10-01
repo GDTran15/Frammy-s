@@ -35,7 +35,7 @@ public class AlbumService {
             throw new InvalidInputException();
         }
         Artist artist = artistRepo.findByArtistId(addAlbumDTORequest.artistId());
-        if (albumRepo.existsAlbumByAlbumNameAndArtist(
+        if (albumRepo.existsAlbumByAlbumNameAndArtist(// check if album exist
                 addAlbumDTORequest.albumName(), artist
         )){
             throw new ObjectAlreadyExist("Album already exist");
@@ -59,7 +59,7 @@ public class AlbumService {
     public Page<ResponseGetAlbumDTO> getAlbumInPage(Pageable pageable) {
         Page<Album> albumPage = albumRepo.findAll(pageable);
         List<ResponseGetAlbumDTO> albumDTOList = albumPage.stream().map(albumToDTO)
-                .toList();
+                .toList();// map list of album to list of dto
 
         return new PageImpl<>(albumDTOList,pageable,albumPage.getTotalElements());
     }
