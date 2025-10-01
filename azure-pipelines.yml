@@ -5,6 +5,7 @@
 
 trigger:
 - main
+- nominee-feature
 
 
 pool:
@@ -15,7 +16,7 @@ stages:
   displayName :  "Build stage"
   jobs:
   - job: BuildBackend
-    displayName: "Setup PostgresSQL"
+    displayName: "Build Backend"
     services:
       postgres:
         image: postgres:15
@@ -27,7 +28,7 @@ stages:
           - 5432:5432
     steps:
     - task: Maven@3
-      displayName: "Build Backend"
+      
       inputs:
         mavenPomFile: 'backend/frammy/pom.xml'
         mavenOptions: '-Xmx3072m'
@@ -36,12 +37,41 @@ stages:
         jdkArchitectureOption: 'x64'
         publishJUnitResults: true
         goals: 'clean package'
+
+  - job: BuildFrontend
+    displayName: "Build Frontend"
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+      - task: NodeTool@0
+        inputs:
+          versionSpec: '20.x'
+        displayName: 'Install Node.js'
+
+      - script: |
+          cd frontend
+          npm install
+          npm run build
+        displayName: 'npm install and build'
+
+        
 - stage: TestStage
   displayName: "Test stage"
   jobs:
   - job: TestBackend
     displayName: "Test Backend"
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: 0000
+          POSTGRES_DB: frammy
+        ports:
+          - 5432:5432
     steps:
+   
+    
     - task: Maven@3
       displayName: "Run Unit Test"
       inputs:
