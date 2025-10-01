@@ -70,6 +70,35 @@ export default function NomineeList({title,  permission}){
             
         }
         }, [categories, chosenCategory]);
+
+
+    const handleVote = async (nomineeId) => {
+        const token = localStorage.getItem("token");
+        if (!token) {
+            alert("Please login to vote.");
+            return;
+        }
+        try {
+            await axios.post(
+                "http://localhost:8080/vote",
+                { nomineeId }, {
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${token}`
+                    }
+                }
+            );
+            alert("Vote successfully created!");
+        } catch (err) {
+            if (err.response?.status === 409) {
+                alert ("You have already voted for this nominee.");
+            } else {
+                alert("Vote failed.");
+            }
+            console.error("Vote error: ", err);
+        }
+    }
+
     return(
         <>
 
@@ -106,7 +135,10 @@ export default function NomineeList({title,  permission}){
                                     {nominee.artistInfo}
                                     </Card.Text>
                                    
-                                    {permission === "user" ? <Button variant="primary">Vote</Button> : 
+                                    {permission === "user" ? 
+                                    
+                                        <Button variant="primary" onClick={() => handleVote(nominee.nomineeId)}>Vote</Button> 
+                                    : 
                                       <div className="d-flex gap-2">
                                         <Button variant="danger" onClick={() => handleDelete(nominee.nomineeId)}>Delete</Button> 
                                       </div> }
