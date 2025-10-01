@@ -16,7 +16,7 @@ public interface NomineeRepo extends JpaRepository<Nominee,Long> {
 
     boolean existsByCategoryAndSong(Category category, Song song);
 
-    Nominee findByNomineeId(Long nomineeId);
+
 
     @Query("""
 select new com.backend.frammy.dto.ResponseGetAllNomineeDTO(
