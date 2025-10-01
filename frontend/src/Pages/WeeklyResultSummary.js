@@ -1,9 +1,79 @@
+import { useState, useEffect } from "react"
 import Header from "../Components/Header"
 import { Link } from "react-router-dom"
 import "../CSS/home.css"
 
-
 export default function WeeklyResultSummary(){
+    const [results, setResults] = useState([]);
+    const [filteredResults, setFilteredResults] = useState([]);
+    const [sortBy, setSortBy] = useState("");
+
+    useEffect(() => {
+        fetchWeeklyResults();
+    }, []);
+
+    const fetchWeeklyResults = async () => {
+        try {
+            const response = await fetch('http://localhost:8080/api/voting/weekly-results');
+            const data = await response.json();
+            setResults(data);
+            setFilteredResults(data);
+        } catch (error) {
+            console.error('Error fetching weekly results:', error);
+        }
+    };
+
+    const handleSort = (e) => {
+        const sortValue = e.target.value;
+        setSortBy(sortValue);
+        
+        let sortedResults = [...results];
+        
+        switch(sortValue) {
+            case 'votes-asc':
+                sortedResults.sort((a, b) => a.voteCount - b.voteCount);
+                setFilteredResults(sortedResults);
+                break;
+            case 'votes-desc':
+                sortedResults.sort((a, b) => b.voteCount - a.voteCount);
+                setFilteredResults(sortedResults);
+                break;
+            case 'time-asc':
+                sortedResults.sort((a, b) => new Date(a.date) - new Date(b.date));
+                setFilteredResults(sortedResults);
+                break;
+            case 'time-desc':
+                sortedResults.sort((a, b) => new Date(b.date) - new Date(a.date));
+                setFilteredResults(sortedResults);
+                break;
+            case 'category-artist':
+                setFilteredResults(sortedResults.filter(r => r.category === 'ARTIST'));
+                break;
+            case 'category-album':
+                setFilteredResults(sortedResults.filter(r => r.category === 'ALBUM'));
+                break;
+            case 'category-song':
+                setFilteredResults(sortedResults.filter(r => r.category === 'SONG'));
+                break;
+            default:
+                setFilteredResults(results);
+                break;
+        }
+    };
+
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        return date.toLocaleDateString('en-GB', { 
+            day: '2-digit', 
+            month: '2-digit', 
+            year: 'numeric' 
+        }).replace(/\//g, '-');
+    };
+
+    const formatVotes = (votes) => {
+        return votes.toLocaleString('en-US');
+    };
+
     return (
         <div>
             <section className="feature bg-body-tertiary">
@@ -21,41 +91,37 @@ export default function WeeklyResultSummary(){
                     </div>
                 </nav>
 
-
-            
                 <div className="container">
                     <div className="row justify-content-center text-center">
                         <div className="col">
                             <h5 className="fs-3">Weekly Result Summary</h5>
-                            <p className="fs-5 text-secondary">Stay up to date with the latest Grammy highlights! Each week, we bring you a quick roundup of winners, standout performances, trending moments, and key updates from the Grammy Awards season. It’s your one-stop summary to catch up on everything you might have missed. </p>
+                            <p className="fs-5 text-secondary">Stay up to date with the latest Grammy highlights! Each week, we bring you a quick roundup of winners, standout performances, trending moments, and key updates from the Grammy Awards season. It's your one-stop summary to catch up on everything you might have missed. </p>
                         </div>
-                    </div>
-                    {/* Feature Cards Row */}
-                    <div className="row mt-5">
-                        {/* <FeatureCard />
-                        <FeatureCard />
-                        <FeatureCard /> */}
                     </div>
                 </div>
 
                 <div className="row mb-3">
                     <div className="col text-end">
-                        <select className="form-select w-auto d-inline-block">
-                        <option value="">Sort By:</option>
-                        <option value="votes-asc">Votes: Lowest to Highest</option>
-                        <option value="votes-desc">Votes: Highest to Lowest</option>
-                        <option value="time-asc">Date: Oldest to Newest</option>
-                        <option value="time-desc">Date: Newest to Oldest</option>
-                        <option value="category-artist">By Artist</option>
-                        <option value="category-album">By Album</option>
-                        <option value="category-song">By Song</option>
+                        <select 
+                            className="form-select w-auto d-inline-block"
+                            value={sortBy}
+                            onChange={handleSort}
+                        >
+                            <option value="">Sort By:</option>
+                            <option value="votes-asc">Votes: Lowest to Highest</option>
+                            <option value="votes-desc">Votes: Highest to Lowest</option>
+                            <option value="time-asc">Date: Oldest to Newest</option>
+                            <option value="time-desc">Date: Newest to Oldest</option>
+                            <option value="category-artist">By Artist</option>
+                            <option value="category-album">By Album</option>
+                            <option value="category-song">By Song</option>
                         </select>
                     </div>
                 </div>
 
                 <div className="row mt-5">
                     <div className="col text-center">
-                        <table className= "table table-striped table-hover align-middle">
+                        <table className="table table-striped table-hover align-middle">
                             <thead className="table-dark">
                                 <tr>
                                     <th scope="col">Category</th>
@@ -65,37 +131,25 @@ export default function WeeklyResultSummary(){
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>Artist</td>
-                                    <td>Ed Sheearan</td>
-                                    <td>22-11-2020</td>
-                                    <td>1,234,567</td>
-                                </tr>
-
-                                <tr>
-                                    <td>Album</td>
-                                    <td>6767</td>
-                                    <td>23-11-2020</td>
-                                    <td>2,234,567</td>
-                                </tr>
-
-                                <tr>
-                                    <td>Song</td>
-                                    <td>Shape of You</td>
-                                    <td>24-11-2020</td>
-                                    <td>3,234,567</td>
-                                </tr>
+                                {filteredResults.length > 0 ? (
+                                    filteredResults.map((result, index) => (
+                                        <tr key={index}>
+                                            <td>{result.category}</td>
+                                            <td>{result.winnerName}</td>
+                                            <td>{formatDate(result.date)}</td>
+                                            <td>{formatVotes(result.voteCount)}</td>
+                                        </tr>
+                                    ))
+                                ) : (
+                                    <tr>
+                                        <td colSpan="4">No results available</td>
+                                    </tr>
+                                )}
                             </tbody>
                         </table>
                     </div>
                 </div>
-
-            
-
             </section>
-        
-
-            
         </div>
     )
- }
+}
