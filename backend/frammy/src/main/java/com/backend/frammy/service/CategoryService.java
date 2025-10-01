@@ -27,7 +27,7 @@ public class CategoryService {
         }
         Category category = new Category();
         category.setCategoryName(addCategoryRequest.categoryName());
-        return  categoryRepo.save(category);
+
     }
 
     public List<CategoryAPIResponseDTO> getCategories() {
