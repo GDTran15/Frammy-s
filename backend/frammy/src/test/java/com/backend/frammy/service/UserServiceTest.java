@@ -45,29 +45,24 @@ public class UserServiceTest {
     void createUser() {
         RegisterRequestDTO dto = new RegisterRequestDTO("test", "test@gmail.com", "test");
 
-        // Mock both checks as they're called in the service
         when(userRepo.existsByUsername(dto.username())).thenReturn(false);
         when(userRepo.existsByGmail(dto.gmail())).thenReturn(false);
 
-        // Capture the user object that gets saved
-        ArgumentCaptor<User> captor = ArgumentCaptor.forClass(User.class);
-        doNothing().when(userRepo).save(captor.capture());
+        // Return the same user passed in to save()
+        when(userRepo.save(any(User.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
         userService.createAccountForUser(dto);
 
-        // Verify save was called
-        verify(userRepo, times(1)).save(any(User.class));
+        // Capture the saved user
+        ArgumentCaptor<User> captor = ArgumentCaptor.forClass(User.class);
+        verify(userRepo).save(captor.capture());
 
         User savedUser = captor.getValue();
 
         assertEquals("test", savedUser.getUsername());
         assertEquals("test@gmail.com", savedUser.getGmail());
-
-        // Password should be encoded, so it should NOT equal plain text
         assertNotEquals("test", savedUser.getPassword());
-
-        // Optionally verify password format (BCrypt starts with $2a, $2b, or $2y)
-        assertTrue(savedUser.getPassword().startsWith("$2"));
+        assertTrue(savedUser.getPassword().startsWith("$2")); // bcrypt hash
     }
 
 }
