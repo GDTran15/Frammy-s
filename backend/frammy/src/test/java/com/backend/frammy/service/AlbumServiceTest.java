@@ -1,4 +1,4 @@
-
+package com.backend.frammy.service;
 
 import com.backend.frammy.dto.AddAlbumDTORequest;
 import com.backend.frammy.dto.ResponseGetAlbumDTO;
