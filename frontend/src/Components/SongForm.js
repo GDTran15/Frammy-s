@@ -1,15 +1,16 @@
-import axios from "axios";
+   import axios from "axios";
 import InputComponent from "./InputComponent";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Select from "react-select";
-import { data } from "react-router-dom";
-import SongList from "./SongList";
 
 
-export default function AddSong(){
-    const [songName,setSongName] = useState("");
-    const [songGenre,setSongGenre] = useState("");
-    const [releaseDate, setReleaseDate] = useState("");
+
+
+export default function SongForm({currentSong,title,usage, fetchSong}){
+
+    const [songName,setSongName] = useState( currentSong?.songName || "");
+    const [songGenre,setSongGenre] = useState(currentSong?.genre || "");
+    const [releaseDate, setReleaseDate] = useState(currentSong?.releaseDate || "");
     const [artistList,setArtistList] = useState([]);
     const [artist,setArtist] = useState("");
     const [error,setError] = useState("");
@@ -27,18 +28,28 @@ export default function AddSong(){
                 songGenre : songGenre,
                 artistId : artist.value
             }
-            axios.post("http://localhost:8080/songs",data,{
+            const method = usage === "Add" ? axios.post : axios.put;
+            const url = (usage === "Add" ? "http://localhost:8080/songs" : `http://localhost:8080/songs/${currentSong.songId}`);
+            method(url,data,{
                 headers:{
             "Authorization": `Bearer ${token}`
         }
             }).then((res) => {
                 alert(res.data.data)
+                fetchSong();
             }).catch ((err)  => {
                 setError(err.response.data.message);
             })
         }
+        useEffect(() => {
+            setSongName(currentSong?.songName);
+            setSongGenre(currentSong?.genre);
+            setReleaseDate(currentSong?.releaseDate);
+        },[currentSong])
 
         const fetchArtist = () => {
+            
+
              axios.get("http://localhost:8080/artists",{
             headers:{
             "Authorization": `Bearer ${token}`
@@ -56,34 +67,33 @@ export default function AddSong(){
             setArtist(e);
             
         }
-    return(
-        
+    return (
         <>
-             <section>
+         <section>
             <div className="container">
             <div className="row mt-2 rounded-2">
                     <div className="col bg-white py-3 px-4">
-        <h2>Add Song</h2>
+        <h2>{title}</h2>
          <form onSubmit={handleSubmit}>
                                    <InputComponent 
                                    labelText="Song Name"
                                     changeHandle={(e) => setSongName(e.target.value)}
                                    inputType="text"
-                                   value={songName}
+                                   inputValue={songName}
                                    placeholderValue="Enter song name"
                                    />
                                    <InputComponent 
                                    labelText="Song Genre"
                                     changeHandle={(e) => setSongGenre(e.target.value)}
                                    inputType="text"
-                                   value={setSongGenre}
+                                   inputValue={songGenre}
                                    placeholderValue="Enter song genre"
                                    />
                                    <InputComponent 
                                    labelText="Release Date"
                                     changeHandle={(e) => setReleaseDate(e.target.value)}
                                    inputType="date"
-                                   value={releaseDate}
+                                   inputValue={releaseDate}
                                    placeholderValue="Enter song genre"
                                    />
                                    <label className="">Owner of this song</label>
@@ -98,8 +108,6 @@ export default function AddSong(){
                                </div>
                                </div>
                                </section>
-                               <SongList/>
         </>
     )
-
 }
