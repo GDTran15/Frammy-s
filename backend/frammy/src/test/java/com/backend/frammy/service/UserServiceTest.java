@@ -9,9 +9,11 @@ import com.backend.frammy.mapper.UserToDTO;
 import com.backend.frammy.model.User;
 
 import com.backend.frammy.repo.UserRepo;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -23,10 +25,10 @@ import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+@Slf4j
 @ExtendWith(MockitoExtension.class)
 public class UserServiceTest {
     @InjectMocks
@@ -42,7 +44,11 @@ public class UserServiceTest {
     @Test
     void createUser() {
         RegisterRequestDTO dto = new RegisterRequestDTO("test", "test@gmail.com", "test");
-        User user = new User();
+        User user = User.builder()
+                .username(dto.username())
+                .gmail(dto.gmail())
+                .password(dto.password())
+                .build();
 
         when(userRepo.existsByUsername(dto.username())).thenReturn(false);
         when(userRepo.existsByGmail(dto.gmail())).thenReturn(false);
@@ -50,7 +56,15 @@ public class UserServiceTest {
 
         userService.createAccountForUser(dto);
 
+        ArgumentCaptor<User> captor = ArgumentCaptor.forClass(User.class);
         verify(userRepo, times(1)).save(user);
+
+        User savedUser = captor.getValue();
+        assertEquals("test",  savedUser.getUsername());
+        assertEquals("test@gmail.com", savedUser.getGmail());
+        assertNotEquals("test", savedUser.getPassword());
+
+
     }
 
 }
