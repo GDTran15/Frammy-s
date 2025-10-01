@@ -97,7 +97,7 @@ public class SongServiceTest {
         PageRequest pageable = PageRequest.of(0, 10);
 
         when(songRepo.findAll(pageable)).thenReturn(songPage);
-        when(songToDTO.apply(song)).thenReturn(new ResponseGetSongDTO(1L,"Song1",LocalDate.now()));
+        when(songToDTO.apply(song)).thenReturn(new ResponseGetSongDTO(1L,"Song1",LocalDate.now(),"Pop"));
 
         Page<ResponseGetSongDTO> result = songService.getSongInPage(pageable);
 
