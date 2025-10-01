@@ -90,7 +90,7 @@ export default function WeeklyResultSummary(){
                     </div>
                 </div>
 
-
+            
 
             </section>
         
