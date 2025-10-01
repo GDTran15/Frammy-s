@@ -63,7 +63,7 @@ public class SongServiceTest {
     }
 
     @Test
-    void createSong_alreadyExist_shouldThrow() {
+    void createSong_alreadyExist_objectAlreadyExceptionThrow() {
         AddSongDTORequest dto = new AddSongDTORequest("Song1", LocalDate.now(), "Pop", artist.getArtistId());
         when(songRepo.existsBySongNameAndArtist("Song1", artist)).thenReturn(true);
 
