@@ -7,7 +7,7 @@ import NomineeManagementPage from "./Pages/NomineeManagementPage";
 
 import RegisterPage from "./Pages/RegisterPage"
 
-import ArtistManagement from "./Pages/ArtistManagement"
+
 import LoginPage from "./Pages/LoginPage";
 import PopularityMetrics from "./Pages/PopularityMetrics"; 
 import AdminDashBoard from "./Pages/AdminDashBoard";
@@ -27,7 +27,7 @@ import UserVotingPage from "./Pages/UserVotingPage";
                   <Route path = "/admin/user-management" element = {<UserManagement />} />
                     <Route path="/login" element = {<LoginPage/>}/>
                     <Route path="/register" element = {<RegisterPage/>}/>
-                  <Route path = "/ArtistManagement" element = {<ArtistManagement />} />
+                 
                   <Route path = "/admin/dashboard" element = {<AdminDashBoard />} />
                   <Route path = "/user/voting" element = {<UserVotingPage />} />
                   <Route path = "/PopularityMetrics" element = {<PopularityMetrics />} />
