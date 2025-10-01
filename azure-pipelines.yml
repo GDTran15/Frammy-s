@@ -37,6 +37,22 @@ stages:
         publishJUnitResults: true
         goals: 'clean package'
 
+  - job: BuildFrontend
+    displayName: "Build Frontend"
+    pool:
+      vmImage: ubuntu-lastest
+    steps:
+      - task: NodeTool@0
+        inputs:
+          versionSpec: '20.x'
+        displayName: 'Install Node.js'
+
+      - script: |
+          cd frontend
+          npm install
+          npm run build
+        displayName: 'npm install and build'
+
         
 - stage: TestStage
   displayName: "Test stage"
