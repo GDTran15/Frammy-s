@@ -1,5 +1,6 @@
 import "../CSS/usermanagement.css"
 import NavBar from "../Components/NavBar";
+import { TabButton } from "../Components/ButtonComponent";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
@@ -13,7 +14,7 @@ export default function UserManagement(){
     }, []);
 
     const fetchUsers = () => {
-        axios.get("http://localhost:8080/user/getUsers")
+        axios.get("http://localhost:8080/user/getUsers", {headers: { Authorization: `Bearer ${token}` }})
             .then((response) => {
                 if (response.data.status === "success") {
                     setUsers(response.data.data);
@@ -109,10 +110,29 @@ export default function UserManagement(){
 
     return(
         <>
-            <NavBar children={""} isNotLogin={false}/>
+            <NavBar children={[
+                <TabButton redirectLink={"/admin/dashboard"}>
+                    DashBoard
+                </TabButton>,
+                <TabButton>
+                    Voting
+                </TabButton>,
+                <TabButton redirectLink={"/admin/nominee-management"}>
+                    Nominee
+                </TabButton>,
+                <TabButton>
+                    Community
+                </TabButton>,
+                <TabButton activeCondition={'active'}>
+                    User
+                </TabButton>,
+                <TabButton redirectLink={"/admin/logs"}>
+                    Logs
+                </TabButton>,
+            ]}/>
 
             <div className="user-management-container">
-                <h1>User Management</h1>
+                <h1 className="title">User Management</h1>
 
                 {loading && <p>Loading users...</p>}
                 {error && <p className="error">{error}</p>}

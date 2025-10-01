@@ -64,6 +64,30 @@ import  "../Images/purple.jpg"
           </div>
         </div>
       </section>
+
+            {/* Public Logs Preview */}
+      <section className="feature bg-dark text-light py-5">
+        <div className="container">
+          <div className="row justify-content-center text-center mb-3">
+            <div className="col">
+              <h5 className="fs-3 text-warning">Latest Community Activity</h5>
+              <p className="fs-6 text-secondary">See what the Frammy community is voting on right now</p>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col">
+              {/* Use  PublicLogFeed component here */}
+              {/* Limit to 5 items for preview */}
+              {/* <PublicLogFeed endpoint="http://localhost:9000/public/logs" limit={5} /> */}
+
+              {/* Link to full page */}
+              <a href="/activity" className="btn btn-outline-warning mt-3">
+                View Full Activity Feed
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
     
     )

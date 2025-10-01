@@ -29,23 +29,26 @@ export default function NomineManagementPage(){
     
     return (
         <>
-         <NavBar  children={[
-                             <TabButton >
-                                DashBoard
-                             </TabButton>,
-                             <TabButton>
-                                Voting
-                             </TabButton>,
-                             <TabButton activeCondition={'active'}>
-                                Nominee
-                             </TabButton>,
-                             <TabButton>
-                                Community
-                             </TabButton>,
-                             <TabButton>
-                                User
-                             </TabButton>,
-           ]}/>
+          <NavBar children={[
+            <TabButton redirectLink={"/admin/dashboard"}>
+                DashBoard
+            </TabButton>,
+            <TabButton>
+                Voting
+            </TabButton>,
+            <TabButton activeCondition={'active'}>
+                Nominee
+            </TabButton>,
+            <TabButton>
+                Community
+            </TabButton>,
+            <TabButton redirectLink={"/admin/user-management"} >
+                User
+            </TabButton>,
+            <TabButton redirectLink={"/admin/logs"}>
+                Logs
+            </TabButton>,
+          ]}/>
 
            <header className="nominee-main">
             <div className="container">

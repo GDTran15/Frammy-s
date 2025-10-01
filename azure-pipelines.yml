@@ -6,17 +6,63 @@
 trigger:
 - main
 
+
 pool:
   vmImage: ubuntu-latest
 
-steps:
-- task: Maven@3
-  inputs:
-    mavenPomFile: 'backend/frammy/pom.xml'
-    mavenOptions: '-Xmx3072m'
-    javaHomeOption: 'JDKVersion'
-    jdkVersionOption: '1.21'
-    jdkArchitectureOption: 'x64'
-    publishJUnitResults: true
-    testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    goals: 'package'
+stages:
+- stage: BuildStage
+  displayName :  "Build stage"
+  jobs:
+  - job: BuildBackend
+    displayName: "Setup PostgresSQL"
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: 0000
+          POSTGRES_DB: frammy
+        ports:
+          - 5432:5432
+    steps:
+    - task: Maven@3
+      displayName: "Build Backend"
+      inputs:
+        mavenPomFile: 'backend/frammy/pom.xml'
+        mavenOptions: '-Xmx3072m'
+        javaHomeOption: 'JDKVersion'
+        jdkVersionOption: '1.21'
+        jdkArchitectureOption: 'x64'
+        publishJUnitResults: true
+        goals: 'clean package'
+- stage: TestStage
+  displayName: "Test stage"
+  jobs:
+  - job: TestBackend
+    displayName: "Test Backend"
+    steps:
+    - task: Maven@3
+      displayName: "Run Unit Test"
+      inputs:
+        mavenPomFile: 'backend/frammy/pom.xml'
+        mavenOptions: '-Xmx3072m'
+        javaHomeOption: 'JDKVersion'
+        jdkVersionOption: '1.21'
+        jdkArchitectureOption: 'x64'
+        publishJUnitResults: true
+        testResultsFiles: '**/surefire-reports/TEST-*.xml'
+        goals: 'test'
+      
+
+
+
+
+
+
+
+
+
+
+
+
