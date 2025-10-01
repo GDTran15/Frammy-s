@@ -27,8 +27,9 @@ public class CategoryController {
     }
 
     @PostMapping
-    public Category addCategory(@RequestBody AddCategoryRequest addCategoryRequest){
-            return categoryService.createCategory(addCategoryRequest);
+    public ResponseEntity<ApiResponse<String>> addCategory(@RequestBody AddCategoryRequest addCategoryRequest){
+             categoryService.createCategory(addCategoryRequest);
+        return ResponseEntity.ok(ApiResponse.success("Category add success"));
     }
 
 }

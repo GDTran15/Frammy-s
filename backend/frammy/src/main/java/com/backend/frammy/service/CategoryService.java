@@ -2,6 +2,7 @@ package com.backend.frammy.service;
 
 import com.backend.frammy.dto.AddCategoryRequest;
 import com.backend.frammy.dto.CategoryAPIResponseDTO;
+import com.backend.frammy.exception.ObjectAlreadyExist;
 import com.backend.frammy.mapper.CategoryToDTO;
 import com.backend.frammy.model.Category;
 import com.backend.frammy.repo.CategoryRepo;
