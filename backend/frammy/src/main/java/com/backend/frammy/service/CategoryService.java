@@ -20,7 +20,11 @@ public class CategoryService {
     private final CategoryToDTO categoryToDTO;
 
     @Transactional
-    public Category createCategory(AddCategoryRequest addCategoryRequest) {
+    public void createCategory(AddCategoryRequest addCategoryRequest) {
+        boolean categoryExist = categoryRepo.existsByCategoryName(addCategoryRequest.categoryName());
+        if (categoryExist){
+            throw new ObjectAlreadyExist("This category already exist");
+        }
         Category category = new Category();
         category.setCategoryName(addCategoryRequest.categoryName());
         return  categoryRepo.save(category);
