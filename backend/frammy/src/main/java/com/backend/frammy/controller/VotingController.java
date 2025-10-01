@@ -1,7 +1,6 @@
 package com.backend.frammy.controller;
 
 import com.backend.frammy.dto.VoteRequestDTO;
-import com.backend.frammy.dto.VoteResponseDTO;
 import com.backend.frammy.dto.ApiResponse;
 import com.backend.frammy.service.VoteService;
 import jakarta.validation.Valid;
@@ -17,7 +16,7 @@ public class VotingController {
     private final VoteService voteService;
 
     @PostMapping()
-    public ResponseEntity<ApiResponse<VoteResponseDTO>>addVote(
+    public ResponseEntity<ApiResponse<String>>addVote(
             @RequestHeader("Authorization") String authorization,
             @Valid @RequestBody VoteRequestDTO voteRequestDTO) {
 

@@ -34,22 +34,29 @@ public class VoteService {
     public void createVote(VoteRequestDTO dto, String authHeader){
 
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            System.out.println("DEBUG vote: missing/invalid Authorization header"); //debug postman
             throw new InvalidInputException();
         }
 
         String token = authHeader.substring(7);
-
         Long tokenUserId = jwtService.extractUserId(token);
+        System.out.println("DEBUG vote: extracted userId=" + tokenUserId); //debug postman
+
         if (tokenUserId == null) {
             throw new InvalidInputException();
         }
 
+        System.out.println("DEBUG vote: incoming nomineeId=" + dto.nomineeId()); //debug
         Nominee nominee = nomineeRepo.findByNomineeId(dto.nomineeId());
+        System.out.println("DEBUG vote: nominee found? " + (nominee != null)); //debug
+
+
         if (nominee == null) {
+            System.out.println("DEBUG vote: nominee not found"); //debug
             throw new InvalidInputException();
         }
 
-        if (voteRepo.existsByUserIdAndNomineeId(tokenUserId, dto.nomineeId())) {
+        if (voteRepo.existsByUser_UserIdAndNominee_NomineeId(tokenUserId, dto.nomineeId())) {
             throw new ObjectAlreadyExist("You have already voted for this nominee");
         }
 
