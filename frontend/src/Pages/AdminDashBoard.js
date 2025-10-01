@@ -2,6 +2,7 @@ import NavBar from "../Components/NavBar"
 import "../CSS/button.css"
 import "../CSS/admindashboard.css"
 import { TabButton } from "../Components/ButtonComponent"
+import { Button,Card } from "react-bootstrap"
 
 export default function AdminDashBoard(){
     return (
@@ -27,77 +28,90 @@ export default function AdminDashBoard(){
                   </TabButton>,
             ]}/>
 
-            <div className="admin-dashboard-container">
-               <h1 className="title">Results Dashboard</h1>
-               <p>Welcome to the Dashboard! Here you can manage users, nominees, and view logs.</p>
-               
-               <div className="clear-button-container">
-                  <button className="clear-home-button">Remove Currently Displayed Result from Home</button>
-               </div>
+             <div className="container my-4">
+      <h1 className="mb-3">Results Dashboard</h1>
+      <p>Welcome to the Dashboard! Here you can manage users, nominees, and view logs.</p>
 
-               <div className="dashboard-sections">
-                  <div className="results-card">
-                     <div className="card-header">
-                        <h2>Weekly Results</h2>
-                     </div>
-                     <div className="card-body">
-                        <p>Summary of weekly results.</p>
-                        <div className="results-display">
-                           <p>Display results from component here</p>
-                        </div>
-                        <div className="card-buttons">
-                           <button className="view-results-button">View Page</button>
-                           <button className="add-results-button">Add to Home</button>
-                        </div>
-                     </div>
-                  </div>
-                  <div className="results-card">
-                     <div className="card-header">
-                        <h2>Leaderboard Results</h2>
-                     </div>
-                     <div className="card-body">
-                        <p>Summary of Leaderboard results.</p>
-                        <div className="results-display">
-                           <p>Display results from component here</p>
-                        </div>
-                        <div className="card-buttons">
-                           <button className="view-results-button">View Page</button>
-                           <button className="add-results-button">Add to Home</button>
-                        </div>
-                     </div>
-                  </div>
-                  <div className="results-card">
-                     <div className="card-header">
-                        <h2>Prediction Results</h2>
-                     </div>
-                     <div className="card-body">
-                        <p>Summary of Prediction results.</p>
-                        <div className="results-display">
-                           <p>Display results from component here</p>
-                        </div>
-                        <div className="card-buttons">
-                           <button className="view-results-button">View Page</button>
-                           <button className="add-results-button">Add to Home</button>
-                        </div>
-                     </div>
-                  </div>
-                  <div className="results-card">
-                     <div className="card-header">
-                        <h2>Streaming Results</h2>
-                     </div>
-                     <div className="card-body">
-                        <p>Summary of Streaming results.</p>
-                        <div className="results-display">
-                           <p>Display results from component here</p>
-                        </div>
-                        <div className="card-buttons">
-                           <button className="view-results-button">View Page</button>
-                           <button className="add-results-button">Add to Home</button>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-            </div>
+      <div className="row mb-3">
+        <div className="col">
+          <Button variant="danger">Remove Currently Displayed Result from Home</Button>
+        </div>
+      </div>
+
+      <div className="row g-4">
+        <div className="col-md-6 col-lg-3">
+          <Card>
+            <Card.Header>
+              <h2 className="h5 mb-0">Weekly Results</h2>
+            </Card.Header>
+            <Card.Body>
+              <p>Summary of weekly results.</p>
+              <div>
+                <p>Display results from component here</p>
+              </div>
+              <div className="d-flex gap-2">
+                <Button variant="primary">View Page</Button>
+                <Button variant="success">Add to Home</Button>
+              </div>
+            </Card.Body>
+          </Card>
+        </div>
+
+        <div className="col-md-6 col-lg-3">
+          <Card>
+            <Card.Header>
+              <h2 className="h5 mb-0">Leaderboard Results</h2>
+            </Card.Header>
+            <Card.Body>
+              <p>Summary of Leaderboard results.</p>
+              <div>
+                <p>Display results from component here</p>
+              </div>
+              <div className="d-flex gap-2">
+                <Button variant="primary">View Page</Button>
+                <Button variant="success">Add to Home</Button>
+              </div>
+            </Card.Body>
+          </Card>
+        </div>
+
+        <div className="col-md-6 col-lg-3">
+          <Card>
+            <Card.Header>
+              <h2 className="h5 mb-0">Prediction Results</h2>
+            </Card.Header>
+            <Card.Body>
+              <p>Summary of Prediction results.</p>
+              <div>
+                <p>Display results from component here</p>
+              </div>
+              <div className="d-flex gap-2">
+                <Button variant="primary">View Page</Button>
+                <Button variant="success">Add to Home</Button>
+              </div>
+            </Card.Body>
+          </Card>
+        </div>
+
+        <div className="col-md-6 col-lg-3">
+          <Card>
+            <Card.Header>
+              <h2 className="h5 mb-0">Streaming Results</h2>
+            </Card.Header>
+            <Card.Body>
+              <p>Summary of Streaming results.</p>
+              <div>
+                <p>Display results from component here</p>
+              </div>
+              <div className="d-flex gap-2">
+                <Button variant="primary">View Page</Button>
+                <Button variant="success">Add to Home</Button>
+              </div>
+            </Card.Body>
+          </Card>
+        </div>
+      </div>
+    </div>
         </>
     )
 }

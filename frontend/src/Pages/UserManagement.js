@@ -3,6 +3,7 @@ import NavBar from "../Components/NavBar";
 import { TabButton } from "../Components/ButtonComponent";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Button,Modal,Card,Form } from "react-bootstrap";
 
 export default function UserManagement(){
     const [users, setUsers] = useState([]);
@@ -131,7 +132,7 @@ export default function UserManagement(){
                 </TabButton>,
             ]}/>
 
-            <div className="user-management-container">
+ {/*            <div className="user-management-container">
                 <h1 className="title">User Management</h1>
 
                 {loading && <p>Loading users...</p>}
@@ -197,7 +198,98 @@ export default function UserManagement(){
                         </div>
                     </div>
                 )}
-            </div>
+            </div> */}
+            <div className="container my-4">
+      <h1 className="mb-4">User Management</h1>
+
+      {loading && <p>Loading users...</p>}
+      {error && <p className="text-danger">{error}</p>}
+
+      <div className="row g-4">
+        {users.map((user) => (
+          <div key={user.userId} className="col-md-6 col-lg-4">
+            <Card>
+              <Card.Body>
+                <div className="mb-2">
+                  <strong>User ID: </strong> {user.userId}
+                </div>
+                <div className="mb-2">
+                  <strong>Username: </strong> {user.username}
+                </div>
+                <div className="mb-2">
+                  <strong>Gmail: </strong> {user.gmail}
+                </div>
+                <div className="mb-2">
+                  <strong>Role: </strong> {user.role}
+                </div>
+
+                <div className="d-flex gap-2 mt-3">
+                  <Button
+                    variant="warning"
+                    onClick={() => {
+                      setEditingUser(user);
+                      setEditData({
+                        username: user.username,
+                        gmail: user.gmail,
+                        password: "",
+                      });
+                    }}
+                  >
+                    Edit
+                  </Button>
+                  <Button variant="danger" onClick={() => handleDelete(user.userId)}>
+                    Delete
+                  </Button>
+                </div>
+              </Card.Body>
+            </Card>
+          </div>
+        ))}
+      </div>
+
+      {/* Edit Modal */}
+      <Modal show={!!editingUser} onHide={() => setEditingUser(null)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Edit User</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group className="mb-3">
+              <Form.Label>Username</Form.Label>
+              <Form.Control
+                type="text"
+                value={editData.username}
+                onChange={(e) => setEditData({ ...editData, username: e.target.value })}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Gmail</Form.Label>
+              <Form.Control
+                type="email"
+                value={editData.gmail}
+                onChange={(e) => setEditData({ ...editData, gmail: e.target.value })}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                type="password"
+                value={editData.password}
+                onChange={(e) => setEditData({ ...editData, password: e.target.value })}
+              />
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setEditingUser(null)}>
+            Cancel
+          </Button>
+          <Button variant="primary" onClick={handleEditUser}>
+            Save
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </div>
         </>
     );
 }
