@@ -40,11 +40,12 @@ public class UserServiceTest {
 
 
     @Test
-    void creatUser() {
+    void createUser() {
         RegisterRequestDTO dto = new RegisterRequestDTO("test", "test@gmail.com", "test");
         User user = new User();
 
         when(userRepo.existsByUsername(dto.username())).thenReturn(false);
+        when(userRepo.existsByGmail(dto.gmail())).thenReturn(false);
         when(dtoToUser.apply(dto)).thenReturn(user);
 
         userService.createAccountForUser(dto);
