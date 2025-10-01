@@ -2,11 +2,14 @@ import NavBar from "../Components/NavBar";
 import { TabButton } from "../Components/ButtonComponent";
 import { useState } from "react";
 import "../CSS/nominee.css"
-import AddNomineeForm from "../Components/AddNomineeForm";
-import AddArtist from "../Components/AddArtistForm";
+
+import NomineeManagement from "../Components/NomineeManagement";
+
 import AddAlbum from "../Components/AddAlbum";
-import AddSong from "../Components/AddSong";
-import NomineeList from "../Components/NomineeList";
+
+import SongManagement from "../Components/SongManagement";
+import ArtistManagement from "../Components/ArtistManagement";
+
 
 
 export default function NomineManagementPage(){
@@ -15,11 +18,11 @@ export default function NomineManagementPage(){
     const mainContent = () => {
     switch (activeTab) {
       case "Nominee":
-        return <AddNomineeForm />;
+        return <NomineeManagement />;
       case "Artist":
-        return <AddArtist />;
+        return <ArtistManagement />;
       case "Song":
-        return <AddSong />;
+        return <SongManagement />;
       case "Album":
         return <AddAlbum />;
       default:
@@ -53,7 +56,7 @@ export default function NomineManagementPage(){
                     <div className="col ">
                         <h3 className=" ps-3">Nominee Management</h3>                        
                         <div className="btn-group w-100 px-1 bg-body-secondary py-1 rounded-5" >
-                        {["Nominee","Artist","Song","Album","Controller"].map((tab) => (
+                        {["Nominee","Artist","Song","Album","Category"].map((tab) => (
                         <button
                             type="button"
                             className={`btn rounded-5 nominee-nav ${
