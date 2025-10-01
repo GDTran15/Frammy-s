@@ -5,6 +5,7 @@ import java.time.LocalDate;
 public record ResponseGetSongDTO (
         Long songId,
         String songName,
-        LocalDate releaseDate
+        LocalDate releaseDate,
+        String genre
 ){
 }
