@@ -50,7 +50,7 @@ public class UserServiceTest {
                 .password(dto.password())
                 .build();
 
-        when(userRepo.existsByUsername(dto.username())).thenReturn(false);
+//        when(userRepo.existsByUsername(dto.username())).thenReturn(false);
         when(userRepo.existsByGmail(dto.gmail())).thenReturn(false);
         when(dtoToUser.apply(dto)).thenReturn(user);
 
