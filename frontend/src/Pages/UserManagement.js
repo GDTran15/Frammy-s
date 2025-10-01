@@ -1,5 +1,6 @@
 import "../CSS/usermanagement.css"
 import NavBar from "../Components/NavBar";
+import { TabButton } from "../Components/ButtonComponent";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
@@ -109,7 +110,26 @@ export default function UserManagement(){
 
     return(
         <>
-            <NavBar children={""} isNotLogin={false}/>
+            <NavBar children={[
+                <TabButton redirectLink={"/admin/dashboard"}>
+                    DashBoard
+                </TabButton>,
+                <TabButton>
+                    Voting
+                </TabButton>,
+                <TabButton redirectLink={"/admin/nominee-management"}>
+                    Nominee
+                </TabButton>,
+                <TabButton>
+                    Community
+                </TabButton>,
+                <TabButton activeCondition={'active'}>
+                    User
+                </TabButton>,
+                <TabButton redirectLink={"/admin/logs"}>
+                    Logs
+                </TabButton>,
+            ]}/>
 
             <div className="user-management-container">
                 <h1 className="title">User Management</h1>

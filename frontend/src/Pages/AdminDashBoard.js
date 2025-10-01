@@ -5,31 +5,26 @@ import { TabButton } from "../Components/ButtonComponent"
 export default function AdminDashBoard(){
     return (
         <>
-        <NavBar children={[
-                     <TabButton activeCondition={'active'}>
-                        DashBoard
-                     </TabButton>,
-                     <TabButton>
-                        Voting
-                     </TabButton>,
-                     <TabButton redirectLink={"/admin/nominee-management"}>
-                        Nominee
-                     </TabButton>,
-                     <TabButton>
-                        Community
-                     </TabButton>,
-                     <TabButton>
-                        User
-                     </TabButton>,
-                     <TabButton redirectLink={"/admin/logs"}>
-                        Logs
-                     </TabButton>,
-            
-   ]}/>
-    
-
-
-
+            <NavBar children={[
+                  <TabButton activeCondition={'active'}>
+                     DashBoard
+                  </TabButton>,
+                  <TabButton>
+                     Voting
+                  </TabButton>,
+                  <TabButton redirectLink={"/admin/nominee-management"}>
+                     Nominee
+                  </TabButton>,
+                  <TabButton>
+                     Community
+                  </TabButton>,
+                  <TabButton redirectLink={"/admin/user-management"}>
+                     User
+                  </TabButton>,
+                  <TabButton redirectLink={"/admin/logs"}>
+                     Logs
+                  </TabButton>,
+            ]}/>
         </>
     )
 }
