@@ -52,7 +52,13 @@ public class ArtistController {
         return ResponseEntity.ok(ApiResponse.success(new PagedModel<>(pagedModel)));
     }
 
+    @PutMapping("/{artistId}")
+    public ResponseEntity<ApiResponse<String>> updateArtist(@PathVariable Long artistId, @Valid @RequestBody CreateArtistRequestDTO createArtistRequestDTO )
+    {
+        artistService.updateArtist(artistId,createArtistRequestDTO);
+        return ResponseEntity.ok(ApiResponse.success("Artist successfully update"));
 
+    }
 
 
 }
