@@ -30,16 +30,16 @@ class VoteServiceTest {
     @Test
     void createVote_savesVoteSuccessfully() {
         String authHeader = "Bearer token-abc";
+
         VoteRequestDTO dto = new VoteRequestDTO(1L);
 
         User user = new User();
         Nominee nominee = new Nominee();
 
         when(jwtService.extractUserId("token-abc")).thenReturn(1L);
-        when(userRepo.findById(1L)).thenReturn(Optional.of(user));
-        when(nomineeRepo.findById(3L)).thenReturn(Optional.of(nominee));
 
-        when(voteRepo.existsByUser_UserIdAndNominee_NomineeId(1L, 3L)).thenReturn(false);
+        when(nomineeRepo.findByNomineeId(1L)).thenReturn(nominee);
+        when(voteRepo.existsByUser_UserIdAndNominee_NomineeId(1L, 1L)).thenReturn(false);
 
         voteService.createVote(dto, authHeader);
 
