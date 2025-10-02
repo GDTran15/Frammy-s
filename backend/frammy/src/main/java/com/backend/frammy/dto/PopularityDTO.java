@@ -1,8 +1,12 @@
-public class NomineePopularityDTO {
+package com.backend.frammy.dto;
+
+public class PopularityDTO {
     private Long nomineeId;
     private Integer popularityScore;
 
-    public NomineePopularityDTO(Long nomineeId, Integer popularityScore) {
+    public PopularityDTO() {}
+
+    public PopularityDTO(Long nomineeId, Integer popularityScore) {
         this.nomineeId = nomineeId;
         this.popularityScore = popularityScore;
     }
@@ -12,6 +16,4 @@ public class NomineePopularityDTO {
 
     public Integer getPopularityScore() { return popularityScore; }
     public void setPopularityScore(Integer popularityScore) { this.popularityScore = popularityScore; }
-
-    //Add getters setters***
 }
