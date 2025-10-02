@@ -4,14 +4,17 @@ import { useEffect, useState } from "react";
 import { Card } from "react-bootstrap";
 import PagiComponent from "./PagiComponenet";
 import  { Button } from "react-bootstrap";
+import ArtistForm from "./ArtistForm";
 
 export default function ArtistList({title}){
     const [artistList,setArtistList] = useState([]);
     const [page,setPage] = useState("0");
     const [totalPage,setTotalPage] = useState(0)
+    const [updateOpen, setUpdateOpen] = useState(false); 
+    const [updateData, setUpdateData] = useState(null);
     const token = localStorage.getItem("token");
 
-    useEffect(() =>{
+    const fetchData = () =>{
         axios.get(`http://localhost:8080/artists/page?page=${page}&size=9`,{
             headers:{
             "Authorization": `Bearer ${token}`
@@ -22,7 +25,9 @@ export default function ArtistList({title}){
               setTotalPage(res.data.data.page.totalPages);
               console.log(res);
         })
-    },[page,token]) 
+    }
+
+    useEffect(() => fetchData(),[page,token]) 
 
     const handleDelete = (id) =>{
         const confirm = window.confirm("Do you want to delete this artist?")
@@ -36,10 +41,15 @@ export default function ArtistList({title}){
         )
         .then((res) => {
             alert(res.data.data);
-            
-            setArtistList(prev => prev.filter(artist => artist.artistId !== id))
+            fetchData();
         })
     }   
+
+    const handleUpdate = (artist) =>{
+        setUpdateData(artist);
+        setUpdateOpen(true);
+        fetchData();
+    }
     return(
         <>
              <div className="container">
@@ -60,6 +70,7 @@ export default function ArtistList({title}){
                                    
                                     
                                       <div className="d-flex gap-2">
+                                        <Button variant="success" onClick={() => handleUpdate(artist)}>Update</Button> 
                                         <Button variant="danger" onClick={() => handleDelete(artist.artistId)}>Delete</Button> 
                                       </div>                                     
                                 </Card.Body>
@@ -71,7 +82,7 @@ export default function ArtistList({title}){
                     </div>
                 </div>
             </div>
-            
+            {updateOpen && <ArtistForm usage="Update" title="Update Artist" currentArtist={updateData}/>}
         
         </>
     )

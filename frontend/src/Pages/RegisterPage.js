@@ -15,9 +15,7 @@ export default function RegisterPage(){
   const handleSubmit = (e) => {
     setError("");
     e.preventDefault();
-    if(gmail === "" || username === "" || password === ""){
-      setError("Please input all field");
-    } else {
+    
     axios.post("http://localhost:8080/register",{
     username: username,
     gmail : gmail,
@@ -38,7 +36,7 @@ export default function RegisterPage(){
     })
     
   }
-  }
+  
 
     return (
      <>
@@ -71,9 +69,10 @@ export default function RegisterPage(){
             value={password}
             placeholderValue="Enter your password"
             />
-            <p className="text-danger">{error !== "" ?  `*${error}` : ""}</p>
+            
             <button type="submit" className="btn btn-warning w-100 mt-2">Register</button>
                     </form>
+                    <p className="text-danger mt-3">{error !== "" ?  `*${error}` : ""}</p>
         </FormComponent>    
 
      </>   

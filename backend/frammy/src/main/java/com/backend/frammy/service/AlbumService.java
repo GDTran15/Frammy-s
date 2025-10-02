@@ -63,4 +63,8 @@ public class AlbumService {
 
         return new PageImpl<>(albumDTOList,pageable,albumPage.getTotalElements());
     }
+
+    public void updateAlbum(@Valid AddAlbumDTORequest addAlbumDTORequest) {
+
+    }
 }

@@ -44,6 +44,12 @@ public class NomineeController {
         return ResponseEntity.ok(ApiResponse.success("Delete success"));
     }
 
+    @PutMapping("{nomineeId}")
+    public ResponseEntity<ApiResponse<String>> updateNominee(@RequestBody @Valid AddNomineeRequestDTO addNomineeRequestDTO, @PathVariable Long nomineeId){
+        nomineeService.updateNominee(addNomineeRequestDTO, nomineeId);
+        return ResponseEntity.ok(ApiResponse.success("Update success"));
+    }
+
 
 
 

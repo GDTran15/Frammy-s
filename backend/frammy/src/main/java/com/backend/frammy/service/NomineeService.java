@@ -6,12 +6,14 @@ import com.backend.frammy.exception.InvalidInputException;
 import com.backend.frammy.exception.ObjectAlreadyExist;
 import com.backend.frammy.model.*;
 import com.backend.frammy.repo.*;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PagedModel;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -25,11 +27,29 @@ public class NomineeService {
 
     @Transactional
     public void createNewNominee(AddNomineeRequestDTO addNomineeRequestDTO) {
+         Nominee nominee = new Nominee();
+        setDataIntoNominee(addNomineeRequestDTO,nominee);
+        nomineeRepo.save(nominee);
+    }
 
+    public Page<ResponseGetAllNomineeDTO> getNominees(Pageable pageable) {
+        return nomineeRepo.findAllNominateWithInformation(pageable);
+    }
 
+    public void deleteNominee(Long nomineeId) {
+        nomineeRepo.deleteById(nomineeId);
+    }
 
-        Nominee nominee = new Nominee();
+    public void updateNominee(@Valid AddNomineeRequestDTO addNomineeRequestDTO, Long nomineeId) {
+       Nominee nominee =  nomineeRepo.findByNomineeId(nomineeId);
+       setDataIntoNominee(addNomineeRequestDTO,nominee);
+
+        nomineeRepo.save(nominee);
+    }
+
+    private void setDataIntoNominee(AddNomineeRequestDTO addNomineeRequestDTO, Nominee nominee){
         Category category = categoryRepo.findByCategoryId(addNomineeRequestDTO.categoryId());
+
         boolean exist = false;
         if (addNomineeRequestDTO.nomineeType().equals(NomineeType.ARTIST)) {
             if (addNomineeRequestDTO.artistId() == null) {
@@ -43,14 +63,14 @@ public class NomineeService {
                 throw new
  InvalidInputException();
             }
-           Album album = albumRepo.findByAlbumId(addNomineeRequestDTO.albumId());
-           exist = nomineeRepo.existsByCategoryAndAlbum(category,album);
+            Album album = albumRepo.findByAlbumId(addNomineeRequestDTO.albumId());
+            exist = nomineeRepo.existsByCategoryAndAlbum(category,album);
             nominee.setAlbum(album);
         } else if (addNomineeRequestDTO.nomineeType().equals(NomineeType.SONG)) {
-            if (addNomineeRequestDTO.albumId() == null) {
+            if (addNomineeRequestDTO.songId() == null) {
                 throw new InvalidInputException();
             }
-           Song song = songRepo.findBySongId(addNomineeRequestDTO.songId());
+            Song song = songRepo.findBySongId(addNomineeRequestDTO.songId());
             exist = nomineeRepo.existsByCategoryAndSong(category,song);
             nominee.setSong(song);
         }
@@ -61,14 +81,5 @@ public class NomineeService {
 
         nominee.setCategory(category);
         nominee.setNomineeType(addNomineeRequestDTO.nomineeType());
-        nomineeRepo.save(nominee);
-    }
-
-    public Page<ResponseGetAllNomineeDTO> getNominees(Pageable pageable) {
-        return nomineeRepo.findAllNominateWithInformation(pageable);
-    }
-
-    public void deleteNominee(Long nomineeId) {
-        nomineeRepo.deleteById(nomineeId);
     }
 }

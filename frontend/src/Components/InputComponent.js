@@ -7,6 +7,7 @@ export default function InputComponent({labelText,changeHandle, inputType, input
                  type={inputType}
                  className="form-control bg-body-tertiary" 
                  value={inputValue} 
+                 
                  placeholder={placeholderValue}/>
                 </div>
         </>

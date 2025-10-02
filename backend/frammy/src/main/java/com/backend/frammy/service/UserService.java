@@ -45,12 +45,11 @@ public class UserService {
 
     public LoginResponseDTO loginUser(LoginRequestDTO loginRequestDTO) {
         Authentication authentication = authenticationManager.authenticate( new UsernamePasswordAuthenticationToken(loginRequestDTO.username(),loginRequestDTO.password()));
-        if (authentication.isAuthenticated()){
+
             User user = userRepo.findByUsername(loginRequestDTO.username());
             String token = jwtService.generateToken(user,user.getUserId());
             return new LoginResponseDTO(token,user.getRole());
-        }
-        return null;
+
     }
 
     @Transactional
@@ -82,6 +81,9 @@ public class UserService {
 
         userRepo.save(user);
     }
+
+
+
 
     public List<UserResponseDTO> getAllUsers() {
         List<User> users = userRepo.findAll();

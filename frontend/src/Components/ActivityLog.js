@@ -10,7 +10,7 @@ export default function ActivityLog() {
   // Fetch logs when component mounts
   const fetchLogs = () => {
     axios
-      .get("http://localhost:9000/logs", {
+      .get("http://localhost:8080/logs", {
         headers: {
           "Authorization": `Bearer ${token}`,
         },
