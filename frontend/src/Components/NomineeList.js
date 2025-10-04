@@ -121,7 +121,7 @@ export default function NomineeList({title,  permission}){
             alert("Vote successfully created!");
         } catch (err) {
             if (err.response?.status === 409) {
-                alert ("You have already voted for this nominee.");
+                alert (err.response?.data?.message || "Vote not allowed.");
             } else {
                 alert("Vote failed.");
             }

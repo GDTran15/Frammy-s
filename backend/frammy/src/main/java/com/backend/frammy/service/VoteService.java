@@ -18,6 +18,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,31 +37,33 @@ public class VoteService {
     public void createVote(VoteRequestDTO dto, String authHeader){
 
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            System.out.println("DEBUG vote: missing/invalid Authorization header"); //debug postman
             throw new InvalidInputException();
         }
 
         String token = authHeader.substring(7);
         Long tokenUserId = jwtService.extractUserId(token);
-        System.out.println("DEBUG vote: extracted userId=" + tokenUserId); //debug postman
-
         if (tokenUserId == null) {
             throw new InvalidInputException();
         }
 
-        System.out.println("DEBUG vote: incoming nomineeId=" + dto.nomineeId()); //debug
         Nominee nominee = nomineeRepo.findByNomineeId(dto.nomineeId());
-        System.out.println("DEBUG vote: nominee found? " + (nominee != null)); //debug
-
-
         if (nominee == null) {
-            System.out.println("DEBUG vote: nominee not found"); //debug
             throw new InvalidInputException();
         }
 
-        if (voteRepo.existsByUser_UserIdAndNominee_NomineeId(tokenUserId, dto.nomineeId())) {
-            throw new ObjectAlreadyExist("You have already voted for this nominee");
+        ZoneId zone = ZoneId.of("Australia/Sydney");
+        LocalDate today = LocalDate.now(zone);
+        Instant startOfToday = today.atStartOfDay(zone).toInstant();
+        Instant startOfTomorrow = today.plusDays(1).atStartOfDay(zone).toInstant();
+
+        long todaysCount = voteRepo.countByUser_UserIdAndCreatedAtBetween(tokenUserId, startOfToday, startOfTomorrow);
+        if (todaysCount >= 3) {
+            throw new ObjectAlreadyExist("Daily limit reached: you can only cast up to 3 votes a day.");
         }
+
+//        if (voteRepo.existsByUser_UserIdAndNominee_NomineeId(tokenUserId, dto.nomineeId())) {
+//            throw new ObjectAlreadyExist("You have already voted for this nominee");
+//        }
 
         Vote vote = new Vote();
         vote.setUser(userRepo.findByUserId(tokenUserId));
