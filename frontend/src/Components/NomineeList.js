@@ -22,9 +22,9 @@ export default function NomineeList({title,  permission}){
 //___________________________________________________________________________
 
     const getColor = (n) => {
-        if (n >= 2) return "green";
-        if (n === 1) return "orange";
-        return "red"
+        if (n >= 2) return "#1dd648ff";
+        if (n === 1) return "#ffc800ff";
+        return "#fd0606ff" 
     };
 
     const [usage, setUsage] = useState({
