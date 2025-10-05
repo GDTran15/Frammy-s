@@ -8,7 +8,7 @@ export default function UserVotingPage(){
             <div className="row">
                 <div className="col pt-5">
                     <h2 className=" fw-bolder">Vote for Yours Favorites</h2>
-                    <p className="text-body-tertiary">Select up to 5 nominees per category</p>
+                    <p className="text-body-tertiary">Cast up to 3 votes per day</p>
                 </div>
             </div>
         </div>
