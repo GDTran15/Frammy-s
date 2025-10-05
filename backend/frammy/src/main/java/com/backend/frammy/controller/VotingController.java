@@ -2,6 +2,7 @@ package com.backend.frammy.controller;
 
 import com.backend.frammy.dto.VoteRequestDTO;
 import com.backend.frammy.dto.ApiResponse;
+import com.backend.frammy.dto.VoteUsageDTO;
 import com.backend.frammy.service.VoteService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,13 @@ public class VotingController {
 
         voteService.createVote(voteRequestDTO, authorization);
         return ResponseEntity.ok(ApiResponse.success("Vote successfully created"));
+    }
+
+    @GetMapping("/usage")
+    public ResponseEntity<ApiResponse<VoteUsageDTO>> getUsage(
+            @RequestHeader("Authorization") String authorization) {
+
+        return ResponseEntity.ok(ApiResponse.success(voteService.getDailyUsage(authorization)));
     }
 
 }

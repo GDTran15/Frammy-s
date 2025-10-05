@@ -71,5 +71,27 @@ public class VoteService {
         voteRepo.save(vote);
     }
 
+    public VoteUsageDTO getDailyUsage(String authHeader) {
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            throw new InvalidInputException();
+        }
+        String token = authHeader.substring(7);
+        Long tokenUserId = jwtService.extractUserId(token);
+        if (tokenUserId == null) {
+            throw new InvalidInputException();
+        }
+
+        final long LIMIT = 3L;
+        ZoneId zone = ZoneId.of("Australia/Sydney");
+        LocalDate today = LocalDate.now(zone);
+        Instant startOfToday = today.atStartOfDay(zone).toInstant();
+        Instant startOfTomorrow = today.plusDays(1).atStartOfDay(zone).toInstant();
+
+        long used = voteRepo.countByUser_UserIdAndCreatedAtBetween(tokenUserId, startOfToday, startOfTomorrow);
+        long remaining = Math.max(0, LIMIT - used);
+
+        return new VoteUsageDTO(LIMIT, used, remaining, startOfTomorrow);
+    }
+
 
 }
