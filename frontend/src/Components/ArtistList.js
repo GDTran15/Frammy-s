@@ -23,7 +23,7 @@ export default function ArtistList({title}){
         .then((res) => {
               setArtistList(res.data.data.content);
               setTotalPage(res.data.data.page.totalPages);
-              console.log(res);
+             
         })
     }
 
@@ -48,10 +48,11 @@ export default function ArtistList({title}){
     const handleUpdate = (artist) =>{
         setUpdateData(artist);
         setUpdateOpen(true);
-        fetchData();
+       
     }
     return(
         <>
+            <ArtistForm usage="Add" title="Add Artist"/> 
              <div className="container">
                 <div className="row bg-white mt-3 rounded-3 py-3">
                     <h3 className="mb-3">{title}</h3>
@@ -70,7 +71,7 @@ export default function ArtistList({title}){
                                    
                                     
                                       <div className="d-flex gap-2">
-                                        <Button variant="success" onClick={() => handleUpdate(artist)}>Update</Button> 
+                                        <Button variant="warning" onClick={() => handleUpdate(artist)}>Update</Button> 
                                         <Button variant="danger" onClick={() => handleDelete(artist.artistId)}>Delete</Button> 
                                       </div>                                     
                                 </Card.Body>
@@ -82,7 +83,7 @@ export default function ArtistList({title}){
                     </div>
                 </div>
             </div>
-            {updateOpen && <ArtistForm usage="Update" title="Update Artist" currentArtist={updateData}/>}
+            {updateOpen && <ArtistForm usage="Update" title="Update Artist" currentArtist={updateData} fetchArtist={fetchData}/>}
         
         </>
     )

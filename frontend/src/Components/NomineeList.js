@@ -131,7 +131,7 @@ export default function NomineeList({title,  permission}){
 
     return(
         <>
-
+            <NomineeForm title="Add Nominee" usage="Add"/>
 
              <div className="container">
                 <div className="row bg-white mt-3 rounded-3 py-3">
@@ -170,7 +170,7 @@ export default function NomineeList({title,  permission}){
                                         <Button variant="primary" onClick={() => handleVote(nominee.nomineeId)}>Vote</Button> 
                                     : 
                                       <div className="d-flex gap-2">
-                                        <Button variant="success" onClick={() => handleUpdate(nominee)}>Update</Button> 
+                                        <Button variant="warning" onClick={() => handleUpdate(nominee)}>Update</Button> 
                                         <Button variant="danger" onClick={() => handleDelete(nominee.nomineeId)}>Delete</Button> 
                                       </div> }
                                     
