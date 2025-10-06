@@ -5,6 +5,7 @@ import { Card } from "react-bootstrap";
 import PagiComponent from "./PagiComponenet";
 import  { Button } from "react-bootstrap";
 import NomineeForm from "./NomineeForm";
+import "../CSS/voting.css";
 
 export default function NomineeList({title,  permission}){
     const [nomineeList,setNomineeList] = useState([]);
@@ -18,6 +19,39 @@ export default function NomineeList({title,  permission}){
     const [updateData, setUpdateData] = useState(null);
     console.log(search);
     
+//___________________________________________________________________________
+
+    const getColor = (n) => {
+        if (n >= 2) return "#1dd648ff";
+        if (n === 1) return "#ffc800ff";
+        return "#fd0606ff" 
+    };
+
+    const [usage, setUsage] = useState({
+        limit: 3,
+        used: 0,
+        remaining: 3,
+        resetAt: null,
+    });
+    const [loadingUsage, setLoadingUsage] = useState(true);
+
+    const fetchUsage = async () => {
+        if (!token) { setLoadingUsage(false); return; }
+        try {
+            const res = await axios.get("http://localhost:8080/vote/usage", {
+                headers: { "Authorization": `Bearer ${token}` }
+            });
+            setUsage(res.data.data);
+        } catch (e) {
+            console.error("Usage fetch failed", e);
+        } finally {
+            setLoadingUsage(false);
+        }
+    };
+
+    useEffect(() => { fetchUsage(); }, [token]);
+
+//___________________________________________________________________________
     const getNominee = () => {
         
         axios.get(`http://localhost:8080/nominee?page=${page}&size=9`,{
@@ -119,9 +153,10 @@ export default function NomineeList({title,  permission}){
                 }
             );
             alert("Vote successfully created!");
+            await fetchUsage();                             // <-------------------
         } catch (err) {
             if (err.response?.status === 409) {
-                alert ("You have already voted for this nominee.");
+                alert (err.response?.data?.message || "Vote not allowed.");
             } else {
                 alert("Vote failed.");
             }
@@ -129,11 +164,35 @@ export default function NomineeList({title,  permission}){
         }
     }
 
+    const resetTimeStr = usage.resetAt
+        ? new Date(usage.resetAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        : "";
+
+    const votesColor = usage.remaining >= 2 ? "text-success" :
+        usage.remaining === 1 ? "text-warning" : "text-danger";
+
     return(
         <>
+<<<<<<< HEAD
             <NomineeForm title="Add Nominee" usage="Add"/>
 
              <div className="container">
+=======
+            <div className="container">
+                <div className="row mt-3">
+                    <div className="col">
+                        {!loadingUsage && typeof usage.remaining === "number" && (
+                        <span
+                            className="vote-pill"
+                            style={{ backgroundColor: getColor(usage.remaining) }}
+                            >
+                            Votes left today: {usage.remaining}/{usage.limit}
+                        </span>
+                        )}
+                    </div>
+                </div>
+
+>>>>>>> 1dec76b465e21cc94e634317a573508306689db8
                 <div className="row bg-white mt-3 rounded-3 py-3">
                     <div className="col-4">
                         <Select options={categories} value={chosenCategory} onChange={handleCategoryChange} defaultValue={chosenCategory}/>  
@@ -167,7 +226,10 @@ export default function NomineeList({title,  permission}){
                                    
                                     {permission === "user" ? 
                                     
-                                        <Button variant="primary" onClick={() => handleVote(nominee.nomineeId)}>Vote</Button> 
+                                        //<Button variant="primary" onClick={() => handleVote(nominee.nomineeId)}>Vote</Button> 
+                                        <Button variant="primary" onClick={() => handleVote(nominee.nomineeId)} disabled={!token || usage.remaining === 0}>
+                                            {usage.remaining === 0 ? "No votes left" : "Vote"}
+                                        </Button>
                                     : 
                                       <div className="d-flex gap-2">
                                         <Button variant="warning" onClick={() => handleUpdate(nominee)}>Update</Button> 

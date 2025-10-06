@@ -1,6 +1,7 @@
 package com.backend.frammy.service;
 
 import com.backend.frammy.dto.VoteRequestDTO;
+import com.backend.frammy.exception.ObjectAlreadyExist;
 import com.backend.frammy.model.Nominee;
 import com.backend.frammy.model.User;
 import com.backend.frammy.model.Vote;
@@ -14,7 +15,9 @@ import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
+import java.time.Instant;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -30,7 +33,6 @@ class VoteServiceTest {
     @Test
     void createVote_savesVoteSuccessfully() {
         String authHeader = "Bearer token-abc";
-
         VoteRequestDTO dto = new VoteRequestDTO(1L);
 
         User user = new User();
@@ -39,10 +41,37 @@ class VoteServiceTest {
         when(jwtService.extractUserId("token-abc")).thenReturn(1L);
 
         when(nomineeRepo.findByNomineeId(1L)).thenReturn(nominee);
-        when(voteRepo.existsByUser_UserIdAndNominee_NomineeId(1L, 1L)).thenReturn(false);
+        //when(voteRepo.existsByUser_UserIdAndNominee_NomineeId(1L, 1L)).thenReturn(false);         //old before timestamp and daily vote limit
+        when(voteRepo.countByUser_UserIdAndCreatedAtBetween(
+                eq(1L),
+                any(Instant.class),
+                any(Instant.class)
+        )).thenReturn(0L);
 
         voteService.createVote(dto, authHeader);
 
         verify(voteRepo, times(1)).save(any(Vote.class));
     }
+
+    @Test
+    void createVote_throws_whenDailyLimitReached() {
+        String authHeader = "Bearer token-abc";
+        VoteRequestDTO dto = new VoteRequestDTO(1L);
+
+        User user = new User();
+        Nominee nominee = new Nominee();
+
+        when(jwtService.extractUserId("token-abc")).thenReturn(1L);
+        when(nomineeRepo.findByNomineeId(1L)).thenReturn(nominee);
+
+        when(voteRepo.countByUser_UserIdAndCreatedAtBetween(
+                eq(1L),
+                any(Instant.class),
+                any(Instant.class)
+        )).thenReturn(3L);
+
+        assertThrows(ObjectAlreadyExist.class, () -> voteService.createVote(dto, authHeader));
+        verify(voteRepo, never()).save(any(Vote.class));
+    }
+
 }
