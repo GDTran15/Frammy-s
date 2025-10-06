@@ -46,8 +46,8 @@ public class AlbumController {
 
     @PutMapping("{albumId}")
     public ResponseEntity<ApiResponse<String>> updateAlbum(@Valid @RequestBody AddAlbumDTORequest addAlbumDTORequest, @PathVariable Long albumId ){
-        albumService.updateAlbum(addAlbumDTORequest);
-        return ResponseEntity.ok(ApiResponse.success("Album successfully created"));
+        albumService.updateAlbum(addAlbumDTORequest,albumId);
+        return ResponseEntity.ok(ApiResponse.success("Album successfully updated"));
     }
 
 

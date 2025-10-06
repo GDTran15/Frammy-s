@@ -132,73 +132,7 @@ export default function UserManagement(){
                 </TabButton>,
             ]}/>
 
- {/*            <div className="user-management-container">
-                <h1 className="title">User Management</h1>
 
-                {loading && <p>Loading users...</p>}
-                {error && <p className="error">{error}</p>}
-
-                <div className="user-cards-wrapper">
-                    {users.map((user) => (
-                        <div key={user.userId} className="user-card">
-                            <div className="user-info">
-                                <div className="user-detail">
-                                    <p><strong>User ID: </strong></p>   
-                                    <p>{user.userId}</p>
-                                </div>
-                                <div className="user-detail">
-                                    <p><strong>Username: </strong></p>
-                                    <p>{user.username}</p>
-                                </div>
-                                <div className="user-detail">
-                                    <p><strong>Gmail: </strong></p>
-                                    <p>{user.gmail}</p>
-                                </div>
-                                <div className="user-detail">
-                                    <p><strong>Role: </strong></p>
-                                    <p>{user.role}</p>
-                                </div>
-                            </div>
-
-                            <div className="card-buttons">
-                                <button className="edit-button" onClick={() => {
-                                    setEditingUser(user);
-                                    setEditData({ username: user.username, gmail: user.gmail, password: "" });
-                                }}>Edit</button>
-                                <button className="delete-button" onClick={() => handleDelete(user.userId)}>Delete</button>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-
-                {editingUser && (
-                    <div className="modal-overlay">
-                        <div className="edit-modal">
-                            <h2>Edit User</h2>
-                            
-                            <div className="edit-form">
-                                <label>
-                                    Username:
-                                    <input type="text" value={editData.username} onChange={(e) => setEditData({ ...editData, username: e.target.value })} />
-                                </label>
-                                <label>
-                                    Gmail:
-                                    <input type="email" value={editData.gmail} onChange={(e) => setEditData({ ...editData, gmail: e.target.value })} />
-                                </label>
-                                <label>
-                                    Password:
-                                    <input type="password" value={editData.password} onChange={(e) => setEditData({ ...editData, password: e.target.value })} />
-                                </label>
-                            </div>
-
-                            <div className="modal-buttons">
-                                <button onClick={handleEditUser}>Save</button>
-                                <button onClick={() => setEditingUser(null)}>Cancel</button>
-                            </div>
-                        </div>
-                    </div>
-                )}
-            </div> */}
             <div className="container my-4">
       <h1 className="mb-4">User Management</h1>
 
@@ -247,7 +181,7 @@ export default function UserManagement(){
         ))}
       </div>
 
-      {/* Edit Modal */}
+     
       <Modal show={!!editingUser} onHide={() => setEditingUser(null)}>
         <Modal.Header closeButton>
           <Modal.Title>Edit User</Modal.Title>

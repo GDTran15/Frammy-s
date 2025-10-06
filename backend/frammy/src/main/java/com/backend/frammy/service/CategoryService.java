@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,12 +27,31 @@ public class CategoryService {
         }
         Category category = new Category();
         category.setCategoryName(addCategoryRequest.categoryName());
-
+        categoryRepo.save(category);
     }
 
     public List<CategoryAPIResponseDTO> getCategories() {
         return categoryRepo.findAll()
                 .stream().map(categoryToDTO)
                 .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public void removeCategory(Long categoryId) {
+        categoryRepo.removeByCategoryId(categoryId);
+
+    }
+
+    public void updateCategory(AddCategoryRequest addCategoryRequest, Long categoryId) {
+
+        boolean exist = categoryRepo.existsByCategoryName(addCategoryRequest.categoryName());
+
+        if (exist){
+            throw new ObjectAlreadyExist("This category already exist");
+        }
+        Category category =categoryRepo.findByCategoryId(categoryId);
+        category.setCategoryName(addCategoryRequest.categoryName());
+        categoryRepo.save(category);
+
     }
 }

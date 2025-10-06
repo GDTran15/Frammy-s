@@ -8,8 +8,7 @@ export default function ArtistManagement(){
     
     return(
         <>
-            <ArtistForm usage="Add" title="Add Artist"/>  
-           <ArtistList/>
+            <ArtistList/>
         </>
     )
 }

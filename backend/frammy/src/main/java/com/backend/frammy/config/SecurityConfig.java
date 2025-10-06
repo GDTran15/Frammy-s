@@ -33,7 +33,7 @@ public class SecurityConfig {
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
         http.csrf(customizer -> customizer.disable())
                 .cors(c -> {
-                    CorsConfigurationSource source = request -> {
+                    CorsConfigurationSource source = request -> {//cors config allow GET,PUT,POST,DELETE to connect
                         CorsConfiguration configuration = new CorsConfiguration();
                         configuration.setAllowedOrigins(List.of("http://localhost:3000"));
                         configuration.setAllowedMethods(List.of("GET","POST","PUT","DELETE"));
@@ -44,7 +44,7 @@ public class SecurityConfig {
                     c.configurationSource(source);
                 })
                 .authorizeHttpRequests(request ->
-                        request.requestMatchers("/login", "/register")
+                        request.requestMatchers("/login", "/register")// allow access without authentication in this api
                                 .permitAll()
                                 .requestMatchers("/vote/**").hasAnyRole("USER", "ADMIN")
                                 .anyRequest().authenticated())

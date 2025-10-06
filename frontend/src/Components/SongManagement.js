@@ -8,7 +8,6 @@ export default function SongManagement(){
     return(
         
         <>
-            <SongForm usage="Add" title="Add Song"/>
             <SongList/>
         </>
     )
