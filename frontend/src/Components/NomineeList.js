@@ -172,12 +172,11 @@ export default function NomineeList({title,  permission}){
         usage.remaining === 1 ? "text-warning" : "text-danger";
 
     return(
-        <>
-<<<<<<< HEAD
-            <NomineeForm title="Add Nominee" usage="Add"/>
+       <>
 
+            
              <div className="container">
-=======
+
             <div className="container">
                 <div className="row mt-3">
                     <div className="col">
@@ -192,7 +191,7 @@ export default function NomineeList({title,  permission}){
                     </div>
                 </div>
 
->>>>>>> 1dec76b465e21cc94e634317a573508306689db8
+
                 <div className="row bg-white mt-3 rounded-3 py-3">
                     <div className="col-4">
                         <Select options={categories} value={chosenCategory} onChange={handleCategoryChange} defaultValue={chosenCategory}/>  
@@ -255,6 +254,8 @@ export default function NomineeList({title,  permission}){
             }
             
         
-        </>
+       </div>
+</>
     )
-}
+}  
+    
