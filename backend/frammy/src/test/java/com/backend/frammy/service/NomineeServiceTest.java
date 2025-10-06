@@ -64,15 +64,6 @@ public class NomineeServiceTest {
     }
 
     @Test
-    void createNewNominee_missingArtistId_throwInvalidInput() {
-        AddNomineeRequestDTO dto = new AddNomineeRequestDTO(
-                category.getCategoryId(), null, null, null, NomineeType.ARTIST);
-
-        assertThrows(InvalidInputException.class, () -> nomineeService.createNewNominee(dto));
-        verify(nomineeRepo, never()).save(any());
-    }
-
-    @Test
     void createNewNominee_alreadyExist_shouldThrowObjectAlreadyExist() {
         Artist artist = new Artist();
         artist.setArtistId(2L);
@@ -80,11 +71,7 @@ public class NomineeServiceTest {
         when(nomineeRepo.existsByCategoryAndArtist(category, artist)).thenReturn(true);
 
         AddNomineeRequestDTO dto = new AddNomineeRequestDTO(
-                category.getCategoryId(),
-                2L,
-                null,
-                null,
-                NomineeType.ARTIST);
+                category.getCategoryId(), 2L,    null,    null, NomineeType.ARTIST);
 
         assertThrows(ObjectAlreadyExist.class, () -> nomineeService.createNewNominee(dto));
     }

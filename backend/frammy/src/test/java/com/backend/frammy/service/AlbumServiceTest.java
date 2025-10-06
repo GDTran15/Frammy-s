@@ -63,7 +63,7 @@ public class AlbumServiceTest {
         Album album = new Album();
         album.setAlbumName("Album1");
         when(albumRepo.findAll()).thenReturn(List.of(album));
-        when(albumToDTO.apply(album)).thenReturn(new ResponseGetAlbumDTO(1L,"Album1",LocalDate.now()));
+        when(albumToDTO.apply(album)).thenReturn(new ResponseGetAlbumDTO(1L,"Album1",LocalDate.now(),"Pop"));
 
         List<ResponseGetAlbumDTO> result = albumService.getAlbums();
 
@@ -78,7 +78,7 @@ public class AlbumServiceTest {
         PageRequest pageable = PageRequest.of(0, 10);
 
         when(albumRepo.findAll(pageable)).thenReturn(albumPage);
-        when(albumToDTO.apply(album)).thenReturn(new ResponseGetAlbumDTO(1L,"Album1",LocalDate.now()));
+        when(albumToDTO.apply(album)).thenReturn(new ResponseGetAlbumDTO(1L,"Album1",LocalDate.now(),"Pop"));
 
         Page<ResponseGetAlbumDTO> result = albumService.getAlbumInPage(pageable);
 
