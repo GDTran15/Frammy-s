@@ -2,7 +2,6 @@ package com.backend.frammy.service;
 
 import com.backend.frammy.dto.AddNomineeRequestDTO;
 import com.backend.frammy.dto.ResponseGetAllNomineeDTO;
-import com.backend.frammy.exception.InvalidInputException;
 import com.backend.frammy.exception.ObjectAlreadyExist;
 import com.backend.frammy.model.*;
 import com.backend.frammy.repo.*;
@@ -11,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -123,12 +121,12 @@ public class NomineeServiceTest {
                 null,
                 null,
                 null             )));
-        when(nomineeRepo.findAllNominateWithInformation(any(PageRequest.class))).thenReturn(page);
+        when(nomineeRepo.findAllNominateWithInformation(any(PageRequest.class), categoryId)).thenReturn(page);
 
-        Page<ResponseGetAllNomineeDTO> result = nomineeService.getNominees(PageRequest.of(0, 5));
+        Page<ResponseGetAllNomineeDTO> result = nomineeService.getNominees(PageRequest.of(0, 5), categoryId);
 
         assertThat(result.getContent()).hasSize(1);
-        verify(nomineeRepo).findAllNominateWithInformation(any(PageRequest.class));
+        verify(nomineeRepo).findAllNominateWithInformation(any(PageRequest.class), categoryId);
     }
 
     @Test
