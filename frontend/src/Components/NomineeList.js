@@ -17,7 +17,8 @@ export default function NomineeList({title,  permission}){
     const [search,setSearch] = useState("")
     const [updateOpen, setUpdateOpen] = useState(false); 
     const [updateData, setUpdateData] = useState(null);
-    console.log(search);
+
+ 
     
 //___________________________________________________________________________
 
@@ -54,7 +55,7 @@ export default function NomineeList({title,  permission}){
 //___________________________________________________________________________
     const getNominee = () => {
         
-        axios.get(`http://localhost:8080/nominee?page=${page}&size=9`,{
+        axios.get(`http://localhost:8080/nominee/category/${chosenCategory.value}?page=${page}&size=9`,{
             headers:{
                 "Authorization": `Bearer ${token}`
             }
@@ -70,7 +71,11 @@ export default function NomineeList({title,  permission}){
 
 
     console.log(updateData);
-    useEffect(() =>{ getNominee();},[page,token]) 
+    useEffect(() =>{
+        if(chosenCategory){ 
+        getNominee();
+        }
+    },[page,token,chosenCategory]) 
 
     const handleDelete = (id) =>{
         const confirm = window.confirm("Do you want to delete this nominee?")
@@ -91,6 +96,7 @@ export default function NomineeList({title,  permission}){
     }   
 
     const handleCategoryChange = (e) => {
+            console.log("e:" + e)
             setChosenCategories(e)
             
     }
@@ -207,12 +213,11 @@ export default function NomineeList({title,  permission}){
                 <div className="row bg-white mt-3 rounded-3 py-3">
                     <h3 className="mb-3">{title}</h3>
                     
-                    {nomineeList.filter((nominee => chosenCategory !== null && nominee.nomineeCategory === chosenCategory.label
-                        && (search === "" || nominee.artistName?.toLowerCase().includes(search.toLowerCase()) ||
+                    {nomineeList.filter(nominee => (search === "" || nominee.artistName?.toLowerCase().includes(search.toLowerCase()) ||
                                 nominee.songName?.toLowerCase().includes(search.toLowerCase()) ||
                                 nominee.albumName?.toLowerCase().includes(search.toLowerCase()))
 
-                    )).map((nominee) =>(
+                    ).map((nominee) =>(
                         <div className="col-4 mt-2">
                             <Card key={nominee.nomineeId}  className="h-100">
                                 <Card.Body>

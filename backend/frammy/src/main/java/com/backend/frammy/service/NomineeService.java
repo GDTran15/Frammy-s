@@ -13,8 +13,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-
 @Service
 @RequiredArgsConstructor
 public class NomineeService {
@@ -32,8 +30,8 @@ public class NomineeService {
         nomineeRepo.save(nominee);
     }
 
-    public Page<ResponseGetAllNomineeDTO> getNominees(Pageable pageable) {
-        return nomineeRepo.findAllNominateWithInformation(pageable);
+    public Page<ResponseGetAllNomineeDTO> getNominees(Pageable pageable, Long categoryId) {
+        return nomineeRepo.findAllNominateWithInformation(pageable,categoryId);
     }
 
     public void deleteNominee(Long nomineeId) {
