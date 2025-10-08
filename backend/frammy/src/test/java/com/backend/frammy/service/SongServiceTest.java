@@ -99,7 +99,7 @@ public class SongServiceTest {
         when(songRepo.findAll(pageable)).thenReturn(songPage);
         when(songToDTO.apply(song)).thenReturn(new ResponseGetSongDTO(1L,"Song1",LocalDate.now(),"Pop"));
 
-        Page<ResponseGetSongDTO> result = songService.getSongInPage(pageable);
+        Page<ResponseGetSongDTO> result = songService.getSongInPage(pageable, search);
 
         assertThat(result.getContent()).hasSize(1);
     }

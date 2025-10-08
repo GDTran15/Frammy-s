@@ -13,9 +13,10 @@ export default function ArtistList({title}){
     const [updateOpen, setUpdateOpen] = useState(false); 
     const [updateData, setUpdateData] = useState(null);
     const token = localStorage.getItem("token");
+    const [search,setSearch] = useState("");
 
     const fetchData = () =>{
-        axios.get(`http://localhost:8080/artists/page?page=${page}&size=9`,{
+        axios.get(`http://localhost:8080/artists/page?page=${page}&size=9&search=${search}`,{
             headers:{
             "Authorization": `Bearer ${token}`
         }
@@ -27,7 +28,7 @@ export default function ArtistList({title}){
         })
     }
 
-    useEffect(() => fetchData(),[page,token]) 
+    useEffect(() => fetchData(),[page,token,search]) 
 
     const handleDelete = (id) =>{
         const confirm = window.confirm("Do you want to delete this artist?")
@@ -54,6 +55,13 @@ export default function ArtistList({title}){
         <>
             <ArtistForm usage="Add" title="Add Artist"/> 
              <div className="container">
+                <div className="row bg-white mt-3 rounded-3 py-3">
+                    <div className="col-4">
+                        <form className="d-flex">
+                            <input className="form-control me-2 border-secondary-subtle" value={search} placeholder="Search" type="search" onChange={(e) => setSearch(e.target.value) }/>
+                        </form>
+                    </div>
+                </div>
                 <div className="row bg-white mt-3 rounded-3 py-3">
                     <h3 className="mb-3">{title}</h3>
                     {artistList.map((artist) =>(

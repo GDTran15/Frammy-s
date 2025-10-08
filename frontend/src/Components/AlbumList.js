@@ -13,10 +13,11 @@ export default function AlbumList({title}){
     const token = localStorage.getItem("token");
     const [updateOpen, setUpdateOpen] = useState(false);
     const [updateData,setUpdateData] = useState(false);
+    const [search,setSearch] = useState("");
 
     const fetchAlbum = 
         () =>{
-        axios.get(`http://localhost:8080/albums/page?page=${page}&size=9`,{
+        axios.get(`http://localhost:8080/albums/page?page=${page}&size=9&search=${search}`,{
             headers:{
             "Authorization": `Bearer ${token}`
         }
@@ -29,7 +30,7 @@ export default function AlbumList({title}){
     }
     
 
-    useEffect(() => fetchAlbum(),[page,token ]) 
+    useEffect(() => fetchAlbum(),[page,token,search ]) 
 
     const handleDelete = (id) =>{
         const confirm = window.confirm("Do you want to delete this album?")
@@ -53,8 +54,15 @@ export default function AlbumList({title}){
     }
     return(
         <>
-            <AlbumForm title="Add Album" usage="Add"/>
+            <AlbumForm title="Add Album" usage="Add" fetchAlbum={fetchAlbum}/>
              <div className="container">
+                 <div className="row bg-white mt-3 rounded-3 py-3">
+                    <div className="col-4">
+                        <form className="d-flex">
+                            <input className="form-control me-2 border-secondary-subtle" value={search} placeholder="Search" type="search" onChange={(e) => setSearch(e.target.value) }/>
+                        </form>
+                    </div>
+                </div>
                 <div className="row bg-white mt-3 rounded-3 py-3">
                     <h3 className="mb-3">{title}</h3>
                     {albumList.map((album) =>(

@@ -30,6 +30,15 @@ select new com.backend.frammy.dto.ResponseGetAllNomineeDTO(
             left join n.song s
             left join n.album al
             where (:categoryId is null or n.category.categoryId = :categoryId)
+            and (
+                :search is null or
+                 (n.nomineeType = 'ARTIST' and lower(a.artistName) like lower(concat ('%',:search,'%')))
+                 or
+                 (n.nomineeType = 'SONG' and lower(s.songName) like lower(concat ('%',:search,'%')))
+                 or
+                 (n.nomineeType = 'ALBUM' and lower(al.albumName) like lower(concat ('%',:search,'%')))
+             
+            )
 """)
-    Page<ResponseGetAllNomineeDTO> findAllNominateWithInformation(Pageable pageable, @Param("categoryId") Long categoryId);
+    Page<ResponseGetAllNomineeDTO> findAllNominateWithInformation(Pageable pageable, @Param("categoryId") Long categoryId,@Param("search") String search);
 }

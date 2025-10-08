@@ -121,12 +121,12 @@ public class NomineeServiceTest {
                 null,
                 null,
                 null             )));
-        when(nomineeRepo.findAllNominateWithInformation(any(PageRequest.class), categoryId)).thenReturn(page);
+        when(nomineeRepo.findAllNominateWithInformation(any(PageRequest.class), categoryId, search)).thenReturn(page);
 
-        Page<ResponseGetAllNomineeDTO> result = nomineeService.getNominees(PageRequest.of(0, 5), categoryId);
+        Page<ResponseGetAllNomineeDTO> result = nomineeService.getNominees(PageRequest.of(0, 5), categoryId, search);
 
         assertThat(result.getContent()).hasSize(1);
-        verify(nomineeRepo).findAllNominateWithInformation(any(PageRequest.class), categoryId);
+        verify(nomineeRepo).findAllNominateWithInformation(any(PageRequest.class), categoryId, search);
     }
 
     @Test

@@ -55,7 +55,7 @@ export default function NomineeList({title,  permission}){
 //___________________________________________________________________________
     const getNominee = () => {
         
-        axios.get(`http://localhost:8080/nominee/category/${chosenCategory.value}?page=${page}&size=9`,{
+        axios.get(`http://localhost:8080/nominee/category/${chosenCategory.value}?page=${page}&size=9&search=${search}`,{
             headers:{
                 "Authorization": `Bearer ${token}`
             }
@@ -75,7 +75,7 @@ export default function NomineeList({title,  permission}){
         if(chosenCategory){ 
         getNominee();
         }
-    },[page,token,chosenCategory]) 
+    },[page,token,chosenCategory,search]) 
 
     const handleDelete = (id) =>{
         const confirm = window.confirm("Do you want to delete this nominee?")
@@ -180,7 +180,7 @@ export default function NomineeList({title,  permission}){
     return(
        <>
 
-            
+           {permission === "user" ? "" : <NomineeForm title="Add Nominee" usage="Add" fetchNominee={getNominee}/> } 
              <div className="container">
 
             <div className="container">
@@ -205,7 +205,6 @@ export default function NomineeList({title,  permission}){
                     <div className="col-4">
                         <form className="d-flex">
                             <input className="form-control me-2 border-secondary-subtle" value={search} placeholder="Search" type="search" onChange={(e) => setSearch(e.target.value) }/>
-                            <button className="btn btn-outline-success" type="submit">Search</button>
                         </form>
                     </div>
                 </div>
@@ -213,11 +212,7 @@ export default function NomineeList({title,  permission}){
                 <div className="row bg-white mt-3 rounded-3 py-3">
                     <h3 className="mb-3">{title}</h3>
                     
-                    {nomineeList.filter(nominee => (search === "" || nominee.artistName?.toLowerCase().includes(search.toLowerCase()) ||
-                                nominee.songName?.toLowerCase().includes(search.toLowerCase()) ||
-                                nominee.albumName?.toLowerCase().includes(search.toLowerCase()))
-
-                    ).map((nominee) =>(
+                    {nomineeList.map((nominee) =>(
                         <div className="col-4 mt-2">
                             <Card key={nominee.nomineeId}  className="h-100">
                                 <Card.Body>

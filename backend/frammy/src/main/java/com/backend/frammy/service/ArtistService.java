@@ -50,12 +50,17 @@ public class ArtistService {
         artistRepo.deleteById(artistId);
     }
 
-    public Page<ResponseGetArtistDTO> getArtistInPage(Pageable pageable) {
+    public Page<ResponseGetArtistDTO> getArtistInPage(Pageable pageable, String search) {
         Page<Artist> artistPage = artistRepo.findAll(pageable);
+
         List<ResponseGetArtistDTO> artistListDTO = artistPage.stream().map(artistToDTO)// map list of artist to List of DTO
                 .toList();
 
         return new PageImpl<>(artistListDTO,pageable,artistPage.getTotalElements());
+    }
+    public Page<ResponseGetArtistDTO> getArtistInPages(Pageable pageable, String search) {
+
+        return artistRepo.findAllArtistInPage(pageable,search);
     }
 
     public void updateArtist(Long artistId, @Valid CreateArtistRequestDTO createArtistRequestDTO) {

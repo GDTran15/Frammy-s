@@ -30,8 +30,8 @@ public class NomineeService {
         nomineeRepo.save(nominee);
     }
 
-    public Page<ResponseGetAllNomineeDTO> getNominees(Pageable pageable, Long categoryId) {
-        return nomineeRepo.findAllNominateWithInformation(pageable,categoryId);
+    public Page<ResponseGetAllNomineeDTO> getNominees(Pageable pageable, Long categoryId, String search) {
+        return nomineeRepo.findAllNominateWithInformation(pageable,categoryId,search);
     }
 
     public void deleteNominee(Long nomineeId) {

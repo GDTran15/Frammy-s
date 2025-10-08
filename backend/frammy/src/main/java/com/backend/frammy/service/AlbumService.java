@@ -55,12 +55,8 @@ public class AlbumService {
                     .collect(Collectors.toList());
     }
 
-    public Page<ResponseGetAlbumDTO> getAlbumInPage(Pageable pageable) {
-        Page<Album> albumPage = albumRepo.findAll(pageable);
-        List<ResponseGetAlbumDTO> albumDTOList = albumPage.stream().map(albumToDTO)
-                .toList();// map list of album to list of dto
-
-        return new PageImpl<>(albumDTOList,pageable,albumPage.getTotalElements());
+    public Page<ResponseGetAlbumDTO> getAlbumInPage(Pageable pageable, String search) {
+        return albumRepo.findAllByPageWithSearch(pageable,search);
     }
 
     public void updateAlbum(@Valid AddAlbumDTORequest addAlbumDTORequest, Long albumId) {

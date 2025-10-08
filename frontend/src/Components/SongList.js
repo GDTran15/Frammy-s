@@ -13,11 +13,12 @@ export default function SongList({title}){
     const [totalPage,setTotalPage] = useState(0);
      const [updateOpen, setUpdateOpen] = useState(false); 
     const [updateData, setUpdateData] = useState(null);
+    const [search, setSearch] = useState("");
     const token = localStorage.getItem("token");
 
 
     const fetchSong = () => {
-        axios.get(`http://localhost:8080/songs/page?page=${page}&size=9`,{
+        axios.get(`http://localhost:8080/songs/page?page=${page}&size=9&search=${search}`,{
             headers:{
             "Authorization": `Bearer ${token}`
         }
@@ -28,7 +29,7 @@ export default function SongList({title}){
               console.log(res);
         })
     }
-    useEffect(() => fetchSong(),[page,token]); 
+    useEffect(() => fetchSong(),[page,token,search]); 
 
     const handleDelete = (id) =>{
         const confirm = window.confirm("Do you want to delete this song?")
@@ -55,6 +56,13 @@ export default function SongList({title}){
         <>
              <SongForm usage="Add" title="Add Song"/>
              <div className="container">
+                 <div className="row bg-white mt-3 rounded-3 py-3">
+                    <div className="col-4">
+                        <form className="d-flex">
+                            <input className="form-control me-2 border-secondary-subtle" value={search} placeholder="Search" type="search" onChange={(e) => setSearch(e.target.value) }/>
+                        </form>
+                    </div>
+                </div>
                 <div className="row bg-white mt-3 rounded-3 py-3">
                     <h3 className="mb-3">{title}</h3>
                     {songList.map((song) =>(

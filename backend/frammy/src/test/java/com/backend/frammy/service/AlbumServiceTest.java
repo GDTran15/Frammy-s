@@ -2,14 +2,11 @@ package com.backend.frammy.service;
 
 import com.backend.frammy.dto.AddAlbumDTORequest;
 import com.backend.frammy.dto.ResponseGetAlbumDTO;
-import com.backend.frammy.exception.InvalidInputException;
-import com.backend.frammy.exception.ObjectAlreadyExist;
 import com.backend.frammy.mapper.AlbumToDTO;
 import com.backend.frammy.model.Album;
 import com.backend.frammy.model.Artist;
 import com.backend.frammy.repo.AlbumRepo;
 import com.backend.frammy.repo.ArtistRepo;
-import com.backend.frammy.service.AlbumService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -80,7 +77,7 @@ public class AlbumServiceTest {
         when(albumRepo.findAll(pageable)).thenReturn(albumPage);
         when(albumToDTO.apply(album)).thenReturn(new ResponseGetAlbumDTO(1L,"Album1",LocalDate.now(),"Pop"));
 
-        Page<ResponseGetAlbumDTO> result = albumService.getAlbumInPage(pageable);
+        Page<ResponseGetAlbumDTO> result = albumService.getAlbumInPage(pageable, search);
 
         assertThat(result.getContent()).hasSize(1);
     }
