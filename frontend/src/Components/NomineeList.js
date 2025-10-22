@@ -3,13 +3,13 @@ import { useEffect, useState } from "react";
 import Select from "react-select"
 import { Card } from "react-bootstrap";
 import PagiComponent from "./PagiComponenet";
-import  { Button } from "react-bootstrap";
+import  { Button,Modal } from "react-bootstrap";
 import NomineeForm from "./NomineeForm";
 import "../CSS/voting.css";
 
 export default function NomineeList({title,  permission}){
     const [nomineeList,setNomineeList] = useState([]);
-    const [page,setPage] = useState("0");
+    const [page,setPage] = useState(0);
     const [totalPage,setTotalPage] = useState(0)
     const [categories,setCategories] = useState(0)
     const [chosenCategory,setChosenCategories] = useState(null) 
@@ -17,7 +17,8 @@ export default function NomineeList({title,  permission}){
     const [search,setSearch] = useState("")
     const [updateOpen, setUpdateOpen] = useState(false); 
     const [updateData, setUpdateData] = useState(null);
-    console.log(search);
+    const [showAdd,setShowAdd] = useState(false)
+ 
     
 //___________________________________________________________________________
 
@@ -57,7 +58,7 @@ export default function NomineeList({title,  permission}){
 //___________________________________________________________________________
     const getNominee = () => {
         
-        axios.get(`http://localhost:8080/nominee?page=${page}&size=9`,{
+        axios.get(`http://localhost:8080/nominee/category/${chosenCategory.value}?page=${page}&size=9&search=${search}`,{
             headers:{
                 "Authorization": `Bearer ${token}`
             }
@@ -73,7 +74,11 @@ export default function NomineeList({title,  permission}){
 
 
     console.log(updateData);
-    useEffect(() =>{ getNominee();},[page,token]) 
+    useEffect(() =>{
+        if(chosenCategory){ 
+        getNominee();
+        }
+    },[page,token,chosenCategory,search]) 
 
     const handleDelete = (id) =>{
         const confirm = window.confirm("Do you want to delete this nominee?")
@@ -94,6 +99,7 @@ export default function NomineeList({title,  permission}){
     }   
 
     const handleCategoryChange = (e) => {
+            console.log("e:" + e)
             setChosenCategories(e)
             
     }
@@ -176,9 +182,26 @@ export default function NomineeList({title,  permission}){
 
     return(
        <>
+                
 
-            
-             <div className="container">
+            <Modal show={showAdd} onHide={() => setShowAdd(false)} animation={false}
+                size="lg"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered>
+                <Modal.Header closeButton>
+                <Modal.Title>Add Nominee</Modal.Title>
+                </Modal.Header>
+                <Modal.Body><NomineeForm  usage="Add" fetchNominee={getNominee}/>  </Modal.Body>
+                <Modal.Footer>
+                <Button variant="secondary" onClick={() => setShowAdd(false)}>
+                    Close
+                </Button>
+                </Modal.Footer>
+            </Modal>
+
+           
+           
+
 
             <div className="container">
                 {permission === "user" && (
@@ -196,27 +219,29 @@ export default function NomineeList({title,  permission}){
                     </div>
                 )}
                 <div className="row bg-white mt-3 rounded-3 py-3">
+=======
+                
+
                     <div className="col-4">
                         <Select options={categories} value={chosenCategory} onChange={handleCategoryChange} defaultValue={chosenCategory}/>  
                     </div>
                     <div className="col-4">
                         <form className="d-flex">
-                            <input className="form-control me-2 border-secondary-subtle" value={search} placeholder="Search" type="search" onChange={(e) => setSearch(e.target.value) }/>
-                            <button className="btn btn-outline-success" type="submit">Search</button>
+                            <input className="form-control  border-secondary-subtle" value={search} placeholder="Search for the nominee" type="search" onChange={(e) => setSearch(e.target.value) }/>
                         </form>
+                    
                     </div>
+                    <div className="col-4">{permission === "user" ? "" : <Button  className=" w-100" variant="warning" onClick={() => setShowAdd(true)}>
+                            Add nominee
+                        </Button>}</div>
+                    
                 </div>
 
                 <div className="row bg-white mt-3 rounded-3 py-3">
                     <h3 className="mb-3">{title}</h3>
                     
-                    {nomineeList.filter((nominee => chosenCategory !== null && nominee.nomineeCategory === chosenCategory.label
-                        && (search === "" || nominee.artistName?.toLowerCase().includes(search.toLowerCase()) ||
-                                nominee.songName?.toLowerCase().includes(search.toLowerCase()) ||
-                                nominee.albumName?.toLowerCase().includes(search.toLowerCase()))
-
-                    )).map((nominee) =>(
-                        <div className="col-4 mt-2">
+                    {nomineeList.map((nominee) =>(
+                        <div className="col-md-4 mt-2">
                             <Card key={nominee.nomineeId}  className="h-100">
                                 <Card.Body>
                                     <Card.Title>{nominee.artistName || nominee.songName || nominee.albumName}</Card.Title>
@@ -246,15 +271,23 @@ export default function NomineeList({title,  permission}){
                     <PagiComponent  page={page} totalPage={totalPage} onChange={setPage}  />
                     </div>
                 </div>
-            </div>
             
-            {
-                updateOpen && (
-                 
-                            <NomineeForm currentNominee={updateData} title="Update Nominee" usage="Update"/>
-                       
-                )
-            }
+            
+           
+             <Modal show={updateOpen} onHide={() => setUpdateOpen(false)} animation={false}
+                size="lg"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered>
+                <Modal.Header closeButton>
+                <Modal.Title>Update Nominee</Modal.Title>
+                </Modal.Header>
+                <Modal.Body><NomineeForm currentNominee={updateData}  usage="Update"/> </Modal.Body>
+                <Modal.Footer>
+                <Button variant="secondary" onClick={() => setUpdateOpen(false)}>
+                    Close
+                </Button>
+                </Modal.Footer>
+            </Modal>
             
         
        </div>

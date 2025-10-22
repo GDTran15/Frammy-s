@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -31,7 +32,16 @@ select new com.backend.frammy.dto.ResponseGetAllNomineeDTO(
             left join n.artist a
             left join n.song s
             left join n.album al
-            
+            where (:categoryId is null or n.category.categoryId = :categoryId)
+            and (
+                :search is null or
+                 (n.nomineeType = 'ARTIST' and lower(a.artistName) like lower(concat ('%',:search,'%')))
+                 or
+                 (n.nomineeType = 'SONG' and lower(s.songName) like lower(concat ('%',:search,'%')))
+                 or
+                 (n.nomineeType = 'ALBUM' and lower(al.albumName) like lower(concat ('%',:search,'%')))
+             
+            )
 """)
     Page<ResponseGetAllNomineeDTO> findAllNominateWithInformation(Pageable pageable);
 
@@ -56,5 +66,8 @@ select new com.backend.frammy.dto.ResponseGetAllNomineeDTO(
     """, nativeQuery = true)
     List<Object[]> findWeeklyResultSummary();
 
+
+
+    Page<ResponseGetAllNomineeDTO> findAllNominateWithInformation(Pageable pageable, @Param("categoryId") Long categoryId,@Param("search") String search);
 
 }

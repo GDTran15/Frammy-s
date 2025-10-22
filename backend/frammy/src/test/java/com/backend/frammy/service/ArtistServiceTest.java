@@ -8,12 +8,10 @@ import com.backend.frammy.mapper.DtoToArtist;
 import com.backend.frammy.model.Artist;
 
 import com.backend.frammy.repo.ArtistRepo;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -99,7 +97,7 @@ public class ArtistServiceTest {
         when(artistRepo.findAll(pageable)).thenReturn(artistPage);
         when(artistToDTO.apply(artist)).thenReturn(new ResponseGetArtistDTO(1L, "MichaelTran", "Young Boy", "No awards"));
 
-        Page<ResponseGetArtistDTO> result = artistService.getArtistInPage(pageable);
+        Page<ResponseGetArtistDTO> result = artistService.getArtistInPage(pageable, search);
 
         assertEquals(1, result.getTotalElements());
         assertEquals("MichaelTran", result.getContent().get(0).artistName());

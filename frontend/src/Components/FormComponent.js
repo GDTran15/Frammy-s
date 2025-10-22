@@ -1,4 +1,4 @@
-export default function FormComponent({title,subTitle,optional,children}){
+export default function FormComponent({title,subTitle,optional,children,link}){
     return(
         <>
         <div className="d-flex justify-content-center align-items-center vh-100"> 
@@ -14,7 +14,7 @@ export default function FormComponent({title,subTitle,optional,children}){
                         <h6 className="card-subtitle mb-2 text-center text-body-tertiary mb-4" >{subTitle}</h6>
                         {children}
                     <div className="text-center my-4">
-                      <a href="" className="link-signin">{optional}</a>
+                      <a href={link} className="link-signin">{optional}</a>
                     </div>
                     </div>
                    </div>    

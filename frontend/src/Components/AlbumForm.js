@@ -14,6 +14,7 @@ export default function AlbumForm({currentAlbum,title,usage,fetchAlbum}){
     console.log(currentAlbum);
     const [artist,setArtist] = useState(currentAlbum?.artist || "");
     const [error,setError] = useState("");
+    const [validationError,setValiationError] = useState({});
     
 
 
@@ -44,7 +45,11 @@ export default function AlbumForm({currentAlbum,title,usage,fetchAlbum}){
                 alert(res.data.data);
                 fetchAlbum();
             }).catch((error) => {
-                setError(error.response.data.message)
+                if(error.response.data.message){
+            setError(error.response.data.message);
+            }    else  {
+            setValiationError(error.response.data)
+            }
             })
         }
 
@@ -81,6 +86,7 @@ export default function AlbumForm({currentAlbum,title,usage,fetchAlbum}){
                                    inputType="text"
                                    inputValue={albumName}
                                    placeholderValue="Enter Album name"
+                                   validationError={validationError.albumName}
                                    />
                                    <InputComponent 
                                    labelText="Album Genre"
@@ -88,6 +94,7 @@ export default function AlbumForm({currentAlbum,title,usage,fetchAlbum}){
                                    inputType="text"
                                    inputValue={albumGenre}
                                    placeholderValue="Enter Album genre"
+                                   validationError={validationError.albumGenre}
                                    />
                                    <InputComponent 
                                    labelText="Release Date"
@@ -95,8 +102,11 @@ export default function AlbumForm({currentAlbum,title,usage,fetchAlbum}){
                                    inputType="date"
                                    inputValue={releaseDate}
                                    placeholderValue="Enter Album genre"
+                                   validationError={validationError.releaseDate}
                                    />
-                                   <label className="">Owner of this album</label>
+                                  <div className="d-flex justify-content-between"><label className="">Owner of this album</label>
+                                    {validationError.artistId && <p className="mb-2 text-danger">*{validationError.artistId}</p>}
+                                    </div>
                                    <Select options={artistList} value={artist} onChange={handleChange} onMenuOpen={fetchArtist}/>
                                    
                                   

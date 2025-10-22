@@ -45,10 +45,11 @@ public class ArtistController {
     @GetMapping("/page")
     public ResponseEntity<ApiResponse<PagedModel<ResponseGetArtistDTO>>> getAllArtistInPagination(
             @RequestParam(value = "page", defaultValue = "0") int page,
-            @RequestParam(value = "size", defaultValue = "9") int size
+            @RequestParam(value = "size", defaultValue = "9") int size,
+            @RequestParam(value = "search", defaultValue = "") String search
     )  {
         Pageable pageable = PageRequest.of(page, size);
-        Page<ResponseGetArtistDTO> pagedModel = artistService.getArtistInPage(pageable);
+        Page<ResponseGetArtistDTO> pagedModel = artistService.getArtistInPages(pageable,search);
         return ResponseEntity.ok(ApiResponse.success(new PagedModel<>(pagedModel)));
     }
 

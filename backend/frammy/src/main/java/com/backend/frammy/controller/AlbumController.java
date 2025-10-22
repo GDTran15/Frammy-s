@@ -35,12 +35,13 @@ public class AlbumController {
     }
 
     @GetMapping("/page")
-    public ResponseEntity<ApiResponse<PagedModel<ResponseGetAlbumDTO>>> getAllAlbumInPagination(
+    public ResponseEntity<ApiResponse<PagedModel<ResponseGetAlbumDTO>>> getAllAlbumInPagination( // request param to define pagination page
             @RequestParam(value = "page", defaultValue = "0") int page,
-            @RequestParam(value = "size", defaultValue = "9") int size
+            @RequestParam(value = "size", defaultValue = "9") int size,
+            @RequestParam(value = "search", defaultValue = "") String search
     )  {
         Pageable pageable = PageRequest.of(page, size);
-        Page<ResponseGetAlbumDTO> pagedModel = albumService.getAlbumInPage(pageable);
+        Page<ResponseGetAlbumDTO> pagedModel = albumService.getAlbumInPage(pageable,search);
         return ResponseEntity.ok(ApiResponse.success(new PagedModel<>(pagedModel)));
     }
 

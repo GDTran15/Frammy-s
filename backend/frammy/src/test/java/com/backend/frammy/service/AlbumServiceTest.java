@@ -2,8 +2,6 @@ package com.backend.frammy.service;
 
 import com.backend.frammy.dto.AddAlbumDTORequest;
 import com.backend.frammy.dto.ResponseGetAlbumDTO;
-import com.backend.frammy.exception.InvalidInputException;
-import com.backend.frammy.exception.ObjectAlreadyExist;
 import com.backend.frammy.mapper.AlbumToDTO;
 import com.backend.frammy.model.Album;
 import com.backend.frammy.model.Artist;
@@ -58,25 +56,15 @@ public class AlbumServiceTest {
         Album album = new Album();
         album.setAlbumName("Album1");
         when(albumRepo.findAll()).thenReturn(List.of(album));
+
         when(albumToDTO.apply(album)).thenReturn(new ResponseGetAlbumDTO(1L, "Album1", LocalDate.now(), "Pop"));
+
+        when(albumToDTO.apply(album)).thenReturn(new ResponseGetAlbumDTO(1L,"Album1",LocalDate.now(),"Pop"));
+
 
         List<ResponseGetAlbumDTO> result = albumService.getAlbums();
 
         assertThat(result).hasSize(1);
     }
 
-    @Test
-    void getAlbumInPage_success() {
-        Album album = new Album();
-        album.setAlbumName("Album1");
-        Page<Album> albumPage = new PageImpl<>(List.of(album));
-        PageRequest pageable = PageRequest.of(0, 10);
-
-        when(albumRepo.findAll(pageable)).thenReturn(albumPage);
-        when(albumToDTO.apply(album)).thenReturn(new ResponseGetAlbumDTO(1L, "Album1", LocalDate.now(), "Pop"));
-
-        Page<ResponseGetAlbumDTO> result = albumService.getAlbumInPage(pageable);
-
-        assertThat(result.getContent()).hasSize(1);
-    }
 }

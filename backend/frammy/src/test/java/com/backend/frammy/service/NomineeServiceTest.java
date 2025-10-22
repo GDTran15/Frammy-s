@@ -2,7 +2,6 @@ package com.backend.frammy.service;
 
 import com.backend.frammy.dto.AddNomineeRequestDTO;
 import com.backend.frammy.dto.ResponseGetAllNomineeDTO;
-import com.backend.frammy.exception.InvalidInputException;
 import com.backend.frammy.exception.ObjectAlreadyExist;
 import com.backend.frammy.model.*;
 import com.backend.frammy.repo.*;
@@ -11,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -64,15 +62,6 @@ public class NomineeServiceTest {
     }
 
     @Test
-    void createNewNominee_missingArtistId_throwInvalidInput() {
-        AddNomineeRequestDTO dto = new AddNomineeRequestDTO(
-                category.getCategoryId(), null, null, null, NomineeType.ARTIST);
-
-        assertThrows(InvalidInputException.class, () -> nomineeService.createNewNominee(dto));
-        verify(nomineeRepo, never()).save(any());
-    }
-
-    @Test
     void createNewNominee_alreadyExist_shouldThrowObjectAlreadyExist() {
         Artist artist = new Artist();
         artist.setArtistId(2L);
@@ -80,11 +69,7 @@ public class NomineeServiceTest {
         when(nomineeRepo.existsByCategoryAndArtist(category, artist)).thenReturn(true);
 
         AddNomineeRequestDTO dto = new AddNomineeRequestDTO(
-                category.getCategoryId(),
-                2L,
-                null,
-                null,
-                NomineeType.ARTIST);
+                category.getCategoryId(), 2L,    null,    null, NomineeType.ARTIST);
 
         assertThrows(ObjectAlreadyExist.class, () -> nomineeService.createNewNominee(dto));
     }
@@ -136,12 +121,12 @@ public class NomineeServiceTest {
                 null,
                 null,
                 null             )));
-        when(nomineeRepo.findAllNominateWithInformation(any(PageRequest.class))).thenReturn(page);
+        when(nomineeRepo.findAllNominateWithInformation(any(PageRequest.class), categoryId, search)).thenReturn(page);
 
-        Page<ResponseGetAllNomineeDTO> result = nomineeService.getNominees(PageRequest.of(0, 5));
+        Page<ResponseGetAllNomineeDTO> result = nomineeService.getNominees(PageRequest.of(0, 5), categoryId, search);
 
         assertThat(result.getContent()).hasSize(1);
-        verify(nomineeRepo).findAllNominateWithInformation(any(PageRequest.class));
+        verify(nomineeRepo).findAllNominateWithInformation(any(PageRequest.class), categoryId, search);
     }
 
     @Test

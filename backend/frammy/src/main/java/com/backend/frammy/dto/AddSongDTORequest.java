@@ -6,12 +6,13 @@ import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 public record AddSongDTORequest(
-        @NotBlank
+        @NotBlank(message = "Song name is require")
         String songName,
-        @NotNull
+        @NotNull(message = "Song release date is require")
         LocalDate releaseDate,
-        @NotBlank
+        @NotBlank(message = "Song genre is require")
         String songGenre,
+        @NotNull(message = "Song artist is require")
         Long artistId
 
 ) {

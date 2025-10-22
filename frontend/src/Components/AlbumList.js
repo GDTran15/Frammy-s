@@ -3,20 +3,21 @@ import { useEffect, useState } from "react";
 
 import { Card } from "react-bootstrap";
 import PagiComponent from "./PagiComponenet";
-import  { Button } from "react-bootstrap";
+import  { Button,Modal } from "react-bootstrap";
 import AlbumForm from "./AlbumForm";
 
 export default function AlbumList({title}){
     const [albumList,setAlbumList] = useState([]);
-    const [page,setPage] = useState("0");
+    const [page,setPage] = useState(0);
     const [totalPage,setTotalPage] = useState(0)
     const token = localStorage.getItem("token");
     const [updateOpen, setUpdateOpen] = useState(false);
     const [updateData,setUpdateData] = useState(false);
-
+    const [search,setSearch] = useState("");
+    const [showAdd, setShowAdd] = useState(false);
     const fetchAlbum = 
         () =>{
-        axios.get(`http://localhost:8080/albums/page?page=${page}&size=9`,{
+        axios.get(`http://localhost:8080/albums/page?page=${page}&size=9&search=${search}`,{
             headers:{
             "Authorization": `Bearer ${token}`
         }
@@ -29,8 +30,8 @@ export default function AlbumList({title}){
     }
     
 
-    useEffect(() => fetchAlbum(),[page,token ]) 
-
+    useEffect(() => fetchAlbum(),[page,token,search ]) 
+    
     const handleDelete = (id) =>{
         const confirm = window.confirm("Do you want to delete this album?")
         if(!confirm) {
@@ -51,14 +52,69 @@ export default function AlbumList({title}){
         setUpdateData(album);
         setUpdateOpen(true);
     }
+
+
+
     return(
         <>
-            <AlbumForm title="Add Album" usage="Add"/>
+        <Modal
+                show={showAdd}
+                onHide={() => setShowAdd(false)}
+                animation={false}
+                size="lg"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title>Add Album</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <AlbumForm  usage="Add" fetchAlbum={fetchAlbum}/>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={() => setShowAdd(false)}>
+                        Close
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+
+           
+            <Modal
+                show={updateOpen}
+                onHide={() => setUpdateOpen(false)}
+                animation={false}
+                size="lg"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title>Update Album</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <AlbumForm currentAlbum={updateData} fetchAlbum={fetchAlbum} usage="Update"/>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={() => setUpdateOpen(false)}>
+                        Close
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+            
              <div className="container">
+                 <div className="row bg-white mt-3 rounded-3 py-3">
+                    <div className="col-4">
+                        <form className="d-flex">
+                            <input className="form-control me-2 border-secondary-subtle" value={search} placeholder="Search for album" type="search" onChange={(e) => setSearch(e.target.value) }/>
+                        </form>
+                    </div>
+                    <div className="col-4">
+                        <Button variant="warning" className="w-100" onClick={() => setShowAdd(true)}>Add Album</Button>
+                    </div>
+                </div>
                 <div className="row bg-white mt-3 rounded-3 py-3">
                     <h3 className="mb-3">{title}</h3>
                     {albumList.map((album) =>(
-                        <div className="col-4 mt-2">
+                        <div className="col-md-4 mt-2">
                             <Card key={album.albumId}  className="h-100">
                                 <Card.Body>
                                     <Card.Title>{album.albumName}</Card.Title>
@@ -84,8 +140,7 @@ export default function AlbumList({title}){
                     </div>
                 </div>
             </div>
-           {updateOpen && <AlbumForm title="Update Album" currentAlbum={updateData} fetchAlbum={fetchAlbum} usage="Update"/>
-            }
+          
         </>
     )
 }
