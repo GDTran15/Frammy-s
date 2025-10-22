@@ -32,12 +32,6 @@ export default function AdminDashBoard(){
       <h1 className="mb-3">Results Dashboard</h1>
       <p>Welcome to the Dashboard! Here you can manage users, nominees, and view logs.</p>
 
-      <div className="row mb-3">
-        <div className="col">
-          <Button variant="danger">Remove Currently Displayed Result from Home</Button>
-        </div>
-      </div>
-
       <div className="row g-4">
         <div className="col-md-6 col-lg-3">
           <Card>
@@ -50,8 +44,7 @@ export default function AdminDashBoard(){
                 <p>Display results from component here</p>
               </div>
               <div className="d-flex gap-2">
-                <Button variant="primary">View Page</Button>
-                <Button variant="success">Add to Home</Button>
+                <Button href="/weekly-result-summary" variant="primary">View Page</Button>
               </div>
             </Card.Body>
           </Card>
@@ -68,8 +61,7 @@ export default function AdminDashBoard(){
                 <p>Display results from component here</p>
               </div>
               <div className="d-flex gap-2">
-                <Button variant="primary">View Page</Button>
-                <Button variant="success">Add to Home</Button>
+                <Button href="" variant="primary">View Page</Button>
               </div>
             </Card.Body>
           </Card>
@@ -86,8 +78,7 @@ export default function AdminDashBoard(){
                 <p>Display results from component here</p>
               </div>
               <div className="d-flex gap-2">
-                <Button variant="primary">View Page</Button>
-                <Button variant="success">Add to Home</Button>
+                <Button href="" variant="primary">View Page</Button>
               </div>
             </Card.Body>
           </Card>
@@ -96,16 +87,15 @@ export default function AdminDashBoard(){
         <div className="col-md-6 col-lg-3">
           <Card>
             <Card.Header>
-              <h2 className="h5 mb-0">Streaming Results</h2>
+              <h2 className="h5 mb-0">Statistics Results</h2>
             </Card.Header>
             <Card.Body>
-              <p>Summary of Streaming results.</p>
+              <p>Summary of Statistics results.</p>
               <div>
                 <p>Display results from component here</p>
               </div>
               <div className="d-flex gap-2">
-                <Button variant="primary">View Page</Button>
-                <Button variant="success">Add to Home</Button>
+                <Button href="/statistics" variant="primary">View Page</Button>
               </div>
             </Card.Body>
           </Card>
