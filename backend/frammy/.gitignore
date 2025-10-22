@@ -58,3 +58,4 @@ copilot.data.*
 *.iml
 copilot.data.*
 full_log.txt
+.gitignore.save
