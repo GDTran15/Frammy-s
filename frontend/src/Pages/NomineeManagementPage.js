@@ -5,10 +5,11 @@ import "../CSS/nominee.css"
 
 import NomineeManagement from "../Components/NomineeManagement";
 
-import AddAlbum from "../Components/AddAlbum";
+import AlbumManagement from "../Components/AlbumManagment";
 
 import SongManagement from "../Components/SongManagement";
 import ArtistManagement from "../Components/ArtistManagement";
+import CategoryManagement from "../Components/CategoryManagement";
 
 
 
@@ -24,7 +25,9 @@ export default function NomineManagementPage(){
       case "Song":
         return <SongManagement />;
       case "Album":
-        return <AddAlbum />;
+        return <AlbumManagement />;
+      case "Category":
+        return <CategoryManagement/>
       default:
         return null;
     }

@@ -2,7 +2,6 @@ package com.backend.frammy.service;
 
 import com.backend.frammy.dto.AddAlbumDTORequest;
 import com.backend.frammy.dto.ResponseGetAlbumDTO;
-import com.backend.frammy.dto.ResponseGetArtistDTO;
 import com.backend.frammy.exception.InvalidInputException;
 import com.backend.frammy.exception.ObjectAlreadyExist;
 import com.backend.frammy.mapper.AlbumToDTO;
@@ -64,7 +63,12 @@ public class AlbumService {
         return new PageImpl<>(albumDTOList,pageable,albumPage.getTotalElements());
     }
 
-    public void updateAlbum(@Valid AddAlbumDTORequest addAlbumDTORequest) {
-
+    public void updateAlbum(@Valid AddAlbumDTORequest addAlbumDTORequest, Long albumId) {
+            Album album = albumRepo.findByAlbumId(albumId);
+            album.setAlbumName(addAlbumDTORequest.albumName());
+            album.setAlbumGenre(addAlbumDTORequest.albumGenre());
+            album.setReleaseDate(addAlbumDTORequest.releaseDate());
+            album.setArtist(artistRepo.findByArtistId(addAlbumDTORequest.artistId()));
+            albumRepo.save(album);
     }
 }

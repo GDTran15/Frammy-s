@@ -15,7 +15,8 @@ public  class AlbumToDTO implements Function<Album, ResponseGetAlbumDTO> {
         return new ResponseGetAlbumDTO(
                 album.getAlbumId(),
                 album.getAlbumName(),
-                album.getReleaseDate()
+                album.getReleaseDate(),
+                album.getAlbumGenre()
         );
     }
 }

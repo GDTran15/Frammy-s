@@ -1,6 +1,8 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import PublicLogFeed from "../Components/PublicLogFeed";
+
 
 function Home() {
   return (

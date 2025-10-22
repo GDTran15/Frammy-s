@@ -1,15 +1,12 @@
 package com.backend.frammy.config;
 
 import com.backend.frammy.model.JwtFilter;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -37,34 +34,38 @@ public class SecurityConfig {
                     CorsConfigurationSource source = request -> {
                         CorsConfiguration configuration = new CorsConfiguration();
                         configuration.setAllowedOrigins(List.of("http://localhost:3000"));
-                        configuration.setAllowedMethods(List.of("GET","POST","PUT","DELETE"));
+                        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
                         configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
                         configuration.setAllowCredentials(true);
                         return configuration;
                     };
                     c.configurationSource(source);
                 })
-                .authorizeHttpRequests(request ->
-                        request.requestMatchers("/login", "/register")
-                                .permitAll()
-                                .requestMatchers(HttpMethod.GET, "/leaderboard", "/leaderboard/**").permitAll()
-                                .requestMatchers("/vote/**").hasAnyRole("USER", "ADMIN")
-                                .anyRequest().authenticated())
+                .authorizeHttpRequests(request -> request
+                        // Public endpoints, allow access without JWT
+                        .requestMatchers(
+                                "/login",
+                                "/register",
+                                "/api/user-logs/public",
+                                "/api/statistics",
+                                "/public/**"
+                        ).permitAll()
+
+                        // Authenticated (JWT)
+                        .requestMatchers("/vote/**").hasAnyRole("USER", "ADMIN")
+                        .anyRequest().authenticated()
+                )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
-
 
         return http.build();
     }
 
     @Bean
-    AuthenticationManager authenticationManager(){
-        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider(userDetailsService);
+    public AuthenticationManager authenticationManager() {
+        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+        authenticationProvider.setUserDetailsService(userDetailsService);
         authenticationProvider.setPasswordEncoder(new BCryptPasswordEncoder());
         return new ProviderManager(authenticationProvider);
     }
-
-
-
-
 }

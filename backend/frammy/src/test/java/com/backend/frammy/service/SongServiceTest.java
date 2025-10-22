@@ -54,10 +54,16 @@ public class SongServiceTest {
         verify(songRepo, times(1)).save(any(Song.class));
     }
 
-   
+    @Test
+    void createSong_missingArtist_invalidExceptionThrow() {
+        AddSongDTORequest dto = new AddSongDTORequest("Song1", LocalDate.now(), "Pop", null);
+
+        assertThrows(InvalidInputException.class, () -> songService.createSong(dto));
+        verify(songRepo, never()).save(any());
+    }
 
     @Test
-    void createSong_alreadyExist_shouldThrow() {
+    void createSong_alreadyExist_objectAlreadyExceptionThrow() {
         AddSongDTORequest dto = new AddSongDTORequest("Song1", LocalDate.now(), "Pop", artist.getArtistId());
         when(songRepo.existsBySongNameAndArtist("Song1", artist)).thenReturn(true);
 

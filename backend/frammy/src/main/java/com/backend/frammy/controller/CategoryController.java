@@ -27,8 +27,23 @@ public class CategoryController {
     }
 
     @PostMapping
-    public Category addCategory(@RequestBody AddCategoryRequest addCategoryRequest){
-            return categoryService.createCategory(addCategoryRequest);
+    public ResponseEntity<ApiResponse<String>> addCategory(@RequestBody AddCategoryRequest addCategoryRequest){
+             categoryService.createCategory(addCategoryRequest);
+        return ResponseEntity.ok(ApiResponse.success("Category add success"));
+    }
+
+    @DeleteMapping("{categoryId}")
+    public ResponseEntity<ApiResponse<String>> deleteCategory(@PathVariable Long categoryId){
+        categoryService.removeCategory(categoryId);
+        return ResponseEntity.ok(ApiResponse.success("Category delete success"));
+
+    }
+
+    @PutMapping("{categoryId}")
+    public ResponseEntity<ApiResponse<String>> updateCategory(@RequestBody AddCategoryRequest addCategoryRequest, @PathVariable Long categoryId){
+        categoryService.updateCategory(addCategoryRequest,categoryId);
+        return ResponseEntity.ok(ApiResponse.success("Category update success"));
+
     }
 
 }

@@ -65,4 +65,5 @@ public class UserServiceTest {
         assertTrue(savedUser.getPassword().startsWith("$2")); // bcrypt hash
     }
 
+
 }

@@ -175,7 +175,11 @@ export default function NomineeList({title,  permission}){
         usage.remaining === 1 ? "text-warning" : "text-danger";
 
     return(
-        <>
+       <>
+
+            
+             <div className="container">
+
             <div className="container">
                 {permission === "user" && (
                     <div className="row mt-3">
@@ -230,7 +234,7 @@ export default function NomineeList({title,  permission}){
                                         </Button>
                                     : 
                                       <div className="d-flex gap-2">
-                                        <Button variant="success" onClick={() => handleUpdate(nominee)}>Update</Button> 
+                                        <Button variant="warning" onClick={() => handleUpdate(nominee)}>Update</Button> 
                                         <Button variant="danger" onClick={() => handleDelete(nominee.nomineeId)}>Delete</Button> 
                                       </div> }
                                     
@@ -253,6 +257,8 @@ export default function NomineeList({title,  permission}){
             }
             
         
-        </>
+       </div>
+</>
     )
-}
+}  
+    
