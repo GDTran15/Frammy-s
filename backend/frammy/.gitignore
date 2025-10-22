@@ -59,3 +59,4 @@ copilot.data.*
 copilot.data.*
 full_log.txt
 .gitignore.save
+compiler.xml
