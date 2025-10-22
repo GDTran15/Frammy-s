@@ -1,11 +1,12 @@
 package com.backend.frammy.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 
 public record CreateArtistRequestDTO(
-        @NotEmpty
+        @NotBlank(message = "Artist name is require")
         String artistName,
-        @NotEmpty
+
         String artistInfo,
 
         String awards

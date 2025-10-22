@@ -125,7 +125,7 @@ export default function NomineeForm({currentNominee,title,usage,fetchNominee}){
             <div className="container">
             <div className="row mt-2 rounded-2">
                     <div className="col bg-white py-3 px-4">
-                        <h2>{title}</h2>
+                      
                         <form onSubmit={handleSubmit}>
            
                         <div className="mb-2">
