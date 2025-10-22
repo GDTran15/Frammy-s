@@ -12,7 +12,7 @@ export default function ActivityPage() {
 
       <p className="text-secondary">Here’s the full activity log:</p>
 
-      {/* Use the same endpoint everywhere for consistency */}
+        
       <PublicLogFeed endpoint="http://localhost:8080/api/user-logs/public" />
     </div>
   );

@@ -1,15 +1,17 @@
 package com.backend.frammy.repo;
 
 import com.backend.frammy.dto.StatisticsResponseDTO;
-import com.backend.frammy.model.Vote;
+import com.backend.frammy.model.Nominee;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import java.util.List;
+
 
 import java.util.List;
 
 @Repository
-public interface StatisticsRepo extends JpaRepository<Vote, Long> {
+public interface StatisticsRepo extends JpaRepository<Nominee, Long> {
 
     @Query("""
         SELECT new com.backend.frammy.dto.StatisticsResponseDTO(
