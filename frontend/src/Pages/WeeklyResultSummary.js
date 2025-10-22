@@ -88,7 +88,6 @@ export default function WeeklyResultSummary(){
                         
                         <div>
                             <a href="/weekly-result-summary" className="btn btn-outline-warning me-2 btn-sm">Weekly Results</a> 
-                            <a href="/prediction" className="btn btn-outline-warning me-2 btn-sm">Prediction</a>
                         </div>
                         <div>
                             <a href="/" className="btn btn-outline-warning me-2 btn-sm">Home</a>

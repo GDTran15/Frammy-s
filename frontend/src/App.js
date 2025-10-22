@@ -7,9 +7,7 @@ import NomineManagementPage from "./Pages/NomineeManagementPage";
 
 import RegisterPage from "./Pages/RegisterPage"
 
-import ArtistManagement from "./Pages/ArtistManagement"
-import LoginPage from "./Pages/LoginPage";
-import PopularityMetrics from "./Pages/PopularityMetrics"; 
+import LoginPage from "./Pages/LoginPage"; 
 import AdminDashBoard from "./Pages/AdminDashBoard";
 import UserVotingPage from "./Pages/UserVotingPage";
 import Prediction from "./Pages/Prediction";
@@ -28,12 +26,11 @@ import Prediction from "./Pages/Prediction";
                   <Route path = "/UserManagement" element = {<UserManagement />} />
                     <Route path="/login" element = {<LoginPage/>}/>
                     <Route path="/register" element = {<RegisterPage/>}/>
-                  <Route path = "/ArtistManagement" element = {<ArtistManagement />} />
                   <Route path = "/admin/dashboard" element = {<AdminDashBoard />} />
                   <Route path = "/user/voting" element = {<UserVotingPage />} />
-                  <Route path = "/prediction" element = {<Prediction />} />
+                  <Route path = "/user/prediction" element = {<Prediction />} />
 
-                  <Route path = "/PopularityMetrics" element = {<PopularityMetrics />} />
+        
                 </Routes>
             </BrowserRouter>
         </div>

@@ -47,7 +47,7 @@ select new com.backend.frammy.dto.ResponseGetAllNomineeDTO(
             CURRENT_DATE,
             CAST(COUNT(v.vote_id) AS bigint)
         FROM nominees n
-        LEFT JOIN votes v ON n.nominee_id = v.nominee_id
+        LEFT JOIN vote v ON n.nominee_id = v.nominee_id
         LEFT JOIN artists ar ON n.artist_id = ar.artist_id
         LEFT JOIN albums al ON n.album_id = al.album_id
         LEFT JOIN songs s ON n.song_id = s.song_id
@@ -55,5 +55,6 @@ select new com.backend.frammy.dto.ResponseGetAllNomineeDTO(
         ORDER BY COUNT(v.vote_id) DESC
     """, nativeQuery = true)
     List<Object[]> findWeeklyResultSummary();
+
 
 }

@@ -22,22 +22,17 @@ public class ResultsController {
 
     private final NomineeRepo nomineeRepo;
 
+    // Get only winners (one per category)
     @GetMapping("/weekly-summary")
     public ResponseEntity<List<WeeklyResultSummaryDTO>> getWeeklyResultSummary() {
         List<Object[]> results = nomineeRepo.findWeeklyResultSummary();
 
-        // Convert Object[] to DTO
         List<WeeklyResultSummaryDTO> dtoList = results.stream()
                 .map(row -> {
                     WeeklyResultSummaryDTO dto = new WeeklyResultSummaryDTO();
-
-                    // row[0] = nominee_type (String)
                     dto.setCategory(NomineeType.valueOf((String) row[0]));
-
-                    // row[1] = winner_name (String)
                     dto.setWinnerName((String) row[1]);
 
-                    // row[2] = date (Date)
                     if (row[2] instanceof Date) {
                         dto.setDate(((Date) row[2]).toLocalDate());
                     } else if (row[2] instanceof java.util.Date) {
@@ -46,7 +41,6 @@ public class ResultsController {
                         dto.setDate(LocalDate.now());
                     }
 
-                    // row[3] = vote_count (BigInteger or Long)
                     if (row[3] instanceof BigInteger) {
                         dto.setVoteCount(((BigInteger) row[3]).longValue());
                     } else if (row[3] instanceof Long) {
@@ -75,4 +69,41 @@ public class ResultsController {
 
         return ResponseEntity.ok(winners);
     }
+
+    // Get ALL nominees with their vote counts
+    @GetMapping("/all-votes")
+    public ResponseEntity<List<WeeklyResultSummaryDTO>> getAllVotes() {
+        List<Object[]> results = nomineeRepo.findWeeklyResultSummary();
+
+        List<WeeklyResultSummaryDTO> dtoList = results.stream()
+                .map(row -> {
+                    WeeklyResultSummaryDTO dto = new WeeklyResultSummaryDTO();
+                    dto.setCategory(NomineeType.valueOf((String) row[0]));
+                    dto.setWinnerName((String) row[1]);
+
+                    if (row[2] instanceof Date) {
+                        dto.setDate(((Date) row[2]).toLocalDate());
+                    } else if (row[2] instanceof java.util.Date) {
+                        dto.setDate(new java.sql.Date(((java.util.Date) row[2]).getTime()).toLocalDate());
+                    } else {
+                        dto.setDate(LocalDate.now());
+                    }
+
+                    if (row[3] instanceof BigInteger) {
+                        dto.setVoteCount(((BigInteger) row[3]).longValue());
+                    } else if (row[3] instanceof Long) {
+                        dto.setVoteCount((Long) row[3]);
+                    } else if (row[3] instanceof Integer) {
+                        dto.setVoteCount(((Integer) row[3]).longValue());
+                    } else {
+                        dto.setVoteCount(0L);
+                    }
+
+                    return dto;
+                })
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(dtoList);
+    }
 }
+
