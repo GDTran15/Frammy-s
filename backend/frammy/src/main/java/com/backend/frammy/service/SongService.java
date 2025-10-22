@@ -68,4 +68,13 @@ public class SongService {
 
         return new PageImpl<>(songDTOList,pageable,songPage.getTotalElements());
     }
+
+    public void updateSong(@Valid AddSongDTORequest addSongDTORequest, Long songId) {
+        Song song = songRepo.findBySongId(songId);
+        song.setSongName(addSongDTORequest.songName());
+        song.setReleaseDate(addSongDTORequest.releaseDate());
+        song.setSongGenre(addSongDTORequest.songGenre());
+        song.setArtist(artistRepo.findByArtistId(addSongDTORequest.artistId()));
+        songRepo.save(song);
+    }
 }

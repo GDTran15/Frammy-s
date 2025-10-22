@@ -13,13 +13,17 @@ import java.util.List;
 public interface NomineeRepo extends JpaRepository<Nominee,Long> {
     boolean existsByCategoryAndArtist(Category category, Artist artist);
 
+    Nominee findByNomineeId(Long nomineeId);
+
     boolean existsByCategoryAndAlbum(Category category, Album album);
 
     boolean existsByCategoryAndSong(Category category, Song song);
 
+
+//query to get data
     @Query("""
 select new com.backend.frammy.dto.ResponseGetAllNomineeDTO(
-            n.nomineeId, n.nomineeType, n.category.categoryName,
+            n.nomineeId, n.nomineeType,n.category.categoryId, n.category.categoryName,
              a.artistId,a.artistName, a.artistInfo,
              s.songId, s.songName, s.releaseDate,s.songGenre,
              al.albumId,al.albumName,al.releaseDate,al.albumGenre)

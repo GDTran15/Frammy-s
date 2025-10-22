@@ -2,11 +2,15 @@ import NavBar from "../Components/NavBar";
 import { TabButton } from "../Components/ButtonComponent";
 import { useState } from "react";
 import "../CSS/nominee.css"
-import AddNomineeForm from "../Components/AddNomineeForm";
-import AddArtist from "../Components/AddArtistForm";
-import AddAlbum from "../Components/AddAlbum";
-import AddSong from "../Components/AddSong";
-import NomineeList from "../Components/NomineeList";
+
+import NomineeManagement from "../Components/NomineeManagement";
+
+import AlbumManagement from "../Components/AlbumManagment";
+
+import SongManagement from "../Components/SongManagement";
+import ArtistManagement from "../Components/ArtistManagement";
+import CategoryManagement from "../Components/CategoryManagement";
+
 
 
 export default function NomineManagementPage(){
@@ -15,13 +19,15 @@ export default function NomineManagementPage(){
     const mainContent = () => {
     switch (activeTab) {
       case "Nominee":
-        return <AddNomineeForm />;
+        return <NomineeManagement />;
       case "Artist":
-        return <AddArtist />;
+        return <ArtistManagement />;
       case "Song":
-        return <AddSong />;
+        return <SongManagement />;
       case "Album":
-        return <AddAlbum />;
+        return <AlbumManagement />;
+      case "Category":
+        return <CategoryManagement/>
       default:
         return null;
     }
@@ -29,23 +35,26 @@ export default function NomineManagementPage(){
     
     return (
         <>
-         <NavBar  children={[
-                             <TabButton >
-                                DashBoard
-                             </TabButton>,
-                             <TabButton>
-                                Voting
-                             </TabButton>,
-                             <TabButton activeCondition={'active'}>
-                                Nominee
-                             </TabButton>,
-                             <TabButton>
-                                Community
-                             </TabButton>,
-                             <TabButton>
-                                User
-                             </TabButton>,
-           ]}/>
+          <NavBar children={[
+            <TabButton redirectLink={"/admin/dashboard"}>
+                DashBoard
+            </TabButton>,
+            <TabButton>
+                Voting
+            </TabButton>,
+            <TabButton activeCondition={'active'}>
+                Nominee
+            </TabButton>,
+            <TabButton>
+                Community
+            </TabButton>,
+            <TabButton redirectLink={"/admin/user-management"} >
+                User
+            </TabButton>,
+            <TabButton redirectLink={"/admin/logs"}>
+                Logs
+            </TabButton>,
+          ]}/>
 
            <header className="nominee-main">
             <div className="container">
@@ -53,7 +62,7 @@ export default function NomineManagementPage(){
                     <div className="col ">
                         <h3 className=" ps-3">Nominee Management</h3>                        
                         <div className="btn-group w-100 px-1 bg-body-secondary py-1 rounded-5" >
-                        {["Nominee","Artist","Song","Album","Controller"].map((tab) => (
+                        {["Nominee","Artist","Song","Album","Category"].map((tab) => (
                         <button
                             type="button"
                             className={`btn rounded-5 nominee-nav ${

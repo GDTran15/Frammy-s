@@ -1,0 +1,35 @@
+package com.backend.frammy.controller;
+
+import com.backend.frammy.dto.VoteRequestDTO;
+import com.backend.frammy.dto.ApiResponse;
+import com.backend.frammy.dto.VoteUsageDTO;
+import com.backend.frammy.service.VoteService;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+@RequiredArgsConstructor
+@RestController
+@RequestMapping("vote")
+public class VotingController {
+
+    private final VoteService voteService;
+
+    @PostMapping()
+    public ResponseEntity<ApiResponse<String>>addVote(
+            @RequestHeader("Authorization") String authorization,
+            @Valid @RequestBody VoteRequestDTO voteRequestDTO) {
+
+        voteService.createVote(voteRequestDTO, authorization);
+        return ResponseEntity.ok(ApiResponse.success("Vote successfully created"));
+    }
+
+    @GetMapping("/usage")
+    public ResponseEntity<ApiResponse<VoteUsageDTO>> getUsage(
+            @RequestHeader("Authorization") String authorization) {
+
+        return ResponseEntity.ok(ApiResponse.success(voteService.getDailyUsage(authorization)));
+    }
+
+}

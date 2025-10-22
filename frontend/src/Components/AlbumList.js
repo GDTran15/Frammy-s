@@ -4,14 +4,18 @@ import { useEffect, useState } from "react";
 import { Card } from "react-bootstrap";
 import PagiComponent from "./PagiComponenet";
 import  { Button } from "react-bootstrap";
+import AlbumForm from "./AlbumForm";
 
 export default function AlbumList({title}){
     const [albumList,setAlbumList] = useState([]);
     const [page,setPage] = useState("0");
     const [totalPage,setTotalPage] = useState(0)
     const token = localStorage.getItem("token");
+    const [updateOpen, setUpdateOpen] = useState(false);
+    const [updateData,setUpdateData] = useState(false);
 
-    useEffect(() =>{
+    const fetchAlbum = 
+        () =>{
         axios.get(`http://localhost:8080/albums/page?page=${page}&size=9`,{
             headers:{
             "Authorization": `Bearer ${token}`
@@ -22,8 +26,10 @@ export default function AlbumList({title}){
               setTotalPage(res.data.data.page.totalPages);
               console.log(res);
         })
-    },[page,token
-    ]) 
+    }
+    
+
+    useEffect(() => fetchAlbum(),[page,token ]) 
 
     const handleDelete = (id) =>{
         const confirm = window.confirm("Do you want to delete this album?")
@@ -41,8 +47,13 @@ export default function AlbumList({title}){
             setAlbumList(prev => prev.filter(album => album.albumId !== id))
         })
     }   
+    const handleUpdate = (album) =>{
+        setUpdateData(album);
+        setUpdateOpen(true);
+    }
     return(
         <>
+            <AlbumForm title="Add Album" usage="Add"/>
              <div className="container">
                 <div className="row bg-white mt-3 rounded-3 py-3">
                     <h3 className="mb-3">{title}</h3>
@@ -61,6 +72,7 @@ export default function AlbumList({title}){
                                    
                                     
                                       <div className="d-flex gap-2">
+                                        <Button variant="warning" onClick={() => handleUpdate(album)}>Update</Button> 
                                         <Button variant="danger" onClick={() => handleDelete(album.albumId)}>Delete</Button> 
                                       </div>                                     
                                 </Card.Body>
@@ -72,8 +84,8 @@ export default function AlbumList({title}){
                     </div>
                 </div>
             </div>
-            
-        
+           {updateOpen && <AlbumForm title="Update Album" currentAlbum={updateData} fetchAlbum={fetchAlbum} usage="Update"/>
+            }
         </>
     )
 }

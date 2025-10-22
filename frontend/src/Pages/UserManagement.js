@@ -1,7 +1,9 @@
 import "../CSS/usermanagement.css"
 import NavBar from "../Components/NavBar";
+import { TabButton } from "../Components/ButtonComponent";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Button,Modal,Card,Form } from "react-bootstrap";
 
 export default function UserManagement(){
     const [users, setUsers] = useState([]);
@@ -13,7 +15,7 @@ export default function UserManagement(){
     }, []);
 
     const fetchUsers = () => {
-        axios.get("http://localhost:8081/user/getUsers")
+        axios.get("http://localhost:8080/user/getUsers", {headers: { Authorization: `Bearer ${token}` }})
             .then((response) => {
                 if (response.data.status === "success") {
                     setUsers(response.data.data);
@@ -50,7 +52,7 @@ export default function UserManagement(){
             return;
         }
 
-        axios.post(`http://localhost:8081/user/deleteUser`, {userId: userId}, {headers: { Authorization: `Bearer ${token}` }})
+        axios.post(`http://localhost:8080/user/deleteUser`, {userId: userId}, {headers: { Authorization: `Bearer ${token}` }})
             .then((response) => {
                 if (response.data.status === "success") {
                     setUsers(prevUsers => prevUsers.filter(user => user.userId !== userId));
@@ -84,7 +86,7 @@ export default function UserManagement(){
                 return;
             }
 
-            axios.post("http://localhost:8081/user/editUser", {
+            axios.post("http://localhost:8080/user/editUser", {
                 userId: editingUser.userId, 
                 username: editData.username,
                 gmail: editData.gmail,
@@ -109,75 +111,119 @@ export default function UserManagement(){
 
     return(
         <>
-            <NavBar children={""} isNotLogin={false}/>
+            <NavBar children={[
+                <TabButton redirectLink={"/admin/dashboard"}>
+                    DashBoard
+                </TabButton>,
+                <TabButton>
+                    Voting
+                </TabButton>,
+                <TabButton redirectLink={"/admin/nominee-management"}>
+                    Nominee
+                </TabButton>,
+                <TabButton>
+                    Community
+                </TabButton>,
+                <TabButton activeCondition={'active'}>
+                    User
+                </TabButton>,
+                <TabButton redirectLink={"/admin/logs"}>
+                    Logs
+                </TabButton>,
+            ]}/>
 
-            <div className="user-management-container">
-                <h1>User Management</h1>
 
-                {loading && <p>Loading users...</p>}
-                {error && <p className="error">{error}</p>}
+            <div className="container my-4">
+      <h1 className="mb-4">User Management</h1>
 
-                <div className="user-cards-wrapper">
-                    {users.map((user) => (
-                        <div key={user.userId} className="user-card">
-                            <div className="user-info">
-                                <div className="user-detail">
-                                    <p><strong>User ID: </strong></p>   
-                                    <p>{user.userId}</p>
-                                </div>
-                                <div className="user-detail">
-                                    <p><strong>Username: </strong></p>
-                                    <p>{user.username}</p>
-                                </div>
-                                <div className="user-detail">
-                                    <p><strong>Gmail: </strong></p>
-                                    <p>{user.gmail}</p>
-                                </div>
-                                <div className="user-detail">
-                                    <p><strong>Role: </strong></p>
-                                    <p>{user.role}</p>
-                                </div>
-                            </div>
+      {loading && <p>Loading users...</p>}
+      {error && <p className="text-danger">{error}</p>}
 
-                            <div className="card-buttons">
-                                <button className="edit-button" onClick={() => {
-                                    setEditingUser(user);
-                                    setEditData({ username: user.username, gmail: user.gmail, password: "" });
-                                }}>Edit</button>
-                                <button className="delete-button" onClick={() => handleDelete(user.userId)}>Delete</button>
-                            </div>
-                        </div>
-                    ))}
+      <div className="row g-4">
+        {users.map((user) => (
+          <div key={user.userId} className="col-md-6 col-lg-4">
+            <Card>
+              <Card.Body>
+                <div className="mb-2">
+                  <strong>User ID: </strong> {user.userId}
+                </div>
+                <div className="mb-2">
+                  <strong>Username: </strong> {user.username}
+                </div>
+                <div className="mb-2">
+                  <strong>Gmail: </strong> {user.gmail}
+                </div>
+                <div className="mb-2">
+                  <strong>Role: </strong> {user.role}
                 </div>
 
-                {editingUser && (
-                    <div className="modal-overlay">
-                        <div className="edit-modal">
-                            <h2>Edit User</h2>
-                            
-                            <div className="edit-form">
-                                <label>
-                                    Username:
-                                    <input type="text" value={editData.username} onChange={(e) => setEditData({ ...editData, username: e.target.value })} />
-                                </label>
-                                <label>
-                                    Gmail:
-                                    <input type="email" value={editData.gmail} onChange={(e) => setEditData({ ...editData, gmail: e.target.value })} />
-                                </label>
-                                <label>
-                                    Password:
-                                    <input type="password" value={editData.password} onChange={(e) => setEditData({ ...editData, password: e.target.value })} />
-                                </label>
-                            </div>
+                <div className="d-flex gap-2 mt-3">
+                  <Button
+                    variant="warning"
+                    onClick={() => {
+                      setEditingUser(user);
+                      setEditData({
+                        username: user.username,
+                        gmail: user.gmail,
+                        password: "",
+                      });
+                    }}
+                  >
+                    Edit
+                  </Button>
+                  <Button variant="danger" onClick={() => handleDelete(user.userId)}>
+                    Delete
+                  </Button>
+                </div>
+              </Card.Body>
+            </Card>
+          </div>
+        ))}
+      </div>
 
-                            <div className="modal-buttons">
-                                <button onClick={handleEditUser}>Save</button>
-                                <button onClick={() => setEditingUser(null)}>Cancel</button>
-                            </div>
-                        </div>
-                    </div>
-                )}
-            </div>
+     
+      <Modal show={!!editingUser} onHide={() => setEditingUser(null)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Edit User</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group className="mb-3">
+              <Form.Label>Username</Form.Label>
+              <Form.Control
+                type="text"
+                value={editData.username}
+                onChange={(e) => setEditData({ ...editData, username: e.target.value })}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Gmail</Form.Label>
+              <Form.Control
+                type="email"
+                value={editData.gmail}
+                onChange={(e) => setEditData({ ...editData, gmail: e.target.value })}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                type="password"
+                value={editData.password}
+                onChange={(e) => setEditData({ ...editData, password: e.target.value })}
+              />
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setEditingUser(null)}>
+            Cancel
+          </Button>
+          <Button variant="primary" onClick={handleEditUser}>
+            Save
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </div>
         </>
     );
 }

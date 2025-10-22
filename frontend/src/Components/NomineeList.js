@@ -4,6 +4,8 @@ import Select from "react-select"
 import { Card } from "react-bootstrap";
 import PagiComponent from "./PagiComponenet";
 import  { Button } from "react-bootstrap";
+import NomineeForm from "./NomineeForm";
+import "../CSS/voting.css";
 
 export default function NomineeList({title,  permission}){
     const [nomineeList,setNomineeList] = useState([]);
@@ -13,11 +15,45 @@ export default function NomineeList({title,  permission}){
     const [chosenCategory,setChosenCategories] = useState(null) 
     const token = localStorage.getItem("token");
     const [search,setSearch] = useState("")
+    const [updateOpen, setUpdateOpen] = useState(false); 
+    const [updateData, setUpdateData] = useState(null);
     console.log(search);
     
-   
+//___________________________________________________________________________
 
-    useEffect(() =>{
+    const getColor = (n) => {
+        if (n >= 2) return "#1dd648ff";
+        if (n === 1) return "#ffc800ff";
+        return "#fd0606ff" 
+    };
+
+    const [usage, setUsage] = useState({
+        limit: 3,
+        used: 0,
+        remaining: 3,
+        resetAt: null,
+    });
+    const [loadingUsage, setLoadingUsage] = useState(true);
+
+    const fetchUsage = async () => {
+        if (!token) { setLoadingUsage(false); return; }
+        try {
+            const res = await axios.get("http://localhost:8080/vote/usage", {
+                headers: { "Authorization": `Bearer ${token}` }
+            });
+            setUsage(res.data.data);
+        } catch (e) {
+            console.error("Usage fetch failed", e);
+        } finally {
+            setLoadingUsage(false);
+        }
+    };
+
+    useEffect(() => { fetchUsage(); }, [token]);
+
+//___________________________________________________________________________
+    const getNominee = () => {
+        
         axios.get(`http://localhost:8080/nominee?page=${page}&size=9`,{
             headers:{
                 "Authorization": `Bearer ${token}`
@@ -29,25 +65,53 @@ export default function NomineeList({title,  permission}){
               setTotalPage(res.data.data.page.totalPages);
            
         })
-    },[page,token]) 
+    
+    }
+
+
+    console.log(updateData);
+    useEffect(() =>{ getNominee();},[page,token]) 
 
     const handleDelete = (id) =>{
         const confirm = window.confirm("Do you want to delete this nominee?")
         if(!confirm) {
             return;
         }
-        axios.delete(`http://localhost:8080/nominee/${id}`
+        axios.delete(`http://localhost:8080/nominee/${id}`,{
+            headers:{
+                "Authorization": `Bearer ${token}`
+            }
+        }
         )
         .then((res) => {
             alert(res.data.data);
-            
-            setNomineeList(prev => prev.filter(nominee =>  nominee.nomineeId !== id))
+            getNominee();
+           
         })
     }   
 
     const handleCategoryChange = (e) => {
             setChosenCategories(e)
             
+    }
+    const handleUpdate = (nominee) =>{
+        const data = {
+            nomineeId: nominee.nomineeId,
+            
+            type: nominee.nomineeType,
+            categories:{
+                value: nominee.categoryNominee,//this is id
+                label: nominee.nomineeCategory//this is name
+            },
+            item:{
+                value: nominee.artistId || nominee.songId || nominee.albumId, 
+                label: nominee.artistName || nominee.songName || nominee.albumName 
+                }
+        }
+        
+        setUpdateData(data);
+        setUpdateOpen(true);
+        getNominee();
     }
    
    useEffect(() =>{
@@ -70,11 +134,64 @@ export default function NomineeList({title,  permission}){
             
         }
         }, [categories, chosenCategory]);
+
+
+    const handleVote = async (nomineeId) => {
+        const token = localStorage.getItem("token");
+        if (!token) {
+            alert("Please login to vote.");
+            return;
+        }
+        try {
+            await axios.post(
+                "http://localhost:8080/vote",
+                { nomineeId }, {
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${token}`
+                    }
+                }
+            );
+            alert("Vote successfully created!");
+            await fetchUsage();                             // <-------------------
+        } catch (err) {
+            if (err.response?.status === 409) {
+                alert (err.response?.data?.message || "Vote not allowed.");
+            } else {
+                alert("Vote failed.");
+            }
+            console.error("Vote error: ", err);
+        }
+    }
+
+    const resetTimeStr = usage.resetAt
+        ? new Date(usage.resetAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        : "";
+
+    const votesColor = usage.remaining >= 2 ? "text-success" :
+        usage.remaining === 1 ? "text-warning" : "text-danger";
+
     return(
-        <>
+       <>
 
-
+            
              <div className="container">
+
+            <div className="container">
+                <div className="row mt-3">
+                    <div className="col">
+                        {!loadingUsage && typeof usage.remaining === "number" && (
+                        <span
+                            className="vote-pill"
+                            style={{ backgroundColor: getColor(usage.remaining) }}
+                            >
+                            Votes left today: {usage.remaining}/{usage.limit}
+                        </span>
+                        )}
+                    </div>
+                </div>
+
+
                 <div className="row bg-white mt-3 rounded-3 py-3">
                     <div className="col-4">
                         <Select options={categories} value={chosenCategory} onChange={handleCategoryChange} defaultValue={chosenCategory}/>  
@@ -106,8 +223,15 @@ export default function NomineeList({title,  permission}){
                                     {nominee.artistInfo}
                                     </Card.Text>
                                    
-                                    {permission === "user" ? <Button variant="primary">Vote</Button> : 
+                                    {permission === "user" ? 
+                                    
+                                        //<Button variant="primary" onClick={() => handleVote(nominee.nomineeId)}>Vote</Button> 
+                                        <Button variant="primary" onClick={() => handleVote(nominee.nomineeId)} disabled={!token || usage.remaining === 0}>
+                                            {usage.remaining === 0 ? "No votes left" : "Vote"}
+                                        </Button>
+                                    : 
                                       <div className="d-flex gap-2">
+                                        <Button variant="warning" onClick={() => handleUpdate(nominee)}>Update</Button> 
                                         <Button variant="danger" onClick={() => handleDelete(nominee.nomineeId)}>Delete</Button> 
                                       </div> }
                                     
@@ -121,7 +245,17 @@ export default function NomineeList({title,  permission}){
                 </div>
             </div>
             
+            {
+                updateOpen && (
+                 
+                            <NomineeForm currentNominee={updateData} title="Update Nominee" usage="Update"/>
+                       
+                )
+            }
+            
         
-        </>
+       </div>
+</>
     )
-}
+}  
+    

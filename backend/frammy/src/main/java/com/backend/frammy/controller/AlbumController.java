@@ -44,5 +44,11 @@ public class AlbumController {
         return ResponseEntity.ok(ApiResponse.success(new PagedModel<>(pagedModel)));
     }
 
+    @PutMapping("{albumId}")
+    public ResponseEntity<ApiResponse<String>> updateAlbum(@Valid @RequestBody AddAlbumDTORequest addAlbumDTORequest, @PathVariable Long albumId ){
+        albumService.updateAlbum(addAlbumDTORequest,albumId);
+        return ResponseEntity.ok(ApiResponse.success("Album successfully updated"));
+    }
+
 
 }

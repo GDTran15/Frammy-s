@@ -3,6 +3,7 @@ import Header from "../Components/Header"
 import { Link } from "react-router-dom"
 import "../CSS/home.css"
 import  "../Images/purple.jpg"
+import PublicLogFeed from '../Components/PublicLogFeed';
 
  export default function HomePage(){
     
@@ -70,7 +71,34 @@ import  "../Images/purple.jpg"
           </div>
         </div>
       </section>
+
+          {/* Public Logs Preview */}
+      <section className="feature bg-dark text-light py-5">
+        <div className="container">
+          <div className="row justify-content-center text-center mb-3">
+            <div className="col">
+              <h5 className="fs-3 text-warning">Latest Community Activity</h5>
+              <p className="fs-6 text-secondary">See what the Frammy community is voting on right now</p>
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="col">
+              {/* Preview feed (limit to 5) — endpoint consistent with ActivityPage */}
+              <PublicLogFeed endpoint="http://localhost:8080/api/user-logs/public" limit={5} />
+
+              <div className="d-flex gap-2 mt-3 justify-content-center">
+                <Link to="/activity" className="btn btn-outline-warning">
+                  View Full Activity Feed
+                </Link>
+                <Link to="/Statistics" className="btn btn-warning">
+                  View Statistics
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
-    
-    )
- }
+  );
+}

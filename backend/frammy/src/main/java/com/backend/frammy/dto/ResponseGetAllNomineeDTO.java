@@ -8,6 +8,7 @@ import java.time.LocalDate;
 public record ResponseGetAllNomineeDTO(
         Long nomineeId,
         NomineeType nomineeType,
+        Long categoryNominee,
         String nomineeCategory,
         Long artistId,
         String artistName,
