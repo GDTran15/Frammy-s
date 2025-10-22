@@ -1,16 +1,12 @@
-/*package com.backend.frammy.mapper;
+package com.backend.frammy.mapper;
 
-import com.backend.frammy.dto.PublicLogDTO;
-import com.backend.frammy.model.PublicLog;
-import org.springframework.stereotype.Component;
-import java.util.function.Function;
+import com.backend.frammy.dto.UserLogResponseDTO;
+import com.backend.frammy.model.UserLog;
 
-@Component
-public class PublicLogToDTO implements Function<PublicLog, PublicLogDTO> {
+public class PublicLogToDTO {
 
-    @Override
-    public PublicLogDTO apply(PublicLog log) {
-        return new PublicLogDTO(
+    public static UserLogResponseDTO map(UserLog log) {
+        return new UserLogResponseDTO(
                 log.getId(),
                 log.getUserName(),
                 log.getTarget(),
@@ -18,4 +14,3 @@ public class PublicLogToDTO implements Function<PublicLog, PublicLogDTO> {
         );
     }
 }
-*/

@@ -1,20 +1,15 @@
-/* package com.backend.frammy.mapper;
+package com.backend.frammy.mapper;
 
 import com.backend.frammy.dto.StatisticsResponseDTO;
-import com.backend.frammy.model.Statistics;
-import org.springframework.stereotype.Component;
+import com.backend.frammy.model.Nominee;
 
-import java.util.function.Function;
+public class StatisticsToDTO {
 
-@Component
-public class StatisticsToDTO implements Function<Statistics, StatisticsResponseDTO> {
-    @Override
-    public StatisticsResponseDTO apply(Statistics statistics) {
+    public static StatisticsResponseDTO map(Nominee nominee, long voteCount) {
         return new StatisticsResponseDTO(
-                statistics.getId(),
-                statistics.getNomineeId(),
-                statistics.getPopularityScore()
+                nominee.getNomineeId(),
+                nominee.getCategory().getCategoryName(),
+                voteCount
         );
     }
 }
-*/
