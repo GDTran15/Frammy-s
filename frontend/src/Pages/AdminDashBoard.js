@@ -61,7 +61,7 @@ export default function AdminDashBoard(){
                 <p>Display results from component here</p>
               </div>
               <div className="d-flex gap-2">
-                <Button href="" variant="primary">View Page</Button>
+                <Button href="/user/leaderboard" variant="primary">View Page</Button>
               </div>
             </Card.Body>
           </Card>
@@ -78,7 +78,7 @@ export default function AdminDashBoard(){
                 <p>Display results from component here</p>
               </div>
               <div className="d-flex gap-2">
-                <Button href="" variant="primary">View Page</Button>
+                <Button href="/user/prediction" variant="primary">View Page</Button>
               </div>
             </Card.Body>
           </Card>
