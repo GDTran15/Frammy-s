@@ -36,7 +36,10 @@ export default function NomineeList({title,  permission}){
     const [loadingUsage, setLoadingUsage] = useState(true);
 
     const fetchUsage = async () => {
-        if (!token) { setLoadingUsage(false); return; }
+        if (!token || permission !== "user") { //edit here
+            setLoadingUsage(false);     
+            return; 
+        }
         try {
             const res = await axios.get("http://localhost:8080/vote/usage", {
                 headers: { "Authorization": `Bearer ${token}` }
@@ -174,19 +177,20 @@ export default function NomineeList({title,  permission}){
     return(
         <>
             <div className="container">
-                <div className="row mt-3">
-                    <div className="col">
-                        {!loadingUsage && typeof usage.remaining === "number" && (
-                        <span
-                            className="vote-pill"
-                            style={{ backgroundColor: getColor(usage.remaining) }}
-                            >
-                            Votes left today: {usage.remaining}/{usage.limit}
-                        </span>
-                        )}
+                {permission === "user" && (
+                    <div className="row mt-3">
+                        <div className="col">
+                            {!loadingUsage && typeof usage.remaining === "number" && (
+                            <span
+                                className="vote-pill"
+                                style={{ backgroundColor: getColor(usage.remaining) }}
+                                >
+                                Votes left today: {usage.remaining}/{usage.limit}
+                            </span>
+                            )}
+                        </div>
                     </div>
-                </div>
-
+                )}
                 <div className="row bg-white mt-3 rounded-3 py-3">
                     <div className="col-4">
                         <Select options={categories} value={chosenCategory} onChange={handleCategoryChange} defaultValue={chosenCategory}/>  
