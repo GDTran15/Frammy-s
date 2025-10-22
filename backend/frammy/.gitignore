@@ -43,3 +43,17 @@ build/
 *.iml
 !src/main/resources/
 !src/main/resources/**
+
+
+# IntelliJ IDEA project files
+.idea/
+*.iml
+
+# GitHub Copilot local plugin data
+copilot.data.*
+
+# OS/system files
+.DS_Store
+.idea/
+*.iml
+copilot.data.*
