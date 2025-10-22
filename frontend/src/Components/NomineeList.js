@@ -136,7 +136,7 @@ export default function NomineeList({title,  permission}){
             setChosenCategories(categories[0]);
             
         }
-        }, [categories, chosenCategory]);
+    }, [categories, chosenCategory]);
 
 
     const handleVote = async (nomineeId) => {

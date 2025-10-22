@@ -29,6 +29,7 @@ public class LeaderboardService {
         };
     }
 
+    //get the leaderboard for up to the top 25 for category
     public List<LeaderboardEntryDTO> getTop(Integer limit, Long categoryId) {
         int top = (limit == null || limit < 1) ? 25 : limit;
 

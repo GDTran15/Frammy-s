@@ -12,6 +12,7 @@ import LoginPage from "./Pages/LoginPage";
 import PopularityMetrics from "./Pages/PopularityMetrics"; 
 import AdminDashBoard from "./Pages/AdminDashBoard";
 import UserVotingPage from "./Pages/UserVotingPage";
+import CommunityLeaderboard from "./Components/CommunityLeaderboard";
 
 //CONFIGURE UR PAGES HERE by importing them and adding to router-Trison
 
@@ -28,6 +29,7 @@ import UserVotingPage from "./Pages/UserVotingPage";
                     <Route path="/login" element = {<LoginPage/>}/>
                     <Route path="/register" element = {<RegisterPage/>}/>
                  
+                  <Route path = "/user/leaderboard" element = {<CommunityLeaderboard />} />
                   <Route path = "/admin/dashboard" element = {<AdminDashBoard />} />
                   <Route path = "/user/voting" element = {<UserVotingPage />} />
                   <Route path = "/PopularityMetrics" element = {<PopularityMetrics />} />
