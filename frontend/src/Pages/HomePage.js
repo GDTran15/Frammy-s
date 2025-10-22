@@ -3,6 +3,7 @@ import Header from "../Components/Header"
 import { Link } from "react-router-dom"
 import "../CSS/home.css"
 import  "../Images/purple.jpg"
+import PublicLogFeed from '../Components/PublicLogFeed';
 
  export default function HomePage(){
     
@@ -14,7 +15,7 @@ import  "../Images/purple.jpg"
           <a className="navbar-brand text-light d-flex align-items-center gap-2">
             {/* SVG Logo */}
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" width={30} height={30}><path fill="#FFD43B" d="M208.3 64L432.3 64C458.8 64 480.4 85.8 479.4 112.2C479.2 117.5 479 122.8 478.7 128L528.3 128C554.4 128 577.4 149.6 575.4 177.8C567.9 281.5 514.9 338.5 457.4 368.3C441.6 376.5 425.5 382.6 410.2 387.1C390 415.7 369 430.8 352.3 438.9L352.3 512L416.3 512C434 512 448.3 526.3 448.3 544C448.3 561.7 434 576 416.3 576L224.3 576C206.6 576 192.3 561.7 192.3 544C192.3 526.3 206.6 512 224.3 512L288.3 512L288.3 438.9C272.3 431.2 252.4 416.9 233 390.6C214.6 385.8 194.6 378.5 175.1 367.5C121 337.2 72.2 280.1 65.2 177.6C63.3 149.5 86.2 127.9 112.3 127.9L161.9 127.9C161.6 122.7 161.4 117.5 161.2 112.1C160.2 85.6 181.8 63.9 208.3 63.9zM165.5 176L113.1 176C119.3 260.7 158.2 303.1 198.3 325.6C183.9 288.3 172 239.6 165.5 176zM444 320.8C484.5 297 521.1 254.7 527.3 176L475 176C468.8 236.9 457.6 284.2 444 320.8z"/></svg>
-            <h5 className="mb-0">Frammy's</h5>
+            <h5 className="mb-0">GrammyVote</h5>
           </a>
           <div>
             <a href="/login" className="btn btn-outline-warning me-2 btn-sm">Login</a>
@@ -65,7 +66,7 @@ import  "../Images/purple.jpg"
         </div>
       </section>
 
-            {/* Public Logs Preview */}
+          {/* Public Logs Preview */}
       <section className="feature bg-dark text-light py-5">
         <div className="container">
           <div className="row justify-content-center text-center mb-3">
@@ -74,21 +75,24 @@ import  "../Images/purple.jpg"
               <p className="fs-6 text-secondary">See what the Frammy community is voting on right now</p>
             </div>
           </div>
+
           <div className="row">
             <div className="col">
-              {/* Use  PublicLogFeed component here */}
-              {/* Limit to 5 items for preview */}
-              {/* <PublicLogFeed endpoint="http://localhost:9000/public/logs" limit={5} /> */}
+              {/* Preview feed (limit to 5) — endpoint consistent with ActivityPage */}
+              <PublicLogFeed endpoint="http://localhost:8080/api/user-logs/public" limit={5} />
 
-              {/* Link to full page */}
-              <a href="/activity" className="btn btn-outline-warning mt-3">
-                View Full Activity Feed
-              </a>
+              <div className="d-flex gap-2 mt-3 justify-content-center">
+                <Link to="/activity" className="btn btn-outline-warning">
+                  View Full Activity Feed
+                </Link>
+                <Link to="/Statistics" className="btn btn-warning">
+                  View Statistics
+                </Link>
+              </div>
             </div>
           </div>
         </div>
       </section>
     </div>
-    
-    )
- }
+  );
+}

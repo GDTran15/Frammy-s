@@ -9,7 +9,6 @@ import com.backend.frammy.model.Album;
 import com.backend.frammy.model.Artist;
 import com.backend.frammy.repo.AlbumRepo;
 import com.backend.frammy.repo.ArtistRepo;
-import com.backend.frammy.service.AlbumService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,7 +23,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -47,7 +45,7 @@ public class AlbumServiceTest {
 
     @Test
     void createAlbum_success() {
-        AddAlbumDTORequest dto = new AddAlbumDTORequest("Album1", LocalDate.now(), "Pop", artist.getArtistId() );
+        AddAlbumDTORequest dto = new AddAlbumDTORequest("Album1", LocalDate.now(), "Pop", artist.getArtistId());
         when(albumRepo.existsAlbumByAlbumNameAndArtist("Album1", artist)).thenReturn(false);
 
         albumService.createAlbum(dto);
@@ -55,15 +53,12 @@ public class AlbumServiceTest {
         verify(albumRepo).save(any(Album.class));
     }
 
-
-
-
     @Test
     void getAlbums_success() {
         Album album = new Album();
         album.setAlbumName("Album1");
         when(albumRepo.findAll()).thenReturn(List.of(album));
-        when(albumToDTO.apply(album)).thenReturn(new ResponseGetAlbumDTO(1L,"Album1",LocalDate.now()));
+        when(albumToDTO.apply(album)).thenReturn(new ResponseGetAlbumDTO(1L, "Album1", LocalDate.now(), "Pop"));
 
         List<ResponseGetAlbumDTO> result = albumService.getAlbums();
 
@@ -78,7 +73,7 @@ public class AlbumServiceTest {
         PageRequest pageable = PageRequest.of(0, 10);
 
         when(albumRepo.findAll(pageable)).thenReturn(albumPage);
-        when(albumToDTO.apply(album)).thenReturn(new ResponseGetAlbumDTO(1L,"Album1",LocalDate.now()));
+        when(albumToDTO.apply(album)).thenReturn(new ResponseGetAlbumDTO(1L, "Album1", LocalDate.now(), "Pop"));
 
         Page<ResponseGetAlbumDTO> result = albumService.getAlbumInPage(pageable);
 

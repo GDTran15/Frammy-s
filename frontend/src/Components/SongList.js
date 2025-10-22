@@ -53,6 +53,7 @@ export default function SongList({title}){
     }
     return(
         <>
+             <SongForm usage="Add" title="Add Song"/>
              <div className="container">
                 <div className="row bg-white mt-3 rounded-3 py-3">
                     <h3 className="mb-3">{title}</h3>
@@ -71,7 +72,7 @@ export default function SongList({title}){
                                    
                                     
                                       <div className="d-flex gap-2">
-                                       <Button variant="success" onClick={() => handleUpdate(song)}>Update</Button> 
+                                       <Button variant="warning" onClick={() => handleUpdate(song)}>Update</Button> 
                                         <Button variant="danger" onClick={() => handleDelete(song.songId)}>Delete</Button> 
                                       </div>                                     
                                 </Card.Body>
