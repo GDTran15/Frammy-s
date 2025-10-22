@@ -41,7 +41,12 @@ export default function CommunityLeaderboard({title, permission, limit = 25 }){
     }, [limit]);
 
     //const filtered = rows.filter((r) => r.nomineeType === "ARTIST");
-    const filtered = rows.filter((r) => r.nomineeType === activeType);
+    //const filtered = rows.filter((r) => r.nomineeType === activeType);
+    const filtered =
+        activeType === "ALL"
+            ? rows
+            : rows.filter((r) => r.nomineeType === activeType);
+
 
     return (
         <>
@@ -65,6 +70,13 @@ export default function CommunityLeaderboard({title, permission, limit = 25 }){
 
                 {/* Type toggle buttons (like your category select, but faster to click) */}
                 <div className="mt-3 d-flex gap-2">
+                <Button
+                    size="sm"
+                    variant={activeType === "ALL" ? "primary" : "outline-primary"}
+                    onClick={() => setActiveType("ALL")}
+                >
+                    Global
+                </Button>
                 <Button
                     size="sm"
                     variant={activeType === "ARTIST" ? "primary" : "outline-primary"}
