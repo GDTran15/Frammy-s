@@ -48,11 +48,15 @@ public class SecurityConfig {
                                 "/register",
                                 "/api/user-logs/public",
                                 "/api/statistics",
+                                "/api/results/**",
+                                "/nominee/**",
                                 "/public/**"
                         ).permitAll()
 
                         // Authenticated (JWT)
                         .requestMatchers("/vote/**").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers("/prediction/**").hasAnyRole("USER", "ADMIN")
+
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

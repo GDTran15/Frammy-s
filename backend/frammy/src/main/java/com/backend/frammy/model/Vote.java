@@ -13,6 +13,8 @@ import java.time.Instant;
 @NoArgsConstructor
 @Builder
 @Entity
+@Table(name = "vote")
+
 public class Vote {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
