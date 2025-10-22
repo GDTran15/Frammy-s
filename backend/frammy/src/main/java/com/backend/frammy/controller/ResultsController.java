@@ -1,3 +1,4 @@
+
 package com.backend.frammy.controller;
 
 import com.backend.frammy.dto.WeeklyResultSummaryDTO;
@@ -14,14 +15,14 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/voting")
+@RequestMapping("/api/results")
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*")
-public class VotingController {
+public class ResultsController {
 
     private final NomineeRepo nomineeRepo;
 
-    @GetMapping("/weekly-results")
+    @GetMapping("/weekly-summary")
     public ResponseEntity<List<WeeklyResultSummaryDTO>> getWeeklyResultSummary() {
         List<Object[]> results = nomineeRepo.findWeeklyResultSummary();
 

@@ -14,7 +14,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class VotingControllerSimpleTest {
+class ResultsControllerSimpleTest {
 
     @Test
     void getWeeklyResultSummary_ShouldReturnWinners() {
@@ -29,7 +29,7 @@ class VotingControllerSimpleTest {
                 .thenReturn(List.of(artistWinner, albumWinner, songWinner));
 
         // Create controller with mocked repo
-        VotingController controller = new VotingController(repo);
+        ResultsController controller = new ResultsController(repo);
 
         // Call method
         ResponseEntity<List<WeeklyResultSummaryDTO>> response = controller.getWeeklyResultSummary();

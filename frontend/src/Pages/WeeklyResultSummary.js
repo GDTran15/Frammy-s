@@ -14,7 +14,7 @@ export default function WeeklyResultSummary(){
 
     const fetchWeeklyResults = async () => {
         try {
-            const response = await fetch('http://localhost:8080/api/voting/weekly-results');
+            const response = await fetch('http://localhost:8080/api/results/weekly-summary');
             const data = await response.json();
             setResults(data);
             setFilteredResults(data);
