@@ -22,7 +22,7 @@ public interface NomineeRepo extends JpaRepository<Nominee,Long> {
 
 
 //query to get data
-    @Query("""
+@Query("""
 select new com.backend.frammy.dto.ResponseGetAllNomineeDTO(
             n.nomineeId, n.nomineeType,n.category.categoryId, n.category.categoryName,
              a.artistId,a.artistName, a.artistInfo,
@@ -43,7 +43,7 @@ select new com.backend.frammy.dto.ResponseGetAllNomineeDTO(
              
             )
 """)
-    Page<ResponseGetAllNomineeDTO> findAllNominateWithInformation(Pageable pageable);
+Page<ResponseGetAllNomineeDTO> findAllNominateWithInformation(Pageable pageable, @Param("categoryId") Long categoryId,@Param("search") String search);
 
     //new query for the weekly result summary
     @Query(value = """
@@ -68,6 +68,5 @@ select new com.backend.frammy.dto.ResponseGetAllNomineeDTO(
 
 
 
-    Page<ResponseGetAllNomineeDTO> findAllNominateWithInformation(Pageable pageable, @Param("categoryId") Long categoryId,@Param("search") String search);
 
 }
