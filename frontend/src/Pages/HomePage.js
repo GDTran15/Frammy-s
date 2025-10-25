@@ -71,22 +71,35 @@ import PublicLogFeed from '../Components/PublicLogFeed';
         </div>
       </section>
 
-          {/* Public Logs Preview */}
-      <section className="feature bg-dark text-light py-5">
+      {/* Public Logs Preview */}
+      <section className="feature bg-dark text-light py-5 latest-activity-section">
         <div className="container">
           <div className="row justify-content-center text-center mb-3">
             <div className="col">
               <h5 className="fs-3 text-warning">Latest Community Activity</h5>
-              <p className="fs-6 text-secondary">See what the Frammy community is voting on right now</p>
+              <p className="fs-6 text-white">
+                See what the Frammy community is voting on right now
+              </p>
             </div>
           </div>
 
+<<<<<<< HEAD
           <div className="row">
             <div className="col">
               {/* Preview feed (limit to 5) — endpoint consistent with ActivityPage */}
               <PublicLogFeed endpoint={`${process.env.REACT_APP_API_URL}/api/user-logs/public`} limit={5} />
+=======
+          <div className="row justify-content-center">
+            <div className="col-md-8">
+              <div className="activity-box">
+                <PublicLogFeed
+                  endpoint="http://localhost:8080/api/user-logs/public"
+                  limit={5}
+                />
+              </div>
+>>>>>>> 9291a3ccbc7f759c9df6e0aa9e7c99e3c204be2d
 
-              <div className="d-flex gap-2 mt-3 justify-content-center">
+              <div className="activity-buttons d-flex gap-2 mt-3 justify-content-center">
                 <Link to="/activity" className="btn btn-outline-warning">
                   View Full Activity Feed
                 </Link>

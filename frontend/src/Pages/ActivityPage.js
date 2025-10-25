@@ -12,8 +12,13 @@ export default function ActivityPage() {
 
       <p className="text-secondary">Here’s the full activity log:</p>
 
+<<<<<<< HEAD
       {/* Use the same endpoint everywhere for consistency */}
       <PublicLogFeed endpoint={`${process.env.REACT_APP_API_URL}/api/user-logs/public`} />
+=======
+        
+      <PublicLogFeed endpoint="http://localhost:8080/api/user-logs/public" />
+>>>>>>> 9291a3ccbc7f759c9df6e0aa9e7c99e3c204be2d
     </div>
   );
 }

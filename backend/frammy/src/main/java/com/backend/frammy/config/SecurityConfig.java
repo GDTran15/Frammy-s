@@ -50,11 +50,14 @@ public class SecurityConfig {
                         .requestMatchers(
                                 "/login",
                                 "/register",
+                                "/api/public-logs",
+                                "/logs/api/public-logs",
                                 "/api/user-logs/public",
                                 "/api/statistics",
                                 "/api/results/**",
                                 "/nominee/**",
-                                "/public/**"
+                                "/public/**",
+                                "/api/**"
                         ).permitAll()
 
                         // Authenticated (JWT)
@@ -64,7 +67,7 @@ public class SecurityConfig {
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+               .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
