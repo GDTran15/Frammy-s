@@ -28,7 +28,7 @@ public class SecurityConfig {
     private final UserDetailsService userDetailsService;
     private final JwtFilter jwtFilter;
 
-    @Value("${frontend.url}")
+  @Value("${frontend.url}")
     private String frontendURL;
 
     @Bean
@@ -63,6 +63,12 @@ public class SecurityConfig {
                         // Authenticated (JWT)
                         .requestMatchers("/vote/**").hasAnyRole("USER", "ADMIN")
                         .requestMatchers("/prediction/**").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers("/nominee/*").hasRole("ADMIN")
+                        .requestMatchers("/artists/*").hasRole("ADMIN")
+                        .requestMatchers("/songs/*").hasRole("ADMIN")
+                        .requestMatchers("/categories/*").hasRole("ADMIN")
+                        .requestMatchers("/albums/*").hasRole("ADMIN")
+
 
                         .anyRequest().authenticated()
                 )

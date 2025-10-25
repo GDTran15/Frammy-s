@@ -18,12 +18,8 @@ export default function StatisticsPage() {
   useEffect(() => {
     (async () => {
       try {
-<<<<<<< HEAD
         // Make this match your backend route
         const res = await fetch(`${process.env.REACT_APP_API_URL}/api/statistics`);
-=======
-        const res = await fetch("http://localhost:8080/api/statistics");
->>>>>>> 9291a3ccbc7f759c9df6e0aa9e7c99e3c204be2d
         if (!res.ok) throw new Error("Failed to fetch statistics data.");
         const json = await res.json();
         setStats(json.data || []);

@@ -83,21 +83,10 @@ import PublicLogFeed from '../Components/PublicLogFeed';
             </div>
           </div>
 
-<<<<<<< HEAD
           <div className="row">
             <div className="col">
               {/* Preview feed (limit to 5) — endpoint consistent with ActivityPage */}
               <PublicLogFeed endpoint={`${process.env.REACT_APP_API_URL}/api/user-logs/public`} limit={5} />
-=======
-          <div className="row justify-content-center">
-            <div className="col-md-8">
-              <div className="activity-box">
-                <PublicLogFeed
-                  endpoint="http://localhost:8080/api/user-logs/public"
-                  limit={5}
-                />
-              </div>
->>>>>>> 9291a3ccbc7f759c9df6e0aa9e7c99e3c204be2d
 
               <div className="activity-buttons d-flex gap-2 mt-3 justify-content-center">
                 <Link to="/activity" className="btn btn-outline-warning">
