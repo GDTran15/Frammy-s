@@ -36,8 +36,8 @@ export default function ArtistForm({currentArtist,usage,fetchArtist}){
 
             const method = (usage === "Add" ? axios.post : axios.put);
             const url = (usage === "Add" 
-                ? "http://localhost:8080/artists"
-                : `http://localhost:8080/artists/${currentArtist.artistId}`);
+                ? `${process.env.REACT_APP_API_URL}/artists`
+                : `${process.env.REACT_APP_API_URL}/artists/${currentArtist.artistId}`);
             method(url,data,{
                 headers:{
             "Authorization": `Bearer ${token}`

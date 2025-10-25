@@ -42,7 +42,7 @@ export default function NomineeList({title,  permission}){
             return; 
         }
         try {
-            const res = await axios.get("http://localhost:8080/vote/usage", {
+            const res = await axios.get(`${process.env.REACT_APP_API_URL}/vote/usage`, {
                 headers: { "Authorization": `Bearer ${token}` }
             });
             setUsage(res.data.data);
@@ -58,7 +58,7 @@ export default function NomineeList({title,  permission}){
 //___________________________________________________________________________
     const getNominee = () => {
         
-        axios.get(`http://localhost:8080/nominee/category/${chosenCategory.value}?page=${page}&size=9&search=${search}`,{
+        axios.get(`${process.env.REACT_APP_API_URL}/nominee/category/${chosenCategory.value}?page=${page}&size=9&search=${search}`,{
             headers:{
                 "Authorization": `Bearer ${token}`
             }
@@ -85,7 +85,7 @@ export default function NomineeList({title,  permission}){
         if(!confirm) {
             return;
         }
-        axios.delete(`http://localhost:8080/nominee/${id}`,{
+        axios.delete(`${process.env.REACT_APP_API_URL}/nominee/${id}`,{
             headers:{
                 "Authorization": `Bearer ${token}`
             }
@@ -124,7 +124,7 @@ export default function NomineeList({title,  permission}){
     }
    
    useEffect(() =>{
-                axios.get("http://localhost:8080/categories",{
+                axios.get(`${process.env.REACT_APP_API_URL}/categories`,{
                     headers:{
                     "Authorization": `Bearer ${token}`
                 }
@@ -153,7 +153,7 @@ export default function NomineeList({title,  permission}){
         }
         try {
             await axios.post(
-                "http://localhost:8080/vote",
+                `${process.env.REACT_APP_API_URL}/vote`,
                 { nomineeId }, {
                     headers: {
                         "Content-Type": "application/json",
@@ -219,7 +219,7 @@ export default function NomineeList({title,  permission}){
                     </div>
                 )}
                 <div className="row bg-white mt-3 rounded-3 py-3">
-=======
+
                 
 
                     <div className="col-4">

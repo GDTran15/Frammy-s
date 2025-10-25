@@ -11,9 +11,6 @@ export default function AdminDashBoard(){
                   <TabButton activeCondition={'active'}>
                      DashBoard
                   </TabButton>,
-                  <TabButton>
-                     Voting
-                  </TabButton>,
                   <TabButton redirectLink={"/admin/nominee-management"}>
                      Nominee
                   </TabButton>,

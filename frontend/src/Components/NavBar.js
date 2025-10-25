@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function NavBar({children,isNotLogin}){
     return (
         <>
@@ -17,9 +19,9 @@ export default function NavBar({children,isNotLogin}){
             
          
           
-            {isNotLogin ? <div><a href="/login" className="btn btn-outline-warning me-2 btn-sm">Login</a>
-            <a href="/register" className="btn btn-warning btn-sm">Register</a> </div> :  
-            <div><a href="/login" className="btn btn-outline-warning bg-white btn-sm">Logout</a></div>// change into button later
+            {isNotLogin ? <div><Link to="/login" className="btn btn-outline-warning me-2 btn-sm">Login</Link>
+            <Link to="/register" className="btn btn-warning btn-sm">Register</Link> </div> :  
+            <div><Link to="/login" className="btn btn-outline-warning bg-white btn-sm">Logout</Link></div>// change into button later
 
             }
             

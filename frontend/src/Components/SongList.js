@@ -18,7 +18,7 @@ export default function SongList({title}){
 
 
     const fetchSong = () => {
-        axios.get(`http://localhost:8080/songs/page?page=${page}&size=9&search=${search}`,{
+        axios.get(`${process.env.REACT_APP_API_URL}/songs/page?page=${page}&size=9&search=${search}`,{
             headers:{
             "Authorization": `Bearer ${token}`
         }
@@ -36,7 +36,7 @@ export default function SongList({title}){
         if(!confirm) {
             return;
         }
-        axios.delete(`http://localhost:8080/songs/${id}`,{
+        axios.delete(`${process.env.REACT_APP_API_URL}/songs/${id}`,{
             headers:{
             "Authorization": `Bearer ${token}`
         }})

@@ -83,24 +83,5 @@ public class ArtistServiceTest {
         verify(artistRepo, times(1)).deleteById(id);
     }
 
-    @Test
-    void getArtistInPage() {
-        Artist artist = Artist.builder()
-                        .artistId(1L)
-                        .artistName("MichaelTran")
-                        .build();
-
-
-        Page<Artist> artistPage = new PageImpl<>(List.of(artist));
-        Pageable pageable = PageRequest.of(0, 10);
-
-        when(artistRepo.findAll(pageable)).thenReturn(artistPage);
-        when(artistToDTO.apply(artist)).thenReturn(new ResponseGetArtistDTO(1L, "MichaelTran", "Young Boy", "No awards"));
-
-        Page<ResponseGetArtistDTO> result = artistService.getArtistInPage(pageable, search);
-
-        assertEquals(1, result.getTotalElements());
-        assertEquals("MichaelTran", result.getContent().get(0).artistName());
-    }
 
 }

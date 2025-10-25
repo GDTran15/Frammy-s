@@ -17,7 +17,7 @@ export default function AlbumList({title}){
     const [showAdd, setShowAdd] = useState(false);
     const fetchAlbum = 
         () =>{
-        axios.get(`http://localhost:8080/albums/page?page=${page}&size=9&search=${search}`,{
+        axios.get(`${process.env.REACT_APP_API_URL}/albums/page?page=${page}&size=9&search=${search}`,{
             headers:{
             "Authorization": `Bearer ${token}`
         }
@@ -37,7 +37,7 @@ export default function AlbumList({title}){
         if(!confirm) {
             return;
         }
-        axios.delete(`http://localhost:8080/albums/${id}`,{
+        axios.delete(`${process.env.REACT_APP_API_URL}/albums/${id}`,{
             headers:{
             "Authorization": `Bearer ${token}`
         }}

@@ -17,7 +17,7 @@ export default function CommunityLeaderboard({title, permission, limit = 25 }){
 
         const fetchRows = async () => {
         try {
-            const res = await axios.get("http://localhost:8080/leaderboard", {
+            const res = await axios.get(`${process.env.REACT_APP_API_URL}/leaderboard`, {
             params: { limit }, // backend already defaults to 25 if omitted
             });
 

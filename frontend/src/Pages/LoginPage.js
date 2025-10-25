@@ -18,7 +18,7 @@ export default function LoginPage(){
         setValiationError({})
         e.preventDefault();
         
-             axios.post("http://localhost:8080/login",{
+             axios.post(`${process.env.REACT_APP_API_URL}/login`,{
             username: username,
             password : password
         }).then((res) =>{

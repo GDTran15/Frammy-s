@@ -10,7 +10,7 @@ export default function CategoryManagement(){
     const [updateData,setUpdateData] = useState("");
     const token = localStorage.getItem("token");
     const fetchCategory = () =>{
-        axios.get("http://localhost:8080/categories",{
+        axios.get(`${process.env.REACT_APP_API_URL}/categories`,{
             headers:{
             "Authorization": `Bearer ${token}`}
         })
@@ -25,7 +25,7 @@ export default function CategoryManagement(){
         setUpdateData(category)
     }
     const handleDelete = (id) =>{
-        axios.delete(`http://localhost:8080/categories/${id}`,{
+        axios.delete(`${process.env.REACT_APP_API_URL}/categories/${id}`,{
             headers:{
             "Authorization": `Bearer ${token}`}
         }).then((res) =>{

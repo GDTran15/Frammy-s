@@ -5,7 +5,7 @@ const PublicLogFeed = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost:8080/api/public-logs")
+    fetch(`${process.env.REACT_APP_API_URL}/api/public-logs`)
       .then(res => res.json())
       .then(data => {
         setLogs(data);

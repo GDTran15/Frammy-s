@@ -17,7 +17,7 @@ export default function CategoryForm({title,usage,currentCategory,fetchCategory}
     const handleSubmit = (e) =>{
         e.preventDefault();
         const method = usage === "Add" ? axios.post : axios.put;
-        const url = usage === "Add" ? "http://localhost:8080/categories" : `http://localhost:8080/categories/${currentCategory.categoryId}`;
+        const url = usage === "Add" ? `${process.env.REACT_APP_API_URL}/categories` : `${process.env.REACT_APP_API_URL}/categories/${currentCategory.categoryId}`;
         const data = {
             categoryName: categoryName
         }

@@ -36,7 +36,7 @@ export default function AlbumForm({currentAlbum,title,usage,fetchAlbum}){
                 artistId : artist.value
             }
             const method = usage === "Add" ? axios.post : axios.put;
-            const url = usage === "Add" ? "http://localhost:8080/albums" : `http://localhost:8080/albums/${currentAlbum.albumId}`;
+            const url = usage === "Add" ? `${process.env.REACT_APP_API_URL}/albums` : `${process.env.REACT_APP_API_URL}/albums/${currentAlbum.albumId}`;
             method(url,data,{
                 headers:{
             "Authorization": `Bearer ${token}`
@@ -54,7 +54,7 @@ export default function AlbumForm({currentAlbum,title,usage,fetchAlbum}){
         }
 
         const fetchArtist = () => {
-             axios.get("http://localhost:8080/artists",{
+             axios.get(`${process.env.REACT_APP_API_URL}/artists`,{
             headers:{
             "Authorization": `Bearer ${token}`
         }

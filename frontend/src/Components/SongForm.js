@@ -30,7 +30,7 @@ export default function SongForm({currentSong,title,usage, fetchSong}){
                 artistId : artist.value
             }
             const method = usage === "Add" ? axios.post : axios.put;
-            const url = (usage === "Add" ? "http://localhost:8080/songs" : `http://localhost:8080/songs/${currentSong.songId}`);
+            const url = (usage === "Add" ? `${process.env.REACT_APP_API_URL}/songs` : `${process.env.REACT_APP_API_URL}/songs/${currentSong.songId}`);
             method(url,data,{
                 headers:{
             "Authorization": `Bearer ${token}`
@@ -55,7 +55,7 @@ export default function SongForm({currentSong,title,usage, fetchSong}){
         const fetchArtist = () => {
             
 
-             axios.get("http://localhost:8080/artists",{
+             axios.get(`${process.env.REACT_APP_API_URL}/artists`,{
             headers:{
             "Authorization": `Bearer ${token}`
         }

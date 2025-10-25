@@ -1,10 +1,10 @@
-
+import { Link } from "react-router-dom"
 
 
 export function TabButton({children,redirectLink, activeCondition}){
     return (
         <li className="nav-item">
-            <a href={redirectLink} className={`btn nav-button ${activeCondition ? 'active' : undefined}`}  >{children}</a>
+            <Link to={redirectLink} className={`btn nav-button ${activeCondition ? 'active' : undefined}`}  >{children}</Link>
          </li>
     )
 };

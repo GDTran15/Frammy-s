@@ -24,16 +24,16 @@ export default function NomineeForm({currentNominee,title,usage,fetchNominee}){
         let url = "";
         switch(selected){
            case "ARTIST":
-        url = "http://localhost:8080/artists";
+        url = `${process.env.REACT_APP_API_URL}/artists`;
         setChoseLabel("Choose artist:");
         break;
       case "ALBUM":
-        url = "http://localhost:8080/albums";
+        url = `${process.env.REACT_APP_API_URL}/albums`;
         setChoseLabel("Choose album:");
 
         break;
       case "SONG":
-        url = "http://localhost:8080/songs";
+        url = `${process.env.REACT_APP_API_URL}/songs"`
         setChoseLabel("Choose song:");
 
         break;
@@ -71,7 +71,7 @@ export default function NomineeForm({currentNominee,title,usage,fetchNominee}){
          console.log(e.value);
     }
     const fetchCategory = () =>{
-        axios.get("http://localhost:8080/categories",{
+        axios.get(`${process.env.REACT_APP_API_URL}/categories`,{
             headers:{
             "Authorization": `Bearer ${token}`
         }
@@ -101,8 +101,8 @@ export default function NomineeForm({currentNominee,title,usage,fetchNominee}){
             
             const method = (usage === "Add" ? axios.post : axios.put);
             const url = (usage === "Add" 
-                ? "http://localhost:8080/nominee"
-                : `http://localhost:8080/nominee/${currentNominee.nomineeId}`);
+                ? `${process.env.REACT_APP_API_URL}/nominee`
+                : `${process.env.REACT_APP_API_URL}/nominee/${currentNominee.nomineeId}`);
             
         console.log("Submitting data:", data);
               method(url,data,{

@@ -18,7 +18,7 @@ export default function RegisterPage(){
     setValiationError({});
     e.preventDefault();
     
-    axios.post("http://localhost:8080/register",{
+    axios.post(`${process.env.REACT_APP_API_URL}/register`,{
     username: username,
     gmail : gmail,
     password : password

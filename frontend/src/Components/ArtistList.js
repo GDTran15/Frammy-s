@@ -17,7 +17,7 @@ export default function ArtistList({title}){
     const [showAdd, setShowAdd] = useState(false);
 
     const fetchData = () =>{
-        axios.get(`http://localhost:8080/artists/page?page=${page}&size=9&search=${search}`,{
+        axios.get(`${process.env.REACT_APP_API_URL}/artists/page?page=${page}&size=9&search=${search}`,{
             headers:{
             "Authorization": `Bearer ${token}`
         }
@@ -36,7 +36,7 @@ export default function ArtistList({title}){
         if(!confirm) {
             return;
         }
-        axios.delete(`http://localhost:8080/artists/${id}`,{
+        axios.delete(`${process.env.REACT_APP_API_URL}/artists/${id}`,{
             headers:{
             "Authorization": `Bearer ${token}`
         }}

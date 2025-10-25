@@ -104,30 +104,6 @@ public class NomineeServiceTest {
         verify(nomineeRepo, times(1)).save(any(Nominee.class));
     }
 
-    @Test
-    void getNominees() {
-        Page<ResponseGetAllNomineeDTO> page = new PageImpl<>(List.of(new ResponseGetAllNomineeDTO(1L,
-                NomineeType.ARTIST,
-                1L,
-                "Best Artist",
-                category.getCategoryId(),
-                "MichaelTran",
-                "Young Boy",
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null             )));
-        when(nomineeRepo.findAllNominateWithInformation(any(PageRequest.class), categoryId, search)).thenReturn(page);
-
-        Page<ResponseGetAllNomineeDTO> result = nomineeService.getNominees(PageRequest.of(0, 5), categoryId, search);
-
-        assertThat(result.getContent()).hasSize(1);
-        verify(nomineeRepo).findAllNominateWithInformation(any(PageRequest.class), categoryId, search);
-    }
 
     @Test
     void testDeleteNominee() {

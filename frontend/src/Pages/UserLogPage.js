@@ -7,7 +7,7 @@ const UserLogPage = () => {
 
   useEffect(() => {
     if (!userId) return;
-    fetch(`http://localhost:8080/api/user-logs/${userId}`)
+    fetch(`${process.env.REACT_APP_API_URL}/api/user-logs/${userId}`)
       .then(res => res.json())
       .then(data => {
         setLogs(data);
