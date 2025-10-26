@@ -4,6 +4,7 @@ import com.backend.frammy.model.JwtFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -50,6 +51,7 @@ public class SecurityConfig {
                                 "/api/statistics",
                                 "/public/**"
                         ).permitAll()
+                        .requestMatchers(HttpMethod.GET, "/leaderboard", "/leaderboard/**").permitAll()
 
                         // Authenticated (JWT)
                         .requestMatchers("/vote/**").hasAnyRole("USER", "ADMIN")

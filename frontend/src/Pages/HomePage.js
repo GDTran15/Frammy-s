@@ -4,6 +4,7 @@ import { Link } from "react-router-dom"
 import "../CSS/home.css"
 import  "../Images/purple.jpg"
 import PublicLogFeed from '../Components/PublicLogFeed';
+import CommunityLeaderboardList from "../Components/CommunityLeaderboardList.js"
 
  export default function HomePage(){
     
@@ -49,7 +50,7 @@ import PublicLogFeed from '../Components/PublicLogFeed';
       </header>
 
       {/* Platform Features */}
-      <section className="feature bg-body-tertiary">
+      {/* <section className="feature bg-body-tertiary">
         <div className="container">
           <div className="row justify-content-center text-center">
             <div className="col">
@@ -57,11 +58,36 @@ import PublicLogFeed from '../Components/PublicLogFeed';
               <p className="fs-5 text-secondary">Everything you need for the ultimate Grammy voting experience</p>
             </div>
           </div>
-          {/* Feature Cards Row */}
+          Feature Cards Row
           <div className="row mt-5">
-            {/* <FeatureCard />
             <FeatureCard />
-            <FeatureCard /> */}
+            <FeatureCard />
+            <FeatureCard />
+          </div>
+        </div>
+      </section> */}
+
+  {/* Community leaderboard Preview */}
+  <section className="feature bg-body-tertiary text-dark py-5">
+        <div className="container">
+          <div className="row justify-content-center text-center mb-3">
+            <div className="col">
+              <h5 className="fs-3 text-warning">Charts</h5>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col">
+              <CommunityLeaderboardList
+                limit={5}
+                defaultType="ALL"
+                showFilter={false}   
+              />
+              <div className="d-flex gap-2 mt-3 justify-content-center">
+                <Link to="/user/leaderboard" className="btn btn-warning">
+                  View Community Leaederboard
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </section>
