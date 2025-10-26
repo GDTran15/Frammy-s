@@ -95,20 +95,13 @@ export default function CommunityLeaderboardList({title, permission, limit = 25,
                         <div className="p-3 text-muted">No votes yet for {activeType.toLowerCase()}s.</div>
                             ) : (
                         <ul className="list-group">
-                            {filtered.map((r) => (
+                            {filtered.map((r, idx) => (
                                 <li
                                     key={`${r.nomineeId}-${r.rank}`}
-                                    className="list-group-item d-flex align-items-center"
-                                    style={{
-                                        borderLeft: r.rank <= 3 ? "4px solid #0d6efd" : "4px solid transparent",
-                                    }}
-                                    >
-                                    {/* Rank badge */}
-                                    <span
-                                        className="badge bg-secondary me-3"
-                                        style={{ minWidth: 38, fontSize: "0.9rem" }}
-                                    >
-                                        #{r.rank}
+                                    className="list-group-item d-flex align-items-center"                
+                                >
+                                    <span className="badge bg-secondary me-3" style={{ minWidth: 38, fontSize: "0.9rem" }}>
+                                        #{idx + 1}
                                     </span>
 
                                     {/* Name (grows, keeps votes to the right) */}
