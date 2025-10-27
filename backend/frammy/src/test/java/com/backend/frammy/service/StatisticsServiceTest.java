@@ -33,7 +33,7 @@ class StatisticsServiceTest {
 
         List<StatisticsResponseDTO> result = statisticsService.getAllStatistics();
         assertEquals(2, result.size());
-        assertEquals("Best Artist", result.get(0).categoryName()); // ✅ use your actual field name
+        assertEquals("Best Artist", result.get(0).categoryName()); 
         assertEquals(50L, result.get(0).voteCount());
     }
 }
