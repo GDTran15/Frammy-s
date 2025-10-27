@@ -2,9 +2,9 @@ package com.backend.frammy.config;
 
 import com.backend.frammy.model.JwtFilter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -28,16 +28,13 @@ public class SecurityConfig {
     private final UserDetailsService userDetailsService;
     private final JwtFilter jwtFilter;
 
-  @Value("${frontend.url}")
-    private String frontendURL;
-
     @Bean
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
         http.csrf(customizer -> customizer.disable())
                 .cors(c -> {
                     CorsConfigurationSource source = request -> {
                         CorsConfiguration configuration = new CorsConfiguration();
-                        configuration.setAllowedOrigins(List.of(frontendURL));
+                        configuration.setAllowedOrigins(List.of("http://localhost:3000"));
                         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
                         configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
                         configuration.setAllowCredentials(true);
@@ -50,30 +47,18 @@ public class SecurityConfig {
                         .requestMatchers(
                                 "/login",
                                 "/register",
-                                "/api/public-logs",
-                                "/logs/api/public-logs",
                                 "/api/user-logs/public",
                                 "/api/statistics",
-                                "/api/results/**",
-                                "/nominee/**",
-                                "/public/**",
-                                "/api/**"
+                                "/public/**"
                         ).permitAll()
+                        .requestMatchers(HttpMethod.GET, "/leaderboard", "/leaderboard/**").permitAll()
 
                         // Authenticated (JWT)
                         .requestMatchers("/vote/**").hasAnyRole("USER", "ADMIN")
-                        .requestMatchers("/prediction/**").hasAnyRole("USER", "ADMIN")
-                        .requestMatchers("/nominee/*").hasRole("ADMIN")
-                        .requestMatchers("/artists/*").hasRole("ADMIN")
-                        .requestMatchers("/songs/*").hasRole("ADMIN")
-                        .requestMatchers("/categories/*").hasRole("ADMIN")
-                        .requestMatchers("/albums/*").hasRole("ADMIN")
-
-
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-               .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
