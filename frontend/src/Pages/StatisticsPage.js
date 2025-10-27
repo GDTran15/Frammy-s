@@ -18,8 +18,9 @@ export default function StatisticsPage() {
   useEffect(() => {
     (async () => {
       try {
-        // Make this match your backend route
-        const res = await fetch(`${process.env.REACT_APP_API_URL}/api/statistics`);
+        
+        const res = await 
+        fetch(`${process.env.REACT_APP_API_URL}/statistics`);
         if (!res.ok) throw new Error("Failed to fetch statistics data.");
         const json = await res.json();
         setStats(json.data || []);
@@ -34,10 +35,10 @@ export default function StatisticsPage() {
 
   return (
     <div className="container py-5 statistics-container">
-      {/* Header always visible */}
+      {/* */}
       <div className="d-flex justify-content-between align-items-center mb-4">
         <h1 className="h3 text-warning m-0">🎶 Voting Statistics</h1>
-        <Link to="/" className="btn btn-outline-secondary">← Back to Home</Link>
+        <a href="/" className="btn btn-outline-secondary">← Back to Home</a>
       </div>
 
       {loading && <div className="text-center mt-5">Loading statistics…</div>}
@@ -66,14 +67,14 @@ export default function StatisticsPage() {
                       <tr key={index}>
                         <td>{row.nomineeId}</td>
                         <td>{row.categoryName}</td>
-                        <td className="fw-semibold">{row.popularityScore}</td>
+                        <td className="fw-semibold">{row.voteCount}</td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
               </div>
 
-              {/* Bar chart section */}
+              {/* */}
               <div className="mt-5">
                 <h2 className="h5 text-center mb-3 text-warning">Popularity Overview</h2>
                 <ResponsiveContainer width="100%" height={400}>

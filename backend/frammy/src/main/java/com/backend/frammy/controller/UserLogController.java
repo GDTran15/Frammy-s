@@ -16,20 +16,20 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api")  //  Clean, unified base path
-@CrossOrigin(origins = "http://localhost:3000") //  Allow frontend access
+@RequestMapping("/api")
+@CrossOrigin(origins = "http://localhost:3000")
 public class UserLogController {
 
     private final UserLogService userLogService;
 
-    //  Create new log
+
     @PostMapping("/logs")
     public ResponseEntity<ApiResponse<String>> createLog(@RequestBody @Valid UserLogRequestDTO dto) {
         userLogService.createUserLog(dto);
         return ResponseEntity.ok(ApiResponse.success("Log created successfully"));
     }
 
-    //  Get all logs (paged)
+
     @GetMapping("/logs")
     public ResponseEntity<ApiResponse<PagedModel<UserLogResponseDTO>>> getAllLogs(
             @RequestParam(defaultValue = "0") int page,
@@ -39,20 +39,17 @@ public class UserLogController {
         return ResponseEntity.ok(ApiResponse.success(new PagedModel<>(paged)));
     }
 
-    //  Delete a log by ID
     @DeleteMapping("/logs/{id}")
     public ResponseEntity<ApiResponse<String>> deleteLog(@PathVariable Long id) {
         userLogService.deleteUserLog(id);
         return ResponseEntity.ok(ApiResponse.success("Log deleted successfully"));
     }
 
-    //  Public logs (for homepage)
     @GetMapping("/public-logs")
     public List<UserLogResponseDTO> getPublicLogs() {
         return userLogService.getPublicLogs();
     }
 
-    //  Logs for a specific user (for user dashboard)
     @GetMapping("/logs/user/{userId}")
     public List<UserLogResponseDTO> getUserLogs(@PathVariable Long userId) {
         return userLogService.getUserLogs(userId);

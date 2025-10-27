@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,12 +19,15 @@ public class UserLogService {
 
     private final UserLogRepo userLogRepo;
 
-    // Create new log
+
     public UserLogResponseDTO createUserLog(UserLogRequestDTO dto) {
         UserLog log = new UserLog();
+        log.setUserId(dto.userId());
         log.setUserName(dto.userName());
         log.setTarget(dto.target());
-        log.setTimestamp(dto.timestamp());
+
+        log.setTimestamp(dto.timestamp() != null ? dto.timestamp() : LocalDateTime.now());
+
         userLogRepo.save(log);
         return UserLogToDTO.map(log);
     }
@@ -57,4 +61,6 @@ public class UserLogService {
                 .map(UserLogToDTO::map)
                 .collect(Collectors.toList());
     }
+
+
 }
