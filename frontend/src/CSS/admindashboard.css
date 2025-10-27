@@ -13,3 +13,17 @@
     padding-top: 20px;
 }
 
+.dashboard-cards {
+    display: block;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.card{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+    border-radius: 5px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    margin-bottom: 20px;
+}
