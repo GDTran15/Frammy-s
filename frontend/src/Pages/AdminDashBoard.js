@@ -3,6 +3,7 @@ import "../CSS/button.css"
 import "../CSS/admindashboard.css"
 import { TabButton } from "../Components/ButtonComponent"
 import { Button,Card } from "react-bootstrap"
+import { Link } from "react-router-dom"
 
 export default function AdminDashBoard(){
     return (
@@ -41,7 +42,7 @@ export default function AdminDashBoard(){
                 <p>Display results from component here</p>
               </div>
               <div className="d-flex gap-2">
-                <Button href="/weekly-result-summary" variant="primary">View Page</Button>
+                <Link to={"/weekly-result-summary"} variant="primary">View Page</Link>
               </div>
             </Card.Body>
           </Card>
@@ -58,7 +59,7 @@ export default function AdminDashBoard(){
                 <p>Display results from component here</p>
               </div>
               <div className="d-flex gap-2">
-                <Button href="/user/leaderboard" variant="primary">View Page</Button>
+                <Link to={"/user/leaderboard"} variant="primary">View Page</Link>
               </div>
             </Card.Body>
           </Card>
@@ -75,7 +76,7 @@ export default function AdminDashBoard(){
                 <p>Display results from component here</p>
               </div>
               <div className="d-flex gap-2">
-                <Button href="/user/prediction" variant="primary">View Page</Button>
+                <Link to={"/user/prediction"} variant="primary">View Page</Link>
               </div>
             </Card.Body>
           </Card>
@@ -92,7 +93,7 @@ export default function AdminDashBoard(){
                 <p>Display results from component here</p>
               </div>
               <div className="d-flex gap-2">
-                <Button href="/statistics" variant="primary">View Page</Button>
+                <Link to={"/statistics"} variant="primary">View Page</Link>
               </div>
             </Card.Body>
           </Card>
