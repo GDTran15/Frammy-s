@@ -42,7 +42,7 @@ export default function AdminDashBoard(){
                 <p>Display results from component here</p>
               </div>
               <div className="d-flex gap-2">
-                <Link to={"/weekly-result-summary"} variant="primary">View Page</Link>
+                <Button as={Link} to={"/weekly-result-summary"} variant="primary">View Page</Button>
               </div>
             </Card.Body>
           </Card>
@@ -59,7 +59,7 @@ export default function AdminDashBoard(){
                 <p>Display results from component here</p>
               </div>
               <div className="d-flex gap-2">
-                <Link to={"/user/leaderboard"} variant="primary">View Page</Link>
+                <Button as={Link} to={"/user/leaderboard"} variant="primary">View Page</Button>
               </div>
             </Card.Body>
           </Card>
@@ -76,7 +76,7 @@ export default function AdminDashBoard(){
                 <p>Display results from component here</p>
               </div>
               <div className="d-flex gap-2">
-                <Link to={"/user/prediction"} variant="primary">View Page</Link>
+                <Button as={Link} to={"/user/prediction"} variant="primary">View Page</Button>
               </div>
             </Card.Body>
           </Card>
@@ -93,7 +93,7 @@ export default function AdminDashBoard(){
                 <p>Display results from component here</p>
               </div>
               <div className="d-flex gap-2">
-                <Link to={"/statistics"} variant="primary">View Page</Link>
+                <Button as={Link} to={"/statistics"} variant="primary">View Page</Button>
               </div>
             </Card.Body>
           </Card>
