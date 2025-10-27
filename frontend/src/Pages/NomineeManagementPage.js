@@ -39,9 +39,6 @@ export default function NomineManagementPage(){
             <TabButton redirectLink={"/admin/dashboard"}>
                 DashBoard
             </TabButton>,
-            <TabButton>
-                Voting
-            </TabButton>,
             <TabButton activeCondition={'active'}>
                 Nominee
             </TabButton>,

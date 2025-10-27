@@ -14,6 +14,7 @@ public class UserLog {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private Long userId;
     private String userName;
     private String target;
     private LocalDateTime timestamp;

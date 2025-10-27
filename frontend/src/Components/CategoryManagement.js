@@ -1,15 +1,16 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Button, Table } from "react-bootstrap";
+import { Button, Table,Modal } from "react-bootstrap";
 import CategoryForm from "./CategoryForm";
 
 export default function CategoryManagement(){
     const [categories,setCategories] = useState([]);
     const [updateOpen,setUpdateOpen] = useState(false);
+    const [addOpen,setAddOpen] = useState(false);
     const [updateData,setUpdateData] = useState("");
     const token = localStorage.getItem("token");
     const fetchCategory = () =>{
-        axios.get("http://localhost:8080/categories",{
+        axios.get(`${process.env.REACT_APP_API_URL}/categories`,{
             headers:{
             "Authorization": `Bearer ${token}`}
         })
@@ -24,7 +25,7 @@ export default function CategoryManagement(){
         setUpdateData(category)
     }
     const handleDelete = (id) =>{
-        axios.delete(`http://localhost:8080/categories/${id}`,{
+        axios.delete(`${process.env.REACT_APP_API_URL}/categories/${id}`,{
             headers:{
             "Authorization": `Bearer ${token}`}
         }).then((res) =>{
@@ -34,7 +35,45 @@ export default function CategoryManagement(){
     }
     return(
         <>
-        <CategoryForm title="Add Category" usage="Add" fetchCategory={fetchCategory}/>
+        <Modal show={addOpen} onHide={() => setAddOpen(false)} animation={false}
+                        size="lg"
+                        aria-labelledby="contained-modal-title-vcenter"
+                        centered>
+                        <Modal.Header closeButton>
+                        <Modal.Title>Add Category</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body><CategoryForm  usage="Add" fetchCategory={fetchCategory}/> </Modal.Body>
+                        <Modal.Footer>
+                        <Button variant="secondary" onClick={() => setAddOpen(false)}>
+                            Close
+                        </Button>
+                        </Modal.Footer>
+                    </Modal>
+        
+        <Modal show={updateOpen} onHide={() => setUpdateOpen(false)} animation={false}
+                        size="lg"
+                        aria-labelledby="contained-modal-title-vcenter"
+                        centered>
+                        <Modal.Header closeButton>
+                        <Modal.Title>Update Category</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body><CategoryForm title="Update Category" usage="Update" fetchCategory={fetchCategory} currentCategory={updateData}/> </Modal.Body>
+                        <Modal.Footer>
+                        <Button variant="secondary" onClick={() => setUpdateOpen(false)}>
+                            Close
+                        </Button>
+                        </Modal.Footer>
+                    </Modal>
+        
+        
+        <div className="container">
+            <div className="row bg-white mt-3 rounded-3 py-3">
+                <div className="col-12">
+                    <Button variant="warning" className="w-100" onClick={() => setAddOpen(true)}>Add Category</Button>
+                </div>
+                
+            </div>
+        </div>
         <section>
             <div className="container">
                 <div className="row bg-white mt-3 rounded-3 py-3">
@@ -64,7 +103,7 @@ export default function CategoryManagement(){
                 </div>
             </div>
         </section>
-        {updateOpen && <CategoryForm title="Update Category" usage="Update" fetchCategory={fetchCategory} currentCategory={updateData}/>}
+    
         
         </>
     )

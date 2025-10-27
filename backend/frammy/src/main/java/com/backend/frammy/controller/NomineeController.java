@@ -28,13 +28,15 @@ public class NomineeController {
         return ResponseEntity.ok(ApiResponse.success("Add success"));
     }
 
-    @GetMapping
+    @GetMapping("category/{categoryId}")
     public ResponseEntity<ApiResponse<PagedModel<ResponseGetAllNomineeDTO>>> getAllNominee(
             @RequestParam(value = "page", defaultValue = "0") int page,
-            @RequestParam(value = "size", defaultValue = "9") int size
+            @RequestParam(value = "size", defaultValue = "9") int size,
+            @RequestParam(value = "search", defaultValue = "") String search,
+            @PathVariable Long categoryId
     )  {
         Pageable pageable = PageRequest.of(page, size);
-        Page<ResponseGetAllNomineeDTO> pagedModel = nomineeService.getNominees(pageable);
+        Page<ResponseGetAllNomineeDTO> pagedModel = nomineeService.getNominees(pageable,categoryId,search);
         return ResponseEntity.ok(ApiResponse.success(new PagedModel<>(pagedModel)));
     }
 

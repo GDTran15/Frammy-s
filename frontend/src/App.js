@@ -15,6 +15,7 @@ import CommunityLeaderboard from "./Pages/CommunityLeaderboard";
 import UserVotingPage from "./Pages/UserVotingPage";
 import ActivityPage from "./Pages/ActivityPage";  //elijah delete
 import StatisticsPage from "./Pages/StatisticsPage";
+import Prediction from "./Pages/Prediction";
 
 
 
@@ -38,7 +39,9 @@ import StatisticsPage from "./Pages/StatisticsPage";
                   <Route path = "/user/voting" element = {<UserVotingPage />} />
                   <Route path = "/statistics" element = {<Statistics />} />
 
-                  <Route path="/activity" element={<ActivityPage />} />       
+                  <Route path="/activity" element={<ActivityPage />} />    
+                  <Route path="/statistics-page" element={<StatisticsPage />} />
+                  <Route path="/user/prediction" element={<Prediction />} />   
                 </Routes>
             </BrowserRouter>
         </div>
