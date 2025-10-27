@@ -107,9 +107,11 @@ export default function CommunityLeaderboardList({title, permission, limit = 25,
                                     {/* Name (grows, keeps votes to the right) */}
                                     <div className="flex-grow-1">
                                         <strong>{r.displayName}</strong>
-                                        <span className="text-muted ms-2" style={{ fontSize: "0.85rem" }}>
-                                        ({r.nomineeType})
-                                        </span>
+                                        {activeType === "ALL" && (
+                                            <span className="text-muted ms-2" style={{ fontSize: "0.85rem" }}>
+                                                ({r.nomineeType})
+                                            </span>
+                                        )}
                                     </div>
 
                                     {/* Votes aligned far right */}
