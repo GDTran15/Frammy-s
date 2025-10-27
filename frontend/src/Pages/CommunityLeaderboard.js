@@ -15,7 +15,6 @@ export default function UserVotingPage(){
         </div>
 
          <CommunityLeaderboardList 
-            title = "Community Leaderboard"
             limit = {25}
             defaultType = "ALL"
             showFilter = {true}
