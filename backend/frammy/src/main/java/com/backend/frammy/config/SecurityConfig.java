@@ -27,6 +27,9 @@ public class SecurityConfig {
 
     private final UserDetailsService userDetailsService;
     private final JwtFilter jwtFilter;
+//for delpoyment
+  //@Value("${frontend.url}")
+    //private String frontendURL;
 
     @Bean
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {

@@ -8,6 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PagedModel;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,6 +23,7 @@ public class AlbumController {
         this.albumService = albumService;
     }
 
+   
     @PostMapping()
     public ResponseEntity<ApiResponse<String>> addAlbum(@Valid @RequestBody AddAlbumDTORequest addAlbumDTORequest){
         albumService.createAlbum(addAlbumDTORequest);

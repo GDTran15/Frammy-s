@@ -7,7 +7,7 @@ export default function ActivityPage() {
     <div className="container py-5">
       <div className="d-flex justify-content-between align-items-center mb-3">
         <h2 className="text-warning m-0">Community Activity Feed</h2>
-        <Link to="/" className="btn btn-outline-secondary">← Back to Home</Link>
+        <a href ="/" className="btn btn-outline-secondary">← Back to Home</a>
       </div>
 
       <p className="text-secondary">Here’s the full activity log:</p>
