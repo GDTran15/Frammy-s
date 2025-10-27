@@ -11,17 +11,18 @@ export default function LoginPage(){
     const [username,setUsername] = useState("");
     const [password,setPassword] = useState("");
     const [error,setError] = useState("");
+    const [validationError,setValiationError] = useState({});
 
     const handleSubmit = (e) => {
-        
+        setError("")
+        setValiationError({})
         e.preventDefault();
         
-             axios.post("http://localhost:8080/login",{
+             axios.post(`${process.env.REACT_APP_API_URL}/login`,{
             username: username,
             password : password
         }).then((res) =>{
-            if(res.data.status === "success"){
-                console.log("Register success" , res.data.data)
+            
                 localStorage.setItem("token", res.data.data.token);
                 localStorage.setItem("userId", res.data.data.userId);
                 const role = res.data.data.role;
@@ -30,14 +31,14 @@ export default function LoginPage(){
                 } else{
                     navigate("/user/voting");
                 }
-            } else  {
-                setError(res.data.message);
-            }
-        }
-        
-    ).catch((error) =>{
+       
+            }).catch((error) =>{
         console.log(error)
+        if(error.response.data.message){
             setError(error.response.data.message);
+        } else  {
+            setValiationError(error.response.data)
+        }
         }
     )
     }
@@ -50,21 +51,24 @@ export default function LoginPage(){
         title="Welcome Back"
         subTitle="Login into your account"
         optional="Don't have account? Register"
+        link="/register"
         >
             <form onSubmit={handleSubmit}>
                 <InputComponent 
                 labelText="Username"
                 changeHandle={(e) => setUsername(e.target.value)}
                 inputType="text"
-                value={username}
+                inputValue={username}
                 placeholderValue="Enter your username"
+                validationError={validationError.username}
                 />
                 <InputComponent 
                 labelText="Password"
                 changeHandle={(e) => setPassword(e.target.value)}
                 inputType="password"
-                value={password}
+                inputValue={password}
                 placeholderValue="Enter your password"
+                 validationError={validationError.password}
                 />
                 <button type="submit" className="btn btn-warning w-100 mt-2">Login</button>
                     

@@ -15,7 +15,7 @@ export default function UserManagement(){
     }, []);
 
     const fetchUsers = () => {
-        axios.get("http://localhost:8080/user/getUsers", {headers: { Authorization: `Bearer ${token}` }})
+        axios.get(`${process.env.REACT_APP_API_URL}/user/getUsers`, {headers: { Authorization: `Bearer ${token}` }})
             .then((response) => {
                 if (response.data.status === "success") {
                     setUsers(response.data.data);
@@ -52,7 +52,7 @@ export default function UserManagement(){
             return;
         }
 
-        axios.post(`http://localhost:8080/user/deleteUser`, {userId: userId}, {headers: { Authorization: `Bearer ${token}` }})
+        axios.post(`${process.env.REACT_APP_API_URL}/user/deleteUser`, {userId: userId}, {headers: { Authorization: `Bearer ${token}` }})
             .then((response) => {
                 if (response.data.status === "success") {
                     setUsers(prevUsers => prevUsers.filter(user => user.userId !== userId));
@@ -86,7 +86,7 @@ export default function UserManagement(){
                 return;
             }
 
-            axios.post("http://localhost:8080/user/editUser", {
+            axios.post(`${process.env.REACT_APP_API_URL}/user/editUser`, {
                 userId: editingUser.userId, 
                 username: editData.username,
                 gmail: editData.gmail,

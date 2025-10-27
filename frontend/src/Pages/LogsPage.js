@@ -10,9 +10,6 @@ export default function AdminLogsPage() {
                 <TabButton redirectLink={"/admin/dashboard"}>
                 Dashboard
                 </TabButton>,
-                <TabButton redirectLink={"/admin/voting"}>
-                Voting
-                </TabButton>,
                 <TabButton redirectLink={"/admin/nominee-management"}>
                 Nominee
                 </TabButton>,

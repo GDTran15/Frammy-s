@@ -9,7 +9,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.3.5</version> <!-- ✅ Correct stable version -->
+        <version>3.3.5</version> <!--Correct stable version -->
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -113,7 +113,7 @@
                 </configuration>
             </plugin>
 
-            <!-- ✅ This plugin makes "mvn spring-boot:run" work -->
+            <!--  This plugin makes "mvn spring-boot:run" work -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>

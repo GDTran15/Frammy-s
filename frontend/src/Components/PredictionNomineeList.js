@@ -27,7 +27,7 @@ export default function PredictionNomineeList({ permission }) {
         setLoading(true);
         try {
             const response = await fetch(
-                `http://localhost:8080/nominee?page=${page}&size=9`
+                `${process.env.REACT_APP_API_URL}/nominee?page=${page}&size=9`
             );
             const result = await response.json();
             
@@ -50,7 +50,7 @@ export default function PredictionNomineeList({ permission }) {
                 return;
             }
             
-            const response = await fetch('http://localhost:8080/prediction/usage', {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/prediction/usage`, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'
@@ -79,7 +79,7 @@ export default function PredictionNomineeList({ permission }) {
         
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch('http://localhost:8080/prediction', {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/prediction`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${token}`,

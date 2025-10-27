@@ -1,0 +1,69 @@
+.statistics-container {
+  background-color: #f4f4f4;           
+  border-radius: 12px;            
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); 
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.statistics-title {
+  color: #222;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.statistics-table,
+.statistics-chart {
+  background-color: white;
+  border-radius: 8px;             
+  padding: 15px;
+  margin-bottom: 16px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+
+.statistics-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.statistics-table th,
+.statistics-table td {
+  padding: 8px 12px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+}
+
+.statistics-table tr:hover {
+  background-color: #fafafa;          
+}
+
+.back-button {
+  display: inline-block;
+  background-color: #6a0dad;         
+  color: white;
+  padding: 10px 16px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.back-button:hover {
+  background-color: #520b9b;
+}
+
+.btn-outline-secondary {
+  border-color: #6a0dad;
+  color: #6a0dad;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+.btn-outline-secondary:hover {
+  background-color: #6a0dad;
+  color: white;
+}

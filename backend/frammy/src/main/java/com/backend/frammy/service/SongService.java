@@ -1,12 +1,10 @@
 package com.backend.frammy.service;
 
 import com.backend.frammy.dto.AddSongDTORequest;
-import com.backend.frammy.dto.ResponseGetAlbumDTO;
 import com.backend.frammy.dto.ResponseGetSongDTO;
 import com.backend.frammy.exception.InvalidInputException;
 import com.backend.frammy.exception.ObjectAlreadyExist;
 import com.backend.frammy.mapper.SongToDTO;
-import com.backend.frammy.model.Album;
 import com.backend.frammy.model.Artist;
 import com.backend.frammy.model.Song;
 import com.backend.frammy.repo.ArtistRepo;
@@ -61,12 +59,8 @@ public class SongService {
     }
 
 
-    public Page<ResponseGetSongDTO> getSongInPage(Pageable pageable) {
-        Page<Song> songPage = songRepo.findAll(pageable);
-        List<ResponseGetSongDTO> songDTOList = songPage.stream().map(songToDTO)
-                .toList();
-
-        return new PageImpl<>(songDTOList,pageable,songPage.getTotalElements());
+    public Page<ResponseGetSongDTO> getSongInPage(Pageable pageable, String search) {
+       return songRepo.findAllSongInPageWithSearch(pageable,search);
     }
 
     public void updateSong(@Valid AddSongDTORequest addSongDTORequest, Long songId) {

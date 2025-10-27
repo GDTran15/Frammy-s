@@ -11,12 +11,14 @@ export default function RegisterPage(){
   const [username,setUsername] = useState("");
   const [password,setPassword] = useState("");
   const [error,setError] = useState("");
+  const [validationError,setValiationError] = useState({})
 
   const handleSubmit = (e) => {
     setError("");
+    setValiationError({});
     e.preventDefault();
     
-    axios.post("http://localhost:8080/register",{
+    axios.post(`${process.env.REACT_APP_API_URL}/register`,{
     username: username,
     gmail : gmail,
     password : password
@@ -31,8 +33,11 @@ export default function RegisterPage(){
     setPassword("");
    
     }).catch((error) => {
-      console.log(error);
-     setError(error.response.data.message); 
+      if(error.response.data.message){
+            setError(error.response.data.message);
+        } else  {
+            setValiationError(error.response.data)
+        }
     })
     
   }
@@ -54,6 +59,7 @@ export default function RegisterPage(){
             inputType="email"
             value={gmail}
             placeholderValue="Enter your gmail"
+            validationError={validationError.gmail}
             />
             <InputComponent 
             labelText="Username"
@@ -61,6 +67,7 @@ export default function RegisterPage(){
             inputType="text"
             value={username}
             placeholderValue="Enter your username"
+            validationError={validationError.username}
             />
             <InputComponent 
             labelText="Password"
@@ -68,6 +75,7 @@ export default function RegisterPage(){
             inputType="password"
             value={password}
             placeholderValue="Enter your password"
+            validationError={validationError.password}
             />
             
             <button type="submit" className="btn btn-warning w-100 mt-2">Register</button>

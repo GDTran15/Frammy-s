@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -21,7 +22,7 @@ public interface NomineeRepo extends JpaRepository<Nominee,Long> {
 
 
 //query to get data
-    @Query("""
+@Query("""
 select new com.backend.frammy.dto.ResponseGetAllNomineeDTO(
             n.nomineeId, n.nomineeType,n.category.categoryId, n.category.categoryName,
              a.artistId,a.artistName, a.artistInfo,
@@ -31,9 +32,18 @@ select new com.backend.frammy.dto.ResponseGetAllNomineeDTO(
             left join n.artist a
             left join n.song s
             left join n.album al
-            
+            where (:categoryId is null or n.category.categoryId = :categoryId)
+            and (
+                :search is null or
+                 (n.nomineeType = 'ARTIST' and lower(a.artistName) like lower(concat ('%',:search,'%')))
+                 or
+                 (n.nomineeType = 'SONG' and lower(s.songName) like lower(concat ('%',:search,'%')))
+                 or
+                 (n.nomineeType = 'ALBUM' and lower(al.albumName) like lower(concat ('%',:search,'%')))
+             
+            )
 """)
-    Page<ResponseGetAllNomineeDTO> findAllNominateWithInformation(Pageable pageable);
+Page<ResponseGetAllNomineeDTO> findAllNominateWithInformation(Pageable pageable, @Param("categoryId") Long categoryId,@Param("search") String search);
 
     //new query for the weekly result summary
     @Query(value = """
@@ -55,6 +65,8 @@ select new com.backend.frammy.dto.ResponseGetAllNomineeDTO(
         ORDER BY COUNT(v.vote_id) DESC
     """, nativeQuery = true)
     List<Object[]> findWeeklyResultSummary();
+
+
 
 
 }

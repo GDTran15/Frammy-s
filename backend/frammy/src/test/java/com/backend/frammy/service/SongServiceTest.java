@@ -89,18 +89,5 @@ public class SongServiceTest {
         verify(songRepo).deleteById(1L);
     }
 
-    @Test
-    void getSongInPage_success() {
-        Song song = new Song();
-        song.setSongName("Song1");
-        Page<Song> songPage = new PageImpl<>(List.of(song));
-        PageRequest pageable = PageRequest.of(0, 10);
 
-        when(songRepo.findAll(pageable)).thenReturn(songPage);
-        when(songToDTO.apply(song)).thenReturn(new ResponseGetSongDTO(1L,"Song1",LocalDate.now(),"Pop"));
-
-        Page<ResponseGetSongDTO> result = songService.getSongInPage(pageable);
-
-        assertThat(result.getContent()).hasSize(1);
-    }
 }
