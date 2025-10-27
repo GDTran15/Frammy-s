@@ -6,6 +6,11 @@ Frammys is a web-based application that allows users to participate in a communi
 Users can register, vote for nominees, track artist popularity through live streaming data, and view activity logs of public voting behaviour.
 The project was developed as part of UTS 41026 – Advanced Software Development, focusing on Agile methods, DevOps pipelines, and full-stack implementation.
 
+How to run the project in local host:
+clone the project down and connect with your database thorugh application properties in backend
+
+
+
 Tech Stack
 Frontend: React.js, Bootstrap, Axios
 Backend: Java Spring Boot, Maven
@@ -25,7 +30,7 @@ Automated tests written using JUnit 5 and Mockito
 
 CI/CD pipeline triggers tests on push and pull requests**
 
-
+Deployment tools: Neon, Render, Netlify
 
 Contributors
 
